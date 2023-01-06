@@ -6,8 +6,10 @@
  * @hitokoto: 一场秋雨一场凉，秋心酌满泪为霜。
  * Copyright (c) 2022 by CloudZA, All Rights Reserved. 
  */
-// require_once 'include/db.class.php';
+
+include 'include/CheckRedis.php';
 require_once('include/common.php');
+CheckRedis::Run();
 // URL
 // $scriptpath = str_replace('\\', '/', $_SERVER['SCRIPT_NAME']);
 // $sitepath = substr($scriptpath, 0, strrpos($scriptpath, '/'));

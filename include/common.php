@@ -1,5 +1,4 @@
 <?php
-
 require_once 'db.class.php';
 
 // require_once 'de.config.php'; //引入配置信息
@@ -121,17 +120,7 @@ function get_qqNum($emil) {
     $qq = str_replace('@qq.com', '', $emil);
     return $qq;
 }
-function http_post($url, $data = null, $ua = '') {
-    //发送httppost请求
-    require_once 'class/HttpCurl.php';
-    $http = new HttpCurl();
-    if (!empty($ua)) {
-        $result = $http->userAgent($ua)->post($url, $data);
-    } else {
-        $result = $http->post($url, $data);
-    }
-    return $result;
-}
+
 function purge($string, $trim = true, $filter = true, $force = 0, $strip = FALSE) {
     //递归addslashes  对参数进行净化
     $encode = mb_detect_encoding($string, array("ASCII", "UTF-8", "GB2312", "GBK", "BIG5"));
@@ -428,13 +417,14 @@ function http($url, $params, $method = 'GET', $header = array()) {
     if ($error) throw new Exception('请求发生错误：' . $error);
     return $data;
 }
+
 /**
- * @param $code
- * @param $msg
- * @param array $data
- * @return Json [json] 返回就是json数据
+ * @param $code int 响应代码
+ * @param $msg  string 描述字符串
+ * @param $data array 返回的数据
+ * @return false|string json
  */
-function return_msg($code, $msg, $data = []) {
+function return_msg($code, $msg, array $data = []) {
     $return_data['code'] = $code;
     $return_data['msg'] = $msg;
     $return_data['data'] = $data;
@@ -443,13 +433,16 @@ function return_msg($code, $msg, $data = []) {
 //成功返回不带数据
 
 /**
- * @param $msg
+ * @param $msg string 描述
  */
 function ReturnSuccess($msg) {
     $result = ['code' => 200, 'msg' => $msg, ];
     return json_encode($result);
 }
-//失败返回
+
+/**
+ * @param $msg string 描述
+ */
 function ReturnError($msg) {
     $result = ['code' => 201, 'msg' => $msg, ];
     return json_encode($result);
