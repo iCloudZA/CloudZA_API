@@ -5,16 +5,17 @@
  * @LastEditTime: 2022-12-30 16:09:01 
  * @hitokoto: 一场秋雨一场凉，秋心酌满泪为霜。
  * File：后台登陆
-*/ 
+*/
+require_once '../include/common.php';
+$WEB = Db::table('webset')->select();
 $err = isset($_GET['err']) ?
-intval($_GET['err']) : 0; $errmsg =
-array(null,'账号密码不能为空','账号密码有误','您还没有登陆，请先登录！');
+intval($_GET['err']) : 0; $errmsg = array(null,'账号密码不能为空','账号密码有误','您还没有登陆，请先登录！');
 $error_msg = $errmsg[$err]; ?>
 <html lang="zh-cn">
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width,initial-scale=1.0" />
-		<title>CloudZA API管理系统 - 后台登录</title>
+		<title><?php echo $WEB[0]['title']; ?> - 后台登录</title>
 		<link rel="icon" href="../assets/img/favicons/favicon.png" />
 		<link rel="stylesheet" id="css-main" href="../assets/css/codebase.min-5.4.css" />
 	</head>

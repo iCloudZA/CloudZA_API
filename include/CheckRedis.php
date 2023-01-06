@@ -1,16 +1,16 @@
 <?php
 
-class CheckRedis {
+class CheckRedis
+{
     public static function Run(): void
     {
         try {
             if (!extension_loaded('redis')) {
-                throw new \Exception('检测到未安装Reids扩展，请现在当前PHP'.PHP_VERSION.'扩展中安装Redis扩展');
+                throw new \Exception('检测到未安装Reids扩展，请现在当前PHP' . PHP_VERSION . '扩展中安装Redis扩展');
             }
             $redis = new Redis();
             $redis->connect('127.0.0.1', 6379);
-        }
-        catch (\Exception $error) {
+        } catch (\Exception $error) {
             echo $error->getMessage();
             exit;
         }
@@ -19,9 +19,9 @@ class CheckRedis {
         $limit = 100;
         $interval = 60;
         // 检查用户是否使用了代理 IP
-		if (isset($_SERVER['HTTP_X_FORWARDED_FOR']) && !empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-			exit(self::ReturnError('非真实IP，禁止访问'));
-		}
+        if (isset($_SERVER['HTTP_X_FORWARDED_FOR']) && !empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            exit(self::ReturnError('非真实IP，禁止访问'));
+        }
         // 检查速率限制键是否已在 Redis 中存在
         $key = "rate_limit:{$_SERVER['REMOTE_ADDR']}";
         if ($redis->exists($key)) {
@@ -49,7 +49,7 @@ class CheckRedis {
             $count = $redis->incr($key);
             $redis->expire($key, $interval);
         }
-        echo '第'.$count.'次';
+        echo '第' . $count . '次';
     }
 
     /**
@@ -58,7 +58,7 @@ class CheckRedis {
      */
     public static function ReturnError($msg)
     {
-        $result = ['code' => 201, 'msg' => $msg, ];
+        $result = ['code' => 201, 'msg' => $msg,];
         return json_encode($result);
     }
 

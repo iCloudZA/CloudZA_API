@@ -13,7 +13,6 @@
 require_once 'userdata.php';//管理员配置
 require_once '../include/common.php';
 
-
 $action = isset($_GET['action']) ? purge($_GET['action']) : '';
 substr($_SERVER['PHP_SELF'],strrpos($_SERVER['PHP_SELF'],'/')+1);
 //登录验证

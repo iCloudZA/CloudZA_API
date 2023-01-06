@@ -1,6 +1,6 @@
 <?php
 if (!isset($islogin)) header("Location: /"); //非法访问拦截
-
+$WEB = Db::table('webset')->select();
 /** 服务器信息 **/
 $php_ver = PHP_VERSION;
 $res = $db->getMysqlVersion();
@@ -20,74 +20,72 @@ if (function_exists("imagecreate")) {
 
 ?>
 
-	<h2 class="content-heading">首页</h2>
-	<div class="row">
-		<div class="col-md-6 col-xl-3">
-			<a class="block block-rounded block-link-shadow" href="javascript:void(0)">
-				<div class="block-content block-content-full block-sticky-options">
-					<div class="block-options">
-						<div class="block-options-item">
-							<i class="far fa-circle fa-2x text-info-light"></i>
-						</div>
-					</div>
-					<div class="py-3 text-center">
-						<div class="fs-2 fw-bold mb-0 text-info">3580</div>
-						<div class="fs-sm fw-semibold text-uppercase text-muted">All Products</div>
-					</div>
-				</div>
-			</a>
-		</div>
-		<div class="col-md-6 col-xl-3">
-			<a class="block block-rounded block-link-shadow" href="javascript:void(0)">
-				<div class="block-content block-content-full block-sticky-options">
-					<div class="block-options">
-						<div class="block-options-item">
-							<i class="fa fa-star fa-2x text-warning-light"></i>
-						</div>
-					</div>
-					<div class="py-3 text-center">
-						<div class="fs-2 fw-bold mb-0 text-warning">95</div>
-						<div class="fs-sm fw-semibold text-uppercase text-muted">Top Sellers</div>
-					</div>
-				</div>
-			</a>
-		</div>
-		<div class="col-md-6 col-xl-3">
-			<a class="block block-rounded block-link-shadow" href="javascript:void(0)">
-				<div class="block-content block-content-full block-sticky-options">
-					<div class="block-options">
-						<div class="block-options-item">
-							<i class="fa fa-exclamation-triangle fa-2x text-danger-light"></i>
-						</div>
-					</div>
-					<div class="py-3 text-center">
-						<div class="fs-2 fw-bold mb-0 text-danger">30</div>
-						<div class="fs-sm fw-semibold text-uppercase text-muted">Out of Stock</div>
-					</div>
-				</div>
-			</a>
-		</div>
-		<div class="col-md-6 col-xl-3">
-			<a class="block block-rounded block-link-shadow" href="be_pages_ecom_product_edit.html">
-				<div class="block-content block-content-full block-sticky-options">
-					<div class="block-options">
-						<div class="block-options-item">
-							<i class="fa fa-archive fa-2x text-success-light"></i>
-						</div>
-					</div>
-					<div class="py-3 text-center">
-						<div class="fs-2 fw-bold mb-0 text-success">
-							<i class="fa fa-plus"></i>
-						</div>
-						<div class="fs-sm fw-semibold text-uppercase text-muted">New Product</div>
-					</div>
-				</div>
-			</a>
-		</div>
-	</div>
+<div class="block block-rounded bg-gd-dusk mb-4">
+    <div class="block-content bg-white-5">
+        <div class="py-4 text-center">
+            <h1 class="h2 fw-bold text-white mb-2"><?php echo $WEB[0]['title']?></h1>
+            <h2 class="h5 fw-medium text-white-75">一款开源的API系统</h2>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-6 col-xl-3">
+        <a class="block block-rounded block-link-pop text-end" href="javascript:void(0)">
+            <div class="block-content block-content-full d-sm-flex justify-content-between align-items-center border-black-op-b border-3">
+                <div class="d-none d-sm-block">
+                    <i class="si si-bar-chart fa-2x text-primary-light"></i>
+                </div>
+                <div class="text-end">
+                    <div class="fs-3 fw-semibold text-primary">435</div>
+                    <div class="fs-sm fw-semibold text-uppercase text-muted">用户数量</div>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-6 col-xl-3">
+        <a class="block block-rounded block-link-pop text-end" href="javascript:void(0)">
+            <div class="block-content block-content-full d-sm-flex justify-content-between align-items-center border-black-op-b border-3">
+                <div class="d-none d-sm-block">
+                    <i class="si si-trophy fa-2x text-earth-light"></i>
+                </div>
+                <div class="text-end">
+                    <div class="fs-3 fw-semibold text-earth">177</div>
+                    <div class="fs-sm fw-semibold text-uppercase text-muted">API接口</div>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-6 col-xl-3">
+        <a class="block block-rounded block-link-pop text-end" href="javascript:void(0)">
+            <div class="block-content block-content-full d-sm-flex justify-content-between align-items-center border-black-op-b border-3">
+                <div class="d-none d-sm-block">
+                    <i class="si si-bar-chart fa-2x text-elegance-light"></i>
+                </div>
+                <div class="text-end">
+                    <div class="fs-3 fw-semibold text-elegance">10930</div>
+                    <div class="fs-sm fw-semibold text-uppercase text-muted">调用次数</div>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-6 col-xl-3">
+        <a class="block block-rounded block-link-pop text-end" href="javascript:void(0)">
+            <div class="block-content block-content-full d-sm-flex justify-content-between align-items-center border-black-op-b border-3">
+                <div class="d-none d-sm-block">
+                    <i class="si si-fire fa-2x text-corporate-light"></i>
+                </div>
+                <div class="text-end">
+                    <div class="fs-3 fw-semibold text-pulse">423</div>
+                    <div class="fs-sm fw-semibold text-uppercase text-muted">日均IP</div>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
 	<div class="block block-rounded">
 		<div class="block-header block-header-default">
-			<h3 class="block-title">Blank <small>Get Started</small>
+			<h3 class="block-title">这里 <small>暂时还没想好</small>
 			</h3>
 			<div class="block-options">
 				<button type="button" class="btn-block-option" data-toggle="block-option" data-action="fullscreen_toggle"></button>
@@ -104,7 +102,7 @@ if (function_exists("imagecreate")) {
 			</div>
 		</div>
 		<div class="block-content">
-			<p>Create your own awesome project!</p>
+			<p>这个估计会删掉，可能没什么用！</p>
 		</div>
 	</div>
 
