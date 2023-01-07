@@ -60,12 +60,6 @@ $so = isset($_POST['so']) ? purge($_POST['so']) : '';
                                 <a class="text-dual fs-sm fw-semibold text-uppercase">云之安</a>
                             </li>
                             <li class="list-inline-item">
-                                <a class="link-fx text-dual" data-toggle="layout" data-action="dark_mode_toggle"
-                                   href="javascript:void(0)">
-                                    <i class="fa fa-burn"></i>
-                                </a>
-                            </li>
-                            <li class="list-inline-item">
                                 <a class="link-fx text-dual" href="./?action=logout">
                                     <i class="fa fa-sign-out-alt"></i>
                                 </a>
@@ -118,62 +112,6 @@ $so = isset($_POST['so']) ? purge($_POST['so']) : '';
                         data-action="sidebar_toggle">
                     <i class="fa fa-fw fa-bars"></i>
                 </button>
-
-                <div class="dropdown d-inline-block">
-                    <button type="button" class="btn btn-sm btn-alt-secondary" id="page-header-themes-dropdown"
-                            data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-haspopup="true"
-                            aria-expanded="false">
-                        <i class="fa fa-paint-brush"></i>
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-lg p-0" aria-labelledby="page-header-themes-dropdown">
-                        <div class="p-3 bg-body-light rounded-top">
-                            <h5 class="h6 text-center mb-0">
-                                主题颜色
-                            </h5>
-                        </div>
-                        <div class="p-3">
-                            <div class="row g-0 text-center">
-                                <div class="col-2">
-                                    <a class="text-default" data-toggle="theme" data-theme="default"
-                                       href="javascript:void(0)">
-                                        <i class="fa fa-2x fa-circle"></i>
-                                    </a>
-                                </div>
-                                <div class="col-2">
-                                    <a class="text-elegance" data-toggle="theme"
-                                       data-theme="../assets/css/themes/elegance.min-5.4.css" href="javascript:void(0)">
-                                        <i class="fa fa-2x fa-circle"></i>
-                                    </a>
-                                </div>
-                                <div class="col-2">
-                                    <a class="text-pulse" data-toggle="theme"
-                                       data-theme="../assets/css/themes/pulse.min-5.4.css" href="javascript:void(0)">
-                                        <i class="fa fa-2x fa-circle"></i>
-                                    </a>
-                                </div>
-                                <div class="col-2">
-                                    <a class="text-flat" data-toggle="theme"
-                                       data-theme="../assets/css/themes/flat.min-5.4.css" href="javascript:void(0)">
-                                        <i class="fa fa-2x fa-circle"></i>
-                                    </a>
-                                </div>
-                                <div class="col-2">
-                                    <a class="text-corporate" data-toggle="theme"
-                                       data-theme="../assets/css/themes/corporate.min-5.4.css"
-                                       href="javascript:void(0)">
-                                        <i class="fa fa-2x fa-circle"></i>
-                                    </a>
-                                </div>
-                                <div class="col-2">
-                                    <a class="text-earth" data-toggle="theme"
-                                       data-theme="../assets/css/themes/earth.min-5.4.css" href="javascript:void(0)">
-                                        <i class="fa fa-2x fa-circle"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
             <div class="space-x-1">
                 <div class="dropdown d-inline-block">

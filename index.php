@@ -1,10 +1,8 @@
 <?php
 /*
- * @Date: 2022-05-19 19:40:56
- * @LastEditors: CloudZA(云之安) <i@zhian.cc>
- * @LastEditTime: 2022-06-13 12:37:54
+ * @LastEditors: CloudZA(云之安) <admin@osuu.cc>
  * @hitokoto: 一场秋雨一场凉，秋心酌满泪为霜。
- * Copyright (c) 2022 by CloudZA, All Rights Reserved. 
+ * Copyright (c) 2022 by CloudZA, All Rights Reserved.
  */
 
 include 'include/CheckRedis.php';
