@@ -50,6 +50,12 @@
                         </div>
                     </div>
                 </div>
+
+                <?php
+                    $data = Db::table('api_list');
+                    $res = $data->select();
+                ?>
+
                 <div class="row">
                     <div class="col-sm-12 table-responsive">
                         <table class="table table-bordered table-striped table-vcenter js-dataTable-responsive dataTable no-footer dtr-inline"
@@ -62,15 +68,48 @@
                                 <th class="sorting_disabled" rowspan="1" colspan="1">API介绍</th>
                                 <th class="sorting_disabled" rowspan="1" colspan="1">添加时间</th>
                                 <th class="sorting_disabled" rowspan="1" colspan="1">调用次数</th>
-                                <th class="sorting_disabled" rowspan="1" colspan="1">是否启用</th>
+                                <th class="sorting_disabled" rowspan="1" colspan="1">操作</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr class="odd">
-                                <td valign="top" colspan="6" class="dataTables_empty">
-                                    <i class="si si-drawer fa-2x"></i>
-                                    <p class="text-muted fs-sm">暂无数据</p>
-                                </td>
+                                <?php
+                                    if (json_encode($res) == '[]') {
+                                        if(!empty($_GET['page'])){
+                                            $url = (($_SERVER['SERVER_PORT'] == 443) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . str_replace($_SERVER['DOCUMENT_ROOT'], (substr($_SERVER['DOCUMENT_ROOT'], -1) == '/') ? '/' : '', dirname($_SERVER['SCRIPT_FILENAME']));
+                                            $js = '<script>window.location="'.$url.'/?user_edit&id='.$user_info['id'].'"</script>';
+                                            echo $js;
+                                        }
+                                        echo '<td valign="top" colspan="6" class="dataTables_empty"><i class="si si-drawer fa-2x"></i><p class="text-muted fs-sm">暂无数据</p></td>';
+                                    }
+                                    foreach ($res as $k => $v){
+                                        $row = $res[$k];
+
+                                ?>
+                                        <td>
+                                            <?php echo $row['id']; ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $row['name']; ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $row['des']; ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $row['add_time'];?>
+                                        </td>
+                                        <td>
+                                            324
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn btn-sm btn-alt-primary me-1">
+                                                修改
+                                            </button>
+                                            <button type="button" class="btn btn-sm btn-alt-primary me-1">
+                                                删除
+                                            </button>
+                                        </td>
+                                <?php } ?>
                             </tr>
                             </tbody>
                         </table>
