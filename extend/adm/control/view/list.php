@@ -1,16 +1,16 @@
 <?php
-/*
-Sort:1
-Hidden:false
-Name:接口列表
-Url:control_list
-*/
+    /*
+    Sort:1
+    Hidden:false
+    Name:接口列表
+    Url:control_list
+    */
 
 
 ?>
 <style>
     td {
-        white-space:nowrap;
+        white-space: nowrap;
     }
 </style>
 <div class="col-12">
@@ -44,14 +44,17 @@ Url:control_list
                     <div class="col-sm-12 col-md-6">
                         <div id="task-logs-list_filter" class="dataTables_filter">
                             <label>
-                                <input type="search" class="form-control" placeholder="输入关键词进行搜索" aria-controls="task-logs-list">
+                                <input type="search" class="form-control" placeholder="输入关键词进行搜索"
+                                       aria-controls="task-logs-list">
                             </label>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-12 table-responsive">
-                        <table class="table table-bordered table-striped table-vcenter js-dataTable-responsive dataTable no-footer dtr-inline" id="task-logs-list" data-type="sport" data-user_id="1080467425" aria-describedby="task-logs-list_info">
+                        <table class="table table-bordered table-striped table-vcenter js-dataTable-responsive dataTable no-footer dtr-inline"
+                               id="task-logs-list" data-type="sport" data-user_id="1080467425"
+                               aria-describedby="task-logs-list_info">
                             <thead>
                             <tr>
                                 <th class="sorting_disabled" rowspan="1" colspan="1">ID</th>
@@ -82,22 +85,26 @@ Url:control_list
                         <div class="dataTables_paginate paging_full_numbers" id="task-logs-list_paginate">
                             <ul class="pagination">
                                 <li class="paginate_button page-item first disabled" id="task-logs-list_first">
-                                    <a href="#" aria-controls="task-logs-list" data-dt-idx="0" tabindex="0" class="page-link">
+                                    <a href="#" aria-controls="task-logs-list" data-dt-idx="0" tabindex="0"
+                                       class="page-link">
                                         <i class="fa fa-angle-double-left"></i>
                                     </a>
                                 </li>
                                 <li class="paginate_button page-item previous disabled" id="task-logs-list_previous">
-                                    <a href="#" aria-controls="task-logs-list" data-dt-idx="1" tabindex="0" class="page-link">
+                                    <a href="#" aria-controls="task-logs-list" data-dt-idx="1" tabindex="0"
+                                       class="page-link">
                                         <i class="fa fa-angle-left"></i>
                                     </a>
                                 </li>
                                 <li class="paginate_button page-item next disabled" id="task-logs-list_next">
-                                    <a href="#" aria-controls="task-logs-list" data-dt-idx="2" tabindex="0" class="page-link">
+                                    <a href="#" aria-controls="task-logs-list" data-dt-idx="2" tabindex="0"
+                                       class="page-link">
                                         <i class="fa fa-angle-right"></i>
                                     </a>
                                 </li>
                                 <li class="paginate_button page-item last disabled" id="task-logs-list_last">
-                                    <a href="#" aria-controls="task-logs-list" data-dt-idx="3" tabindex="0" class="page-link">
+                                    <a href="#" aria-controls="task-logs-list" data-dt-idx="3" tabindex="0"
+                                       class="page-link">
                                         <i class="fa fa-angle-double-right"></i>
                                     </a>
                                 </li>

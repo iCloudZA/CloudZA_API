@@ -9,17 +9,16 @@ DROP TABLE IF EXISTS `webset`;
         `ban` varchar(1024) not null comment '网站底部版权',
         `page_nums` varchar(255) not null comment '每页条数'
     ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-
-INSERT INTO public_api.webset (title, des, `key`, beian, ban, page_nums) VALUES ('云之安API', '云之安API,提供API数据接口调用服务平台 - 我们致力于为用户提供稳定、快速的免费API数据接口服务。', 'PI,聚合数据,API数据接口,免费API数据调用,', '京ICP备88888888号-8', 'CloudZA', '10')
+INSERT INTO public_api.webset (title, des, `key`, beian, ban, page_nums) VALUES ('云之安API', '云之安API,提供API数据接口调用服务平台 - 我们致力于为用户提供稳定、快速的免费API数据接口服务。', 'PI,聚合数据,API数据接口,免费API数据调用,', '京ICP备88888888号-8', 'CloudZA', '10');
 
 -- 管理员账号密码设置
 DROP TABLE IF EXISTS `admin`;
     CREATE TABLE `admin` (
         `user` varchar(32) not null comment '管理员账号',
         `password` varchar(32) not null comment '管理员密码',
-        `cooke` varchar(32) not null comment 'Cookie'
+        `cookie` varchar(32) not null comment 'Cookie'
     ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-
+INSERT INTO public_api.admin (user, password, cookie) VALUES ('admin', '123456', '5844a8e587c353ce2dfbca3def069981');
 -- API接口列表
 DROP TABLE IF EXISTS `api_list`;
     CREATE TABLE `api_list` (
@@ -37,3 +36,22 @@ DROP TABLE IF EXISTS `api_list`;
         `code_demo` varchar(255) not null comment '代码演示'
     ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
+-- API调用统计
+DROP TABLE IF EXISTS `api_count`;
+    CREATE TABLE `api_count` (
+        `id` int primary key auto_increment comment '主键',
+        `api_id` int not null comment 'API_ID',
+        `call_num` int not null comment '调用次数',
+        `ip` varchar(32) not null comment 'IP',
+        `address` varchar(32) not null comment '地址',
+        `datetime` datetime not null comment '时间'
+    ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+
+-- API黑名单
+DROP TABLE IF EXISTS `blacklist`;
+    CREATE TABLE `blacklist` (
+        `id` int primary key auto_increment comment '主键',
+        `api_id` int not null comment 'API_ID',
+        `ip` varchar(32) not null comment 'IP',
+        `date` datetime not null comment '时间'
+    ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;

@@ -29,7 +29,7 @@ $so = isset($_POST['so']) ? purge($_POST['so']) : '';
 							<span class="smini-visible fw-bold tracking-wide fs-lg">
 								c<span class="text-primary">c</span>
 							</span>
-                    <a class="link-fx fw-bold tracking-wide mx-auto" data-pjax href="./">
+                    <a class="link-fx fw-bold tracking-wide mx-auto" data-pjax href="./?index">
 								<span class="smini-hidden">
 									<i class="fa fa-fire text-primary"></i>
 									<span class="fs-4 text-dual">cloudza</span>
@@ -51,7 +51,7 @@ $so = isset($_POST['so']) ? purge($_POST['so']) : '';
                              src="https://api.test.zhian.pro/assets/images/users/avatar-1.jpg" alt="">
                     </div>
                     <div class="smini-hidden text-center mx-auto">
-                        <a class="img-link" href="./">
+                        <a class="img-link" data-pjax href="./?index">
                             <img class="img-avatar" src="https://api.test.zhian.pro/assets/images/users/avatar-1.jpg"
                                  alt="">
                         </a>
