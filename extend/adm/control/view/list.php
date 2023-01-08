@@ -8,10 +8,10 @@ Url:control_list
 
 
 $nums = $db::table('api_list')->count();
-$page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+$page = isset($_GET[ 'page' ]) ? intval($_GET[ 'page' ]) : 1;
 $url = "./?control_list&page=";
 $ENUMS = '10'; // 每页条数
-$bnums = ($page - 1) * $ENUMS;
+$bnums = ( $page - 1 ) * $ENUMS;
 ?>
 <style>
     td {
@@ -39,9 +39,11 @@ $bnums = ($page - 1) * $ENUMS;
                         <div class="dataTables_filter">
                             <form action="" method="post">
                                 <div class="input-group">
-                                    <input type="search" class="form-control form-control-alt" placeholder="输入关键词进行搜索"
-                                           name = "so"
-                                           value='<?php echo $so; ?>'
+                                    <input type="search" class="form-control form-control-alt"
+                                           placeholder="输入关键词进行搜索"
+                                           name="so"
+                                           value='<?php
+                                           echo $so; ?>'
                                            aria-controls="task-logs-list">
                                     <button type="submit" class="btn btn-info">
                                         <i class="fa fa-search"></i>
@@ -55,10 +57,10 @@ $bnums = ($page - 1) * $ENUMS;
 
                 <?php
                 $data = Db::table('api_list');
-                if($so != ''){
-                    $list = $data->where('name','=',"%$so%")->whereOr('key','=',"%$so%");
+                if ($so != '') {
+                    $list = $data->where('name' , 'like' , "%$so%")->whereOr('key' , 'like' , "%$so%");
                 } else {
-                    $list = $data->order('id desc')->limit($bnums, $ENUMS);
+                    $list = $data->order('id ASC')->limit($bnums , $ENUMS);
                 }
                 $res = $list->select();
                 ?>
@@ -66,10 +68,16 @@ $bnums = ($page - 1) * $ENUMS;
                 <div class="row">
                     <div class="col-sm-12 table-responsive">
                         <table class="table table-bordered table-striped table-vcenter js-dataTable-responsive dataTable no-footer dtr-inline"
-                               id="task-logs-list" data-type="sport" data-user_id="1080467425"
+                               id="task-logs-list" data-type="sport"
                                aria-describedby="task-logs-list_info">
                             <thead>
                             <tr>
+                                <th style="width: 10px">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="all"
+                                               onclick="checkAll();" />
+                                    </div>
+                                </th>
                                 <th class="sorting_disabled" rowspan="1" colspan="1">ID</th>
                                 <th class="sorting_disabled" rowspan="1" colspan="1">API名称</th>
                                 <th class="sorting_disabled" rowspan="1" colspan="1">API介绍</th>
@@ -79,20 +87,31 @@ $bnums = ($page - 1) * $ENUMS;
                             </tr>
                             </thead>
                             <tbody>
-                            <tr class="odd">
-                                <?php
-                                if (json_encode($res) == '[]') {
-                                    if ( !empty($_GET[ 'page' ])) {
-                                        $url = ( ( $_SERVER[ 'SERVER_PORT' ] == 443 ) ? 'https' : 'http' ) . '://' . $_SERVER[ 'HTTP_HOST' ] . str_replace($_SERVER[ 'DOCUMENT_ROOT' ] , ( substr($_SERVER[ 'DOCUMENT_ROOT' ] , -1) == '/' ) ? '/' : '' , dirname($_SERVER[ 'SCRIPT_FILENAME' ]));
-                                        $js = '<script>window.location="' . $url . '/?user_edit&id=' . $user_info[ 'id' ] . '"</script>';
-                                        echo $js;
-                                    }
-                                    echo '<td colspan="6" class="dataTables_empty"><i class="si si-drawer fa-2x"></i><p class="text-muted fs-sm">暂无数据</p></td>';
-                                }
-                                foreach ($res as $k => $v) {
-                                    $row = $res[ $k ];
 
-                                    ?>
+                            <?php
+                            if (json_encode($res) == '[]') {
+                                if ( !empty($_GET[ 'page' ])) {
+                                    $url = ( ( $_SERVER[ 'SERVER_PORT' ] == 443 ) ? 'https' : 'http' ) . '://' . $_SERVER[ 'HTTP_HOST' ] . str_replace($_SERVER[ 'DOCUMENT_ROOT' ] , ( substr($_SERVER[ 'DOCUMENT_ROOT' ] , -1) == '/' ) ? '/' : '' , dirname($_SERVER[ 'SCRIPT_FILENAME' ]));
+                                    $js = '<script>window.location="' . $url . '/?user_edit&id=' . $user_info[ 'id' ] . '"</script>';
+                                    echo $js;
+                                }
+                                echo '<td colspan="7" class="dataTables_empty"><i class="si si-drawer fa-2x"></i><p class="text-muted fs-sm">暂无数据</p></td>';
+                            }
+                            foreach ($res as $k => $v) {
+                                $row = $res[ $k ];
+
+                                ?>
+                                <tr class="odd">
+                                    <td>
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" name="ids[]"
+                                                   value="<?php
+                                                   echo $row[ 'id' ]; ?>" id="<?php
+                                            echo 'check_' . $row[ 'id' ]; ?>">
+                                            <label class="custom-control-label" for="<?php
+                                            echo 'check_' . $row[ 'id' ]; ?>"></label>
+                                        </div>
+                                    </td>
                                     <td>
                                         <?php
                                         echo $row[ 'id' ]; ?>
@@ -110,7 +129,9 @@ $bnums = ($page - 1) * $ENUMS;
                                         echo $row[ 'add_time' ]; ?>
                                     </td>
                                     <td>
-                                        324
+                                        <?php
+                                        echo $row[ 'pv' ];
+                                        ?>
                                     </td>
                                     <td>
                                         <button type="button" class="btn btn-sm btn-alt-primary me-1">
@@ -123,9 +144,10 @@ $bnums = ($page - 1) * $ENUMS;
                                             删除
                                         </button>
                                     </td>
+                                </tr>
                                 <?php
-                                } ?>
-                            </tr>
+                            } ?>
+
                             </tbody>
                         </table>
                     </div>
@@ -133,7 +155,9 @@ $bnums = ($page - 1) * $ENUMS;
                 <!--分页-->
                 <div class="row">
                     <div class="col-sm-12 col-md-5">
-                        <div class="dataTables_info" id="task-logs-list_info" role="status" aria-live="polite"></div>
+                        <div class="dataTables_info" id="task-logs-list_info" role="status" aria-live="polite">
+                            选中项：<a href="javascript:void(0);" onclick="delSelect()">删除</a>
+                        </div>
                     </div>
                     <div class="col-sm-12 col-md-7">
                         <div class="dataTables_paginate paging_full_numbers" id="task-logs-list_paginate">
@@ -172,6 +196,43 @@ $bnums = ($page - 1) * $ENUMS;
 </div>
 
 <script>
+    function checkAll ()
+    {
+        let code_Values = document.getElementsByTagName("input");
+        let all = document.getElementById("all");
+        if (code_Values.length) {
+            for (let i = 0; i < code_Values.length; i++) {
+                if (code_Values[i].type === "checkbox") {
+                    code_Values[i].checked = all.checked;
+                }
+            }
+        } else {
+            if (code_Values.type === "checkbox") {
+                code_Values.checked = all.checked;
+            }
+        }
+    }
+
+    function delSelect ()
+    {
+        let id_array = new Array();
+        //获取界面复选框的所有值
+        $("input[name='ids[]']:checked").each(function () {
+            //向数组中添加元素
+            id_array.push($(this).val());
+        });
+        //把复选框的值以数组形式存放
+        let chapterstr = id_array.join(',');
+        if (chapterstr.length <= 0) {
+            x.notify('请选择要删除的项目', 'warning')
+            return false;
+        }
+        console.log(chapterstr)
+        x.del('ajax.php?act=control_delSelect', {
+            chapterstr: chapterstr
+        }, '你确定要删除选中的内容吗?')
+    }
+
     /**
      * @param name 名称
      * @param id ID
@@ -180,6 +241,6 @@ $bnums = ($page - 1) * $ENUMS;
     {
         x.del('ajax.php?act=control_delApi', {
             id: id
-        }, '你确定要删除【' + name + '】吗?')
+        }, (name.length <= 5) ? '你确定要删除【' + name + '】吗?' : '你确定要删除【' + name.substring(0, 5) + "..." + '】吗?')
     }
 </script>
