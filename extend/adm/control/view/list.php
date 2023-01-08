@@ -34,18 +34,21 @@ $bnums = ( $page - 1 ) * $ENUMS;
         </div>
         <div class="block-content block-content-full">
             <div class="dataTables_wrapper dt-bootstrap5 no-footer">
-                <div class="row">
-                    <div class="col-lg-12 col-xl-12 mb-2">
+                <div class="row mb-2">
+                    <div class="col-3">
+                        <button type="button" class="btn btn-sm btn-alt-primary me-1" data-bs-toggle="modal" data-bs-target="#modal-top">添加API</button>
+                    </div>
+                    <div class="col-9">
                         <div class="dataTables_filter">
                             <form action="" method="post">
-                                <div class="input-group">
+                                <div class="input-group-sm">
                                     <input type="search" class="form-control form-control-alt"
                                            placeholder="输入关键词进行搜索"
                                            name="so"
                                            value='<?php
                                            echo $so; ?>'
                                            aria-controls="task-logs-list">
-                                    <button type="submit" class="btn btn-info">
+                                    <button type="submit" class="btn btn-alt-info">
                                         <i class="fa fa-search"></i>
                                     </button>
                                 </div>
@@ -194,7 +197,52 @@ $bnums = ( $page - 1 ) * $ENUMS;
         </div>
     </div>
 </div>
+<!--模态框-->
+<div class="modal fade" id="modal-top" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="block block-rounded shadow-none mb-0">
+                <div class="block-header block-header-default">
+                    <h3 class="block-title">新增API</h3>
+                    <div class="block-options">
+                        <button type="button" class="btn-block-option" data-bs-dismiss="modal" aria-label="Close">
+                            <i class="fa fa-times"></i>
+                        </button>
+                    </div>
+                </div>
 
+                <div class="block-content fs-sm">
+                    <div class="mb-4">
+                        <label class="form-label">API名称</label>
+                        <input type="text" class="form-control fs-sm" name="api_name" placeholder="例如：短网址生成" value="">
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label">API地址</label>
+                        <input type="text" class="form-control fs-sm" name="api_url" placeholder="https://abc.com/api/dome" value="">
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label" for="example-textarea-input">API介绍</label>
+                        <textarea class="form-control fs-sm "name="api_dec" rows="2" placeholder="例如：将长网址进行缩短，支持百度、新浪、腾讯短网址等等..."></textarea>
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label">关键词</label>
+                        <input type="text" class="form-control fs-sm" name="api_key" placeholder="用英文逗号分开例如：短网址,短链接" value="">
+                    </div>
+                </div>
+
+                <div class="block-content block-content-full block-content-sm text-end border-top">
+                    <button type="button" class="btn btn-alt-secondary" data-bs-dismiss="modal">
+                        取消
+                    </button>
+                    <button type="button" class="btn btn-alt-primary" data-bs-dismiss="modal">
+                        提交
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
     function checkAll ()
     {
@@ -215,7 +263,7 @@ $bnums = ( $page - 1 ) * $ENUMS;
 
     function delSelect ()
     {
-        let id_array = new Array();
+        let id_array = [];
         //获取界面复选框的所有值
         $("input[name='ids[]']:checked").each(function () {
             //向数组中添加元素
@@ -239,7 +287,7 @@ $bnums = ( $page - 1 ) * $ENUMS;
      */
     function del (name, id)
     {
-        x.del('ajax.php?act=control_delApi', {
+        x.del('ajax.php?act=control_delapi', {
             id: id
         }, (name.length <= 5) ? '你确定要删除【' + name + '】吗?' : '你确定要删除【' + name.substring(0, 5) + "..." + '】吗?')
     }
