@@ -23,17 +23,18 @@ INSERT INTO public_api.admin (user, password, cookie) VALUES ('admin', '123456',
 DROP TABLE IF EXISTS `api_list`;
     CREATE TABLE `api_list` (
         `id` int primary key auto_increment comment '主键',
-        `name` varchar(32) not null comment '名称',
-        `des` varchar(128) not null comment '描述',
-        `key` varchar(128) not null comment '关键词',  -- ['key1','key2','key3']
-        `return` varchar(32) not null comment '返回格式',
-        `params` varchar(255) not null comment '请求参数', -- ['params1','params2','params3']
-        `return_params` varchar(255) not null comment '返回参数',
-        `return_example` varchar(255) not null comment '返回示例',
-        `error_code` varchar(128) not null comment '服务错误码',
-        `system_code` varchar(128) not null comment '系统错误码',
-        `code_format` varchar(128) not null comment '错误码格式',
-        `code_demo` varchar(255) not null comment '代码演示'
+        `name` text comment '名称',
+        `api_url` text comment '接口地址',
+        `des` text comment '描述',
+        `key` text comment '关键词',  -- ['key1','key2','key3']
+        `http_mode` text comment '请求方法',
+        `params` text comment '请求参数', -- ['params1','params2','params3']
+        `return_format` text comment '返回格式',
+        `return_params` text comment '返回参数',
+        `return_case` text comment '返回示例',
+        `demo_code` text comment '代码演示',
+        `pv` int(10) not null comment '浏览量',
+        `add_time` datetime not null comment '添加时间'
     ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
 -- API调用统计
