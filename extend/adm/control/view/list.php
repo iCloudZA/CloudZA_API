@@ -1,12 +1,17 @@
 <?php
-    /*
-    Sort:1
-    Hidden:false
-    Name:接口列表
-    Url:control_list
-    */
+/*
+Sort:1
+Hidden:false
+Name:接口列表
+Url:control_list
+*/
 
 
+$nums = $db::table('api_list')->count();
+$page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+$url = "./?control_list&page=";
+$ENUMS = '10'; // 每页条数
+$bnums = ($page - 1) * $ENUMS;
 ?>
 <style>
     td {
@@ -28,32 +33,34 @@
             </h3>
         </div>
         <div class="block-content block-content-full">
-            <div id="task-logs-list_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+            <div class="dataTables_wrapper dt-bootstrap5 no-footer">
                 <div class="row">
-                    <div class="col-sm-12 col-md-6">
-                        <div class="dataTables_length" id="task-logs-list_length">
-                            <label>
-                                <select name="task-logs-list_length" aria-controls="task-logs-list" class="form-select">
-                                    <option value="10">10</option>
-                                    <option value="20">20</option>
-                                    <option value="50">50</option>
-                                </select>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-md-6">
-                        <div id="task-logs-list_filter" class="dataTables_filter">
-                            <label>
-                                <input type="search" class="form-control" placeholder="输入关键词进行搜索"
-                                       aria-controls="task-logs-list">
-                            </label>
+                    <div class="col-lg-12 col-xl-12 mb-2">
+                        <div class="dataTables_filter">
+                            <form action="" method="post">
+                                <div class="input-group">
+                                    <input type="search" class="form-control form-control-alt" placeholder="输入关键词进行搜索"
+                                           name = "so"
+                                           value='<?php echo $so; ?>'
+                                           aria-controls="task-logs-list">
+                                    <button type="submit" class="btn btn-info">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </div>
+                            </form>
+
                         </div>
                     </div>
                 </div>
 
                 <?php
-                    $data = Db::table('api_list');
-                    $res = $data->select();
+                $data = Db::table('api_list');
+                if($so != ''){
+                    $list = $data->where('name','=',"%$so%")->whereOr('key','=',"%$so%");
+                } else {
+                    $list = $data->order('id desc')->limit($bnums, $ENUMS);
+                }
+                $res = $list->select();
                 ?>
 
                 <div class="row">
@@ -74,48 +81,56 @@
                             <tbody>
                             <tr class="odd">
                                 <?php
-                                    if (json_encode($res) == '[]') {
-                                        if(!empty($_GET['page'])){
-                                            $url = (($_SERVER['SERVER_PORT'] == 443) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . str_replace($_SERVER['DOCUMENT_ROOT'], (substr($_SERVER['DOCUMENT_ROOT'], -1) == '/') ? '/' : '', dirname($_SERVER['SCRIPT_FILENAME']));
-                                            $js = '<script>window.location="'.$url.'/?user_edit&id='.$user_info['id'].'"</script>';
-                                            echo $js;
-                                        }
-                                        echo '<td colspan="6" class="dataTables_empty"><i class="si si-drawer fa-2x"></i><p class="text-muted fs-sm">暂无数据</p></td>';
+                                if (json_encode($res) == '[]') {
+                                    if ( !empty($_GET[ 'page' ])) {
+                                        $url = ( ( $_SERVER[ 'SERVER_PORT' ] == 443 ) ? 'https' : 'http' ) . '://' . $_SERVER[ 'HTTP_HOST' ] . str_replace($_SERVER[ 'DOCUMENT_ROOT' ] , ( substr($_SERVER[ 'DOCUMENT_ROOT' ] , -1) == '/' ) ? '/' : '' , dirname($_SERVER[ 'SCRIPT_FILENAME' ]));
+                                        $js = '<script>window.location="' . $url . '/?user_edit&id=' . $user_info[ 'id' ] . '"</script>';
+                                        echo $js;
                                     }
-                                    foreach ($res as $k => $v){
-                                        $row = $res[$k];
+                                    echo '<td colspan="6" class="dataTables_empty"><i class="si si-drawer fa-2x"></i><p class="text-muted fs-sm">暂无数据</p></td>';
+                                }
+                                foreach ($res as $k => $v) {
+                                    $row = $res[ $k ];
 
-                                ?>
-                                        <td>
-                                            <?php echo $row['id']; ?>
-                                        </td>
-                                        <td>
-                                            <?php echo $row['name']; ?>
-                                        </td>
-                                        <td>
-                                            <?php echo $row['des']; ?>
-                                        </td>
-                                        <td>
-                                            <?php echo $row['add_time'];?>
-                                        </td>
-                                        <td>
-                                            324
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-sm btn-alt-primary me-1">
-                                                修改
-                                            </button>
-                                            <button type="button" class="btn btn-sm btn-alt-primary me-1" onclick="del('<?php echo $row['name']?>',<?php echo $row['id'] ?>)">
-                                                删除
-                                            </button>
-                                        </td>
-                                <?php } ?>
+                                    ?>
+                                    <td>
+                                        <?php
+                                        echo $row[ 'id' ]; ?>
+                                    </td>
+                                    <td>
+                                        <?php
+                                        echo $row[ 'name' ]; ?>
+                                    </td>
+                                    <td>
+                                        <?php
+                                        echo $row[ 'des' ]; ?>
+                                    </td>
+                                    <td>
+                                        <?php
+                                        echo $row[ 'add_time' ]; ?>
+                                    </td>
+                                    <td>
+                                        324
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-alt-primary me-1">
+                                            修改
+                                        </button>
+                                        <button type="button" class="btn btn-sm btn-alt-primary me-1"
+                                                onclick="del('<?php
+                                                echo $row[ 'name' ] ?>',<?php
+                                                echo $row[ 'id' ] ?>)">
+                                            删除
+                                        </button>
+                                    </td>
+                                <?php
+                                } ?>
                             </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
-
+                <!--分页-->
                 <div class="row">
                     <div class="col-sm-12 col-md-5">
                         <div class="dataTables_info" id="task-logs-list_info" role="status" aria-live="polite"></div>
@@ -161,9 +176,10 @@
      * @param name 名称
      * @param id ID
      */
-    function del(name,id){
-        x.del('ajax.php?act=control_delApi',{
-            id:id
-        },'你确定要删除【'+name+'】吗?')
+    function del (name, id)
+    {
+        x.del('ajax.php?act=control_delApi', {
+            id: id
+        }, '你确定要删除【' + name + '】吗?')
     }
 </script>
