@@ -80,7 +80,7 @@
                                             $js = '<script>window.location="'.$url.'/?user_edit&id='.$user_info['id'].'"</script>';
                                             echo $js;
                                         }
-                                        echo '<td valign="top" colspan="6" class="dataTables_empty"><i class="si si-drawer fa-2x"></i><p class="text-muted fs-sm">暂无数据</p></td>';
+                                        echo '<td colspan="6" class="dataTables_empty"><i class="si si-drawer fa-2x"></i><p class="text-muted fs-sm">暂无数据</p></td>';
                                     }
                                     foreach ($res as $k => $v){
                                         $row = $res[$k];
@@ -105,7 +105,7 @@
                                             <button type="button" class="btn btn-sm btn-alt-primary me-1">
                                                 修改
                                             </button>
-                                            <button type="button" class="btn btn-sm btn-alt-primary me-1">
+                                            <button type="button" class="btn btn-sm btn-alt-primary me-1" onclick="del('<?php echo $row['name']?>',<?php echo $row['id'] ?>)">
                                                 删除
                                             </button>
                                         </td>
@@ -155,3 +155,15 @@
         </div>
     </div>
 </div>
+
+<script>
+    /**
+     * @param name 名称
+     * @param id ID
+     */
+    function del(name,id){
+        x.del('ajax.php?act=control_delApi',{
+            id:id
+        },'你确定要删除【'+name+'】吗?')
+    }
+</script>
