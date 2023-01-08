@@ -55,7 +55,7 @@
                 $count = $redis->incr($key);
                 $redis->expire($key , $interval);
             }
-            echo '第' . $count . '次';
+//            echo '第' . $count . '次';
         }
 
         /**
