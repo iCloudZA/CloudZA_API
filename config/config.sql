@@ -27,7 +27,8 @@ DROP TABLE IF EXISTS `api_list`;
         `api_url` text comment '接口地址',
         `des` text comment '描述',
         `key` text comment '关键词',  -- ['key1','key2','key3']
-        `http_mode` text comment '请求方法',
+        `http_mode` text comment '请求方法', -- get/post
+        `http_case` text comment '请求示例',
         `params` text comment '请求参数', -- ['params1','params2','params3']
         `return_format` text comment '返回格式',
         `return_params` text comment '返回参数',
@@ -36,6 +37,18 @@ DROP TABLE IF EXISTS `api_list`;
         `pv` int(10) not null comment '浏览量',
         `add_time` datetime not null comment '添加时间'
     ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+
+-- API请求参数说明
+DROP TABLE IF EXISTS `api_content_http`;
+    CREATE TABLE `api_content_http` (
+        `id` int primary key auto_increment comment '主键',
+        `name` varchar(64) comment '名称',
+        `must` varchar(12) comment '必填',
+        `type` varchar(32) comment '类型',
+        `explain` text comment '说明',
+        `API_ID` int not null comment 'API_ID'
+    ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+
 
 -- API调用统计
 DROP TABLE IF EXISTS `api_count`;
