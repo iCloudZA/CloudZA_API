@@ -36,8 +36,7 @@ $bnums = ( $page - 1 ) * $ENUMS;
             <div class="dataTables_wrapper dt-bootstrap5 no-footer">
                 <div class="row mb-2">
                     <div class="col-3">
-                        <button type="button" class="btn btn-sm btn-alt-primary me-1" data-bs-toggle="modal"
-                                data-bs-target="#modal-top">添加API
+                        <button type="button" class="btn btn-sm btn-alt-primary me-1" onclick="edit()">添加API
                         </button>
                     </div>
                     <div class="col-9">
@@ -88,7 +87,7 @@ $bnums = ( $page - 1 ) * $ENUMS;
                                 <th class="sorting_disabled" rowspan="1" colspan="1">API介绍</th>
                                 <th class="sorting_disabled" rowspan="1" colspan="1">添加时间</th>
                                 <th class="sorting_disabled" rowspan="1" colspan="1">调用次数</th>
-                                <th class="sorting_disabled" rowspan="1" colspan="1">操作</th>
+                                <th style="width: 40px" class="sorting_disabled" rowspan="1" colspan="1">操作</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -139,8 +138,23 @@ $bnums = ( $page - 1 ) * $ENUMS;
                                         ?>
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-sm btn-alt-primary me-1">
+                                        <button type="button" class="btn btn-sm btn-alt-primary me-1"
+                                                onclick="edit('%7B%22api_name%22:%22<?php
+                                                echo $row[ 'name' ] ?>%22,%22api_url%22:%22<?php
+                                                echo $row[ 'api_url' ] ?>%22,%22api_des%22:%22<?php
+                                                echo $row[ 'des' ] ?>%22,%22api_key%22:%22<?php
+                                                echo $row[ 'key' ] ?>%22,%22api_name%22:%22<?php
+                                                echo $row[ 'http_mode' ] ?>%22,%22http_mode%22:%22<?php
+                                                echo $row[ 'return_format' ] ?>%22,%22return_format%22:%22<?php
+                                                echo $row[ 'http_case' ] ?>%22,%22http_case%22:%22<?php
+                                                echo $row[ 'return_case' ] ?>%22%7D');">
                                             修改
+                                        </button>
+                                        <button type="button" class="btn btn-sm btn-alt-primary me-1">
+                                            代码示例
+                                        </button>
+                                        <button type="button" class="btn btn-sm btn-alt-primary me-1">
+                                            错误代码
                                         </button>
                                         <button type="button" class="btn btn-sm btn-alt-primary me-1"
                                                 onclick="del('<?php
@@ -207,7 +221,7 @@ $bnums = ( $page - 1 ) * $ENUMS;
             <div class="modal-content">
                 <div class="block block-rounded shadow-none mb-0">
                     <div class="block-header block-header-default">
-                        <h3 class="block-title">新增API</h3>
+                        <h3 class="block-title" id="title">新增API</h3>
                         <div class="block-options">
                             <button type="button" class="btn-block-option" data-bs-dismiss="modal" aria-label="Close">
                                 <i class="fa fa-times"></i>
@@ -217,6 +231,7 @@ $bnums = ( $page - 1 ) * $ENUMS;
 
                     <div class="block-content fs-sm">
                         <div class="row mb-4">
+                            <input type="hidden" name="fun" value="add">
                             <div class="col-sm-5">
                                 <label class="form-label">API名称</label>
                                 <input type="text" class="form-control fs-sm" name="api_name"
@@ -285,6 +300,7 @@ $bnums = ( $page - 1 ) * $ENUMS;
     <script>
         function add_api ()
         {
+            let a = $("input[name='fun']").val()
             let api = [];
             api['name'] = $("input[name='api_name']").val(); // 接口名字
             api['api_url'] = $("input[name='api_url']").val(); // 接口地址
@@ -294,10 +310,8 @@ $bnums = ( $page - 1 ) * $ENUMS;
             api['return_format'] = $("input[name='return_format']").val(); // 接口返回格式
             api['http_case'] = $("input[name='http_case']").val(); // 接口请求示例
             api['return_case'] = $("textarea[name='return_case']").val(); // 接口返回示例
-
             console.log(api);
-
-            x.ajax('ajax.php?act=control_add', 'api', function (data) {
+            x.ajax('ajax.php?act=control_' + a, 'api', function (data) {
                 console.log('index', data)
                 if (200 == data.code) {
                     $('#modal-top').modal('hide');
@@ -312,6 +326,38 @@ $bnums = ( $page - 1 ) * $ENUMS;
                 }
             });
         }
+
+        function edit (list = null)
+        {
+            if (list != null) {
+                let udata = decodeURI(list);
+                let data = JSON.parse(udata.replace(/\n/g, "\\n").replace(/\r/g, "\\r"));
+                console.log(data)
+                $("input[name='api_name']").val(data.api_name); // 接口名字
+                $("input[name='api_url']").val(data.api_url); // 接口地址
+                $("textarea[name='api_des']").val(data.api_des); // 接口介绍
+                $("input[name='api_key']").val(data.api_key); // 接口关键词
+                $("input[name='http_mode']").val(data.http_mode); // 接口请求方法
+                $("input[name='return_format']").val(data.return_format); // 接口返回格式
+                $("input[name='http_case']").val(data.http_case); // 接口请求示例
+                $("textarea[name='return_case']").val(data.return_case); // 接口返回示例
+                $("input[name='fun']").val('edit') // 编辑
+                $("#title").html('编辑API');
+                $('#modal-top').modal('show');
+            } else {
+                $("input[name='api_name']").val(null); // 接口名字
+                $("input[name='api_url']").val(null); // 接口地址
+                $("textarea[name='api_des']").val(null); // 接口介绍
+                $("input[name='api_key']").val(null); // 接口关键词
+                $("input[name='http_mode']").val(null); // 接口请求方法
+                $("input[name='return_format']").val(null); // 接口返回格式
+                $("input[name='http_case']").val(null); // 接口请求示例
+                $("textarea[name='return_case']").val(null); // 接口返回示例
+                $("input[name='fun']").val('add') // 新增
+                $("#title").html('新增API');
+                $('#modal-top').modal('show');
+            }
+        };
 
         function checkAll ()
         {
@@ -334,7 +380,7 @@ $bnums = ( $page - 1 ) * $ENUMS;
         {
             let id_array = [];
             //获取界面复选框的所有值
-            $("input[name='ids[]']:checked").each( function () {
+            $("input[name='ids[]']:checked").each(function () {
                 //向数组中添加元素
                 id_array.push($(this).val());
             });
