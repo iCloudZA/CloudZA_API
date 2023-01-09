@@ -36,7 +36,9 @@ $bnums = ( $page - 1 ) * $ENUMS;
             <div class="dataTables_wrapper dt-bootstrap5 no-footer">
                 <div class="row mb-2">
                     <div class="col-3">
-                        <button type="button" class="btn btn-sm btn-alt-primary me-1" data-bs-toggle="modal" data-bs-target="#modal-top">添加API</button>
+                        <button type="button" class="btn btn-sm btn-alt-primary me-1" data-bs-toggle="modal"
+                                data-bs-target="#modal-top">添加API
+                        </button>
                     </div>
                     <div class="col-9">
                         <div class="dataTables_filter">
@@ -198,100 +200,175 @@ $bnums = ( $page - 1 ) * $ENUMS;
     </div>
 </div>
 <!--模态框-->
-<div class="modal fade" id="modal-top" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="modal-top" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="block block-rounded shadow-none mb-0">
-                <div class="block-header block-header-default">
-                    <h3 class="block-title">新增API</h3>
-                    <div class="block-options">
-                        <button type="button" class="btn-block-option" data-bs-dismiss="modal" aria-label="Close">
-                            <i class="fa fa-times"></i>
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="block block-rounded shadow-none mb-0">
+                    <div class="block-header block-header-default">
+                        <h3 class="block-title">新增API</h3>
+                        <div class="block-options">
+                            <button type="button" class="btn-block-option" data-bs-dismiss="modal" aria-label="Close">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="block-content fs-sm">
+                        <div class="row mb-4">
+                            <div class="col-sm-5">
+                                <label class="form-label">API名称</label>
+                                <input type="text" class="form-control fs-sm" name="api_name"
+                                       placeholder="例如：短网址生成" value="">
+                            </div>
+                            <div class="col-sm-7">
+                                <label class="form-label">API地址</label>
+                                <input type="text" class="form-control fs-sm" name="api_url"
+                                       placeholder="https://abc.com/api/dome" value="">
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label" for="example-textarea-input">API介绍</label>
+                            <textarea class="form-control fs-sm " name="api_des" rows="2"
+                                      placeholder="例如：将长网址进行缩短，支持百度、新浪、腾讯短网址等等..."></textarea>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label">关键词</label>
+                            <input type="text" class="form-control fs-sm" name="api_key"
+                                   placeholder="用英文逗号分开例如：短网址,短链接" value="">
+                        </div>
+                        <div class="row mb-4">
+                            <div class="col-sm-6">
+                                <label class="form-label">请求方法</label>
+                                <input type="text" class="form-control fs-sm" name="http_mode"
+                                       placeholder="例如：GET/POST" value="">
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="form-label">返回格式</label>
+                                <input type="text" class="form-control fs-sm" name="return_format"
+                                       placeholder="例如：JSON" value="">
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label">请求示例</label>
+                            <input type="text" class="form-control fs-sm" name="http_case"
+                                   placeholder="https://abc.com/api/dome?url=http://baidu.com" value="">
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label" for="example-textarea-input">返回示例</label>
+                            <textarea class="form-control fs-sm " name="return_case" rows="5" placeholder='{
+    "code": 1,
+    "msg": "生成成功",
+    "url": "http://baidu.com",
+    "data": {
+        "tcn": "http://t.cn/xxxxxx",
+        "url": "https://url.cn/xxxxxx"
+    }
+}'></textarea>
+                        </div>
+
+                    </div>
+
+                    <div class="block-content block-content-full block-content-sm text-end border-top">
+                        <button type="button" class="btn btn-alt-secondary" data-bs-dismiss="modal">
+                            取消
+                        </button>
+                        <button type="button" class="btn btn-alt-primary" onclick="add_api()">
+                            提交
                         </button>
                     </div>
-                </div>
-
-                <div class="block-content fs-sm">
-                    <div class="row mb-4">
-                        <div class="col-sm-5">
-                            <label class="form-label">API名称</label>
-                            <input type="text" class="form-control fs-sm" name="api_name" placeholder="例如：短网址生成" value="">
-                        </div>
-                        <div class="col-sm-7">
-                            <label class="form-label">API地址</label>
-                            <input type="text" class="form-control fs-sm" name="api_url" placeholder="https://abc.com/api/dome" value="">
-                        </div>
-                    </div>
-                    <div class="mb-4">
-                        <label class="form-label" for="example-textarea-input">API介绍</label>
-                        <textarea class="form-control fs-sm "name="api_dec" rows="2" placeholder="例如：将长网址进行缩短，支持百度、新浪、腾讯短网址等等..."></textarea>
-                    </div>
-                    <div class="mb-4">
-                        <label class="form-label">关键词</label>
-                        <input type="text" class="form-control fs-sm" name="api_key" placeholder="用英文逗号分开例如：短网址,短链接" value="">
-                    </div>
-
-                </div>
-
-                <div class="block-content block-content-full block-content-sm text-end border-top">
-                    <button type="button" class="btn btn-alt-secondary" data-bs-dismiss="modal">
-                        取消
-                    </button>
-                    <button type="button" class="btn btn-alt-primary" data-bs-dismiss="modal">
-                        提交
-                    </button>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<script>
-    function checkAll ()
-    {
-        let code_Values = document.getElementsByTagName("input");
-        let all = document.getElementById("all");
-        if (code_Values.length) {
-            for (let i = 0; i < code_Values.length; i++) {
-                if (code_Values[i].type === "checkbox") {
-                    code_Values[i].checked = all.checked;
+    <script>
+        function add_api ()
+        {
+            let api = [];
+            api['name'] = $("input[name='api_name']").val(); // 接口名字
+            api['api_url'] = $("input[name='api_url']").val(); // 接口地址
+            api['des'] = $("textarea[name='api_des']").val(); // 接口介绍
+            api['key'] = $("input[name='api_key']").val(); // 接口关键词
+            api['http_mode'] = $("input[name='http_mode']").val(); // 接口请求方法
+            api['return_format'] = $("input[name='return_format']").val(); // 接口返回格式
+            api['http_case'] = $("input[name='http_case']").val(); // 接口请求示例
+            api['return_case'] = $("textarea[name='return_case']").val(); // 接口返回示例
+
+            console.log(api);
+
+            x.ajax('ajax.php?act=control_add', 'api', function (data) {
+                console.log('index', data)
+                if (200 == data.code) {
+                    $('#modal-top').modal('hide');
+                    setTimeout(() => {
+                        x.notify(data.msg, 'success')
+                    }, 300)
+                } else {
+                    setTimeout(() => {
+                        x.notify(data.msg, 'warning')
+                    }, 500)
+
+                }
+            });
+        }
+
+        function checkAll ()
+        {
+            let code_Values = document.getElementsByTagName("input");
+            let all = document.getElementById("all");
+            if (code_Values.length) {
+                for (let i = 0; i < code_Values.length; i++) {
+                    if (code_Values[i].type === "checkbox") {
+                        code_Values[i].checked = all.checked;
+                    }
+                }
+            } else {
+                if (code_Values.type === "checkbox") {
+                    code_Values.checked = all.checked;
                 }
             }
-        } else {
-            if (code_Values.type === "checkbox") {
-                code_Values.checked = all.checked;
+        }
+
+        function delSelect ()
+        {
+            let id_array = [];
+            //获取界面复选框的所有值
+            $("input[name='ids[]']:checked").each( function () {
+                //向数组中添加元素
+                id_array.push($(this).val());
+            });
+            //把复选框的值以数组形式存放
+            let chapterstr = id_array.join(',');
+            if (chapterstr.length <= 0) {
+                x.notify('请选择要删除的项目', 'warning')
+                return false;
             }
+            x.del('ajax.php?act=control_delSelect', {
+                chapterstr: chapterstr
+            }, ((data) => {
+                if (200 === data.code) {
+                    x.notify(data.msg, 'success')
+                } else {
+                    x.notify(data.msg, 'warning')
+                }
+            }), '你确定要删除选中的内容吗?')
         }
-    }
 
-    function delSelect ()
-    {
-        let id_array = [];
-        //获取界面复选框的所有值
-        $("input[name='ids[]']:checked").each(function () {
-            //向数组中添加元素
-            id_array.push($(this).val());
-        });
-        //把复选框的值以数组形式存放
-        let chapterstr = id_array.join(',');
-        if (chapterstr.length <= 0) {
-            x.notify('请选择要删除的项目', 'warning')
-            return false;
+        /**
+         * @param name 名称
+         * @param id ID
+         */
+        function del (name, id)
+        {
+            x.del('ajax.php?act=control_delapi', {
+                id: id
+            }, ((data) => {
+                if (200 === data.code) {
+                    x.notify(data.msg, 'success')
+                } else {
+                    x.notify(data.msg, 'warning')
+                }
+            }), (name.length <= 5) ? '你确定要删除【' + name + '】吗?' : '你确定要删除【' + name.substring(0, 5) + "..." + '】吗?')
         }
-        console.log(chapterstr)
-        x.del('ajax.php?act=control_delSelect', {
-            chapterstr: chapterstr
-        }, '你确定要删除选中的内容吗?')
-    }
-
-    /**
-     * @param name 名称
-     * @param id ID
-     */
-    function del (name, id)
-    {
-        x.del('ajax.php?act=control_delapi', {
-            id: id
-        }, (name.length <= 5) ? '你确定要删除【' + name + '】吗?' : '你确定要删除【' + name.substring(0, 5) + "..." + '】吗?')
-    }
-</script>
+    </script>
