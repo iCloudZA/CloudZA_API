@@ -213,13 +213,15 @@ $bnums = ( $page - 1 ) * $ENUMS;
                 </div>
 
                 <div class="block-content fs-sm">
-                    <div class="mb-4">
-                        <label class="form-label">API名称</label>
-                        <input type="text" class="form-control fs-sm" name="api_name" placeholder="例如：短网址生成" value="">
-                    </div>
-                    <div class="mb-4">
-                        <label class="form-label">API地址</label>
-                        <input type="text" class="form-control fs-sm" name="api_url" placeholder="https://abc.com/api/dome" value="">
+                    <div class="row mb-4">
+                        <div class="col-sm-5">
+                            <label class="form-label">API名称</label>
+                            <input type="text" class="form-control fs-sm" name="api_name" placeholder="例如：短网址生成" value="">
+                        </div>
+                        <div class="col-sm-7">
+                            <label class="form-label">API地址</label>
+                            <input type="text" class="form-control fs-sm" name="api_url" placeholder="https://abc.com/api/dome" value="">
+                        </div>
                     </div>
                     <div class="mb-4">
                         <label class="form-label" for="example-textarea-input">API介绍</label>
@@ -229,6 +231,7 @@ $bnums = ( $page - 1 ) * $ENUMS;
                         <label class="form-label">关键词</label>
                         <input type="text" class="form-control fs-sm" name="api_key" placeholder="用英文逗号分开例如：短网址,短链接" value="">
                     </div>
+
                 </div>
 
                 <div class="block-content block-content-full block-content-sm text-end border-top">
