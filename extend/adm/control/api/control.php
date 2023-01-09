@@ -5,7 +5,9 @@ if($act === 'add'){
 
     exit(ReturnSuccess('添加成功'));
 }
-
+if($act === 'edit'){
+    exit(ReturnSuccess('更新成功'));
+}
 // 删除选中
 if ($act === 'delSelect') {
     exit(ReturnSuccess('删除成功，但并没有执行SQL'));
