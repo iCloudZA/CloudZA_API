@@ -62,7 +62,7 @@ $bnums = ( $page - 1 ) * $ENUMS;
                 <?php
                 $data = Db::table('api_list');
                 if ($so != '') {
-                    $list = $data->where('name', 'like', "%{$so}%");
+                    $list = $data->where('name' , 'like' , "%{$so}%");
                 } else {
                     $list = $data->order('id ASC')->limit($bnums , $ENUMS);
                 }
@@ -117,7 +117,7 @@ $bnums = ( $page - 1 ) * $ENUMS;
 
                                 ?>
                                 <tr class="odd">
-                                    <td style="text-align: center;">
+                                    <td style="text-align: center;" class="fs-sm">
                                         <div class="custom-control custom-checkbox">
                                             <input type="checkbox" name="ids[]"
                                                    value="<?php
@@ -127,27 +127,27 @@ $bnums = ( $page - 1 ) * $ENUMS;
                                             echo 'check_' . $row[ 'id' ]; ?>"></label>
                                         </div>
                                     </td>
-                                    <td style="text-align: center;">
+                                    <td style="text-align: center;" class="fs-sm">
                                         <?php
                                         echo $row[ 'id' ]; ?>
                                     </td>
-                                    <td style="text-align: center;">
+                                    <td style="text-align: center;" class="fs-sm">
                                         <?php
                                         echo $row[ 'name' ]; ?>
                                     </td>
-                                    <td style="text-align: center;">
+                                    <td style="text-align: center;" class="fs-sm">
                                         <?php
                                         echo $row[ 'api_url' ]; ?>
                                     </td>
-                                    <td style="text-align: center;">
+                                    <td style="text-align: center;" class="fs-sm">
                                         <?php
                                         echo $row[ 'des' ]; ?>
                                     </td>
-                                    <td style="text-align: center;">
+                                    <td style="text-align: center;" class="fs-sm">
                                         <?php
                                         echo $row[ 'add_time' ]; ?>
                                     </td>
-                                    <td style="text-align: center;">
+                                    <td style="text-align: center;" class="fs-sm">
                                         <?php
                                         echo $row[ 'pv' ];
                                         ?>
@@ -247,49 +247,50 @@ $bnums = ( $page - 1 ) * $ENUMS;
 
                     <div class="block-content fs-sm">
                         <div class="row">
-                            <input type="hidden" name="fun" value="add">
-                            <input type="hidden" name="api_id" value="">
+                            <input type="hidden" name="fun" id="fun" value="add">
+                            <input type="hidden" name="api_id" id="api_id" value="">
                             <div class="col-sm-5 mb-4">
                                 <label class="form-label">API名称</label>
-                                <input type="text" class="form-control fs-sm" name="api_name"
+                                <input type="text" class="form-control fs-sm" name="api_name" id="api_name"
                                        placeholder="例如：短网址生成" value="">
                             </div>
                             <div class="col-sm-7 mb-4">
                                 <label class="form-label">API地址</label>
-                                <input type="text" class="form-control fs-sm" name="api_url"
+                                <input type="text" class="form-control fs-sm" name="api_url" id="api_url"
                                        placeholder="https://abc.com/api/dome" value="">
                             </div>
                         </div>
                         <div class="mb-4">
                             <label class="form-label" for="example-textarea-input">API介绍</label>
-                            <textarea class="form-control fs-sm " name="api_des" rows="2"
+                            <textarea class="form-control fs-sm " name="api_des" id="api_des" rows="2"
                                       placeholder="例如：将长网址进行缩短，支持百度、新浪、腾讯短网址等等..."></textarea>
                         </div>
                         <div class="mb-4">
                             <label class="form-label">关键词</label>
-                            <input type="text" class="form-control fs-sm" name="api_key"
+                            <input type="text" class="form-control fs-sm" name="api_key" id="api_key"
                                    placeholder="用英文逗号分开例如：短网址,短链接" value="">
                         </div>
                         <div class="row">
                             <div class="col-sm-6 mb-4">
                                 <label class="form-label">请求方法</label>
-                                <input type="text" class="form-control fs-sm" name="http_mode"
+                                <input type="text" class="form-control fs-sm" name="http_mode" id="http_mode"
                                        placeholder="例如：GET/POST" value="">
                             </div>
                             <div class="col-sm-6 mb-4">
                                 <label class="form-label">返回格式</label>
-                                <input type="text" class="form-control fs-sm" name="return_format"
+                                <input type="text" class="form-control fs-sm" name="return_format" id="return_format"
                                        placeholder="例如：JSON" value="">
                             </div>
                         </div>
                         <div class="mb-4">
                             <label class="form-label">请求示例</label>
-                            <input type="text" class="form-control fs-sm" name="http_case"
+                            <input type="text" class="form-control fs-sm" name="http_case" id="http_case"
                                    placeholder="https://abc.com/api/dome?url=http://baidu.com" value="">
                         </div>
                         <div class="mb-4">
                             <label class="form-label" for="example-textarea-input">返回示例</label>
-                            <textarea class="form-control fs-sm " name="return_case" rows="5" placeholder='{
+                            <textarea class="form-control fs-sm " name="return_case" id="return_case" rows="5"
+                                      placeholder='{
     "code": 1,
     "msg": "生成成功",
     "url": "http://baidu.com",
@@ -317,30 +318,30 @@ $bnums = ( $page - 1 ) * $ENUMS;
     <script>
         function add_api ()
         {
-            let a = $("input[name='fun']").val()
-            let api = [];
-            api['id'] = $("input[name='api_id']").val(); // 接口ID
-            api['name'] = $("input[name='api_name']").val(); // 接口名字
-            api['api_url'] = $("input[name='api_url']").val(); // 接口地址
-            api['des'] = $("textarea[name='api_des']").val(); // 接口介绍
-            api['api_key'] = $("input[name='api_key']").val(); // 接口关键词
-            api['http_mode'] = $("input[name='http_mode']").val(); // 接口请求方法
-            api['return_format'] = $("input[name='return_format']").val(); // 接口返回格式
-            api['http_case'] = $("input[name='http_case']").val(); // 接口请求示例
-            api['return_case'] = $("textarea[name='return_case']").val(); // 接口返回示例
-            x.ajax('ajax.php?act=control_' + a, api, (data) => {
+            x.ajax('ajax.php?act=control_' + x.getval('#fun'), {
+                id: x.getval('#api_id'),                            // 接口ID
+                name: x.getval('#api_name'),                        // 接口名字
+                api_url: x.getval('#api_url'),                      // 接口地址
+                des: x.getval('#api_des'),                          // 接口介绍
+                api_key: x.getval('#api_key'),                      // 接口关键词
+                http_mode: x.getval('#http_mode'),                  // 接口请求方法
+                return_format: x.getval('#return_format'),          // 接口返回格式
+                http_case: x.getval('#http_case'),                  // 接口请求示例
+                return_case: x.getval('#return_case')               // 接口返回示例
+            }, (data) => {
                 if (data.code === '200') {
+                    console.log('return =>', data)
                     $('#modal-top').modal('hide');
                     setTimeout(() => {
                         x.notify(data.msg, 'success')
-                        setTimeout(()=>{
+                        setTimeout(() => {
                             x.pjax('?control_list');
-                        },300)
+                        }, 300)
                     }, 300)
                 } else {
                     x.btn(data.msg)
                 }
-            }, 'POST');
+            });
         }
 
         function edit_modal (list = null)
@@ -349,7 +350,6 @@ $bnums = ( $page - 1 ) * $ENUMS;
             if (list != null) {
                 let udata = decodeURI(list);
                 let data = JSON.parse(udata.replace(/\n/g, "\\n").replace(/\r/g, "\\r"));
-                // console.log(data)
                 $("input[name='api_id']").val(data.api_id); // 接口ID
                 $("input[name='api_name']").val(data.api_name); // 接口名字
                 $("input[name='api_url']").val(data.api_url); // 接口地址
@@ -376,7 +376,6 @@ $bnums = ( $page - 1 ) * $ENUMS;
                 $("#title").html('新增API');
                 $('#modal-top').modal('show');
             }
-
 
         }
 
@@ -405,26 +404,19 @@ $bnums = ( $page - 1 ) * $ENUMS;
                 //向数组中添加元素
                 id_array.push($(this).val());
             });
-            //把复选框的值以数组形式存放
-            // let chapterstr = id_array.join(',');
-            // if (chapterstr.length <= 0) {
-            //     x.notify('请选择要删除的项目', 'warning')
-            //     return false;
-            // }
             x.del('ajax.php?act=control_delSelect', {
                 id: id_array
             }, ((data) => {
                 if (200 === data.code) {
                     x.notify(data.msg, 'success')
-                    setTimeout(()=>{
+                    setTimeout(() => {
                         x.pjax('?control_list');
-                    },300)
+                    }, 300)
                 } else {
                     x.notify(data.msg, 'warning')
                 }
             }), '你确定要删除选中的内容吗?')
         }
-
 
         function del (name, id)
         {
@@ -433,9 +425,9 @@ $bnums = ( $page - 1 ) * $ENUMS;
             }, ((data) => {
                 if (200 === data.code) {
                     x.notify(data.msg, 'success')
-                    setTimeout(()=>{
+                    setTimeout(() => {
                         x.pjax('?control_list');
-                    },300)
+                    }, 300)
                 } else {
                     x.notify(data.msg, 'warning')
                 }
