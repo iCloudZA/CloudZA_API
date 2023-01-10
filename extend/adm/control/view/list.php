@@ -36,7 +36,7 @@ $bnums = ( $page - 1 ) * $ENUMS;
             <div class="dataTables_wrapper dt-bootstrap5 no-footer">
                 <div class="row mb-2">
                     <div class="col-3">
-                        <button type="button" class="btn btn-sm btn-alt-primary me-1" onclick="edit()">添加API
+                        <button type="button" class="btn btn-sm btn-alt-primary me-1" onclick="edit_modal(null)">添加API
                         </button>
                     </div>
                     <div class="col-9">
@@ -82,12 +82,13 @@ $bnums = ( $page - 1 ) * $ENUMS;
                                                onclick="checkAll();" />
                                     </div>
                                 </th>
-                                <th class="sorting_disabled" rowspan="1" colspan="1">ID</th>
-                                <th class="sorting_disabled" rowspan="1" colspan="1">API名称</th>
-                                <th class="sorting_disabled" rowspan="1" colspan="1">API介绍</th>
-                                <th class="sorting_disabled" rowspan="1" colspan="1">添加时间</th>
+                                <th  style="text-align: center;" class="sorting_disabled" rowspan="1" colspan="1">ID</th>
+                                <th  style="text-align: center;" class="sorting_disabled" rowspan="1" colspan="1">API名称</th>
+                                <th  style="text-align: center;" class="sorting_disabled" rowspan="1" colspan="1">API地址</th>
+                                <th  style="text-align: center;" class="sorting_disabled" rowspan="1" colspan="1">API介绍</th>
+                                <th style="text-align: center;" class="sorting_disabled" rowspan="1" colspan="1">添加时间</th>
                                 <th class="sorting_disabled" rowspan="1" colspan="1">调用次数</th>
-                                <th style="width: 40px" class="sorting_disabled" rowspan="1" colspan="1">操作</th>
+                                <th style="width: 40px;text-align: center;" class="sorting_disabled" rowspan="1" colspan="1">操作</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -99,14 +100,14 @@ $bnums = ( $page - 1 ) * $ENUMS;
                                     $js = '<script>window.location="' . $url . '/?user_edit&id=' . $user_info[ 'id' ] . '"</script>';
                                     echo $js;
                                 }
-                                echo '<td colspan="7" class="dataTables_empty"><i class="si si-drawer fa-2x"></i><p class="text-muted fs-sm">暂无数据</p></td>';
+                                echo '<td colspan="8" class="dataTables_empty"><i class="si si-drawer fa-2x"></i><p class="text-muted fs-sm">暂无数据</p></td>';
                             }
                             foreach ($res as $k => $v) {
                                 $row = $res[ $k ];
 
                                 ?>
                                 <tr class="odd">
-                                    <td>
+                                    <td  style="text-align: center;">
                                         <div class="custom-control custom-checkbox">
                                             <input type="checkbox" name="ids[]"
                                                    value="<?php
@@ -116,38 +117,43 @@ $bnums = ( $page - 1 ) * $ENUMS;
                                             echo 'check_' . $row[ 'id' ]; ?>"></label>
                                         </div>
                                     </td>
-                                    <td>
+                                    <td  style="text-align: center;">
                                         <?php
                                         echo $row[ 'id' ]; ?>
                                     </td>
-                                    <td>
+                                    <td  style="text-align: center;">
                                         <?php
                                         echo $row[ 'name' ]; ?>
                                     </td>
-                                    <td>
+                                    <td  style="text-align: center;">
+                                        <?php
+                                        echo $row[ 'api_url' ]; ?>
+                                    </td>
+                                    <td  style="text-align: center;">
                                         <?php
                                         echo $row[ 'des' ]; ?>
                                     </td>
-                                    <td>
+                                    <td style="text-align: center;">
                                         <?php
                                         echo $row[ 'add_time' ]; ?>
                                     </td>
-                                    <td>
+                                    <td  style="text-align: center;">
                                         <?php
                                         echo $row[ 'pv' ];
                                         ?>
                                     </td>
-                                    <td>
+                                    <td style="text-align: center;">
                                         <button type="button" class="btn btn-sm btn-alt-primary me-1"
-                                                onclick="edit('%7B%22api_name%22:%22<?php
+                                                onclick="edit_modal('%7B%22api_id%22:%22<?php
+                                                echo $row[ 'id' ] ?>%22,%22api_name%22:%22<?php
                                                 echo $row[ 'name' ] ?>%22,%22api_url%22:%22<?php
                                                 echo $row[ 'api_url' ] ?>%22,%22api_des%22:%22<?php
                                                 echo $row[ 'des' ] ?>%22,%22api_key%22:%22<?php
-                                                echo $row[ 'key' ] ?>%22,%22api_name%22:%22<?php
-                                                echo $row[ 'http_mode' ] ?>%22,%22http_mode%22:%22<?php
-                                                echo $row[ 'return_format' ] ?>%22,%22return_format%22:%22<?php
-                                                echo $row[ 'http_case' ] ?>%22,%22http_case%22:%22<?php
-                                                echo $row[ 'return_case' ] ?>%22%7D');">
+                                                echo $row[ 'api_key' ] ?>%22,%22http_mode%22:%22<?php
+                                                echo $row[ 'http_mode' ] ?>%22,%22return_format%22:%22<?php
+                                                echo $row[ 'return_format' ] ?>%22,%22http_case%22:%22<?php
+                                                echo $row[ 'http_case' ] ?>%22,%22return_case%22:%22<?php
+                                                echo base64_encode($row[ 'return_case' ]) ?>%22%7D');">
                                             修改
                                         </button>
                                         <button type="button" class="btn btn-sm btn-alt-primary me-1">
@@ -232,6 +238,7 @@ $bnums = ( $page - 1 ) * $ENUMS;
                     <div class="block-content fs-sm">
                         <div class="row mb-4">
                             <input type="hidden" name="fun" value="add">
+                            <input type="hidden" name="api_id" value="">
                             <div class="col-sm-5">
                                 <label class="form-label">API名称</label>
                                 <input type="text" class="form-control fs-sm" name="api_name"
@@ -302,37 +309,34 @@ $bnums = ( $page - 1 ) * $ENUMS;
         {
             let a = $("input[name='fun']").val()
             let api = [];
+            api['id'] = $("input[name='api_id']").val(); // 接口ID
             api['name'] = $("input[name='api_name']").val(); // 接口名字
             api['api_url'] = $("input[name='api_url']").val(); // 接口地址
             api['des'] = $("textarea[name='api_des']").val(); // 接口介绍
-            api['key'] = $("input[name='api_key']").val(); // 接口关键词
+            api['api_key'] = $("input[name='api_key']").val(); // 接口关键词
             api['http_mode'] = $("input[name='http_mode']").val(); // 接口请求方法
             api['return_format'] = $("input[name='return_format']").val(); // 接口返回格式
             api['http_case'] = $("input[name='http_case']").val(); // 接口请求示例
             api['return_case'] = $("textarea[name='return_case']").val(); // 接口返回示例
-            console.log(api);
-            x.ajax('ajax.php?act=control_' + a, 'api', function (data) {
-                console.log('index', data)
-                if (200 == data.code) {
+            x.ajax('ajax.php?act=control_' + a, api, (data)=> {
+                if (data.code == 200) {
                     $('#modal-top').modal('hide');
                     setTimeout(() => {
                         x.notify(data.msg, 'success')
                     }, 300)
                 } else {
-                    setTimeout(() => {
-                        x.notify(data.msg, 'warning')
-                    }, 500)
-
+                    x.btn(data.msg)
                 }
-            });
+            },'POST');
         }
 
-        function edit (list = null)
+        function edit_modal (list = null)
         {
             if (list != null) {
                 let udata = decodeURI(list);
                 let data = JSON.parse(udata.replace(/\n/g, "\\n").replace(/\r/g, "\\r"));
                 console.log(data)
+                $("input[name='api_id']").val(data.api_id); // 接口ID
                 $("input[name='api_name']").val(data.api_name); // 接口名字
                 $("input[name='api_url']").val(data.api_url); // 接口地址
                 $("textarea[name='api_des']").val(data.api_des); // 接口介绍
@@ -340,11 +344,12 @@ $bnums = ( $page - 1 ) * $ENUMS;
                 $("input[name='http_mode']").val(data.http_mode); // 接口请求方法
                 $("input[name='return_format']").val(data.return_format); // 接口返回格式
                 $("input[name='http_case']").val(data.http_case); // 接口请求示例
-                $("textarea[name='return_case']").val(data.return_case); // 接口返回示例
+                $("textarea[name='return_case']").val(Base64.decode(data.return_case)); // 接口返回示例
                 $("input[name='fun']").val('edit') // 编辑
                 $("#title").html('编辑API');
                 $('#modal-top').modal('show');
             } else {
+                $("inpit[name='api_id']").val(null); // 接口ID
                 $("input[name='api_name']").val(null); // 接口名字
                 $("input[name='api_url']").val(null); // 接口地址
                 $("textarea[name='api_des']").val(null); // 接口介绍
