@@ -82,12 +82,12 @@ $bnums = ( $page - 1 ) * $ENUMS;
                                                onclick="checkAll();" />
                                     </div>
                                 </th>
-                                <th  style="text-align: center;" class="sorting_disabled" rowspan="1" colspan="1">ID</th>
-                                <th  style="text-align: center;" class="sorting_disabled" rowspan="1" colspan="1">API名称</th>
-                                <th  style="text-align: center;" class="sorting_disabled" rowspan="1" colspan="1">API地址</th>
-                                <th  style="text-align: center;" class="sorting_disabled" rowspan="1" colspan="1">API介绍</th>
+                                <th style="text-align: center;" class="sorting_disabled" rowspan="1" colspan="1">ID</th>
+                                <th style="text-align: center;" class="sorting_disabled" rowspan="1" colspan="1">API名称</th>
+                                <th style="text-align: center;" class="sorting_disabled" rowspan="1" colspan="1">API地址</th>
+                                <th style="text-align: center;" class="sorting_disabled" rowspan="1" colspan="1">API介绍</th>
                                 <th style="text-align: center;" class="sorting_disabled" rowspan="1" colspan="1">添加时间</th>
-                                <th class="sorting_disabled" rowspan="1" colspan="1">调用次数</th>
+                                <th style="text-align: center;" class="sorting_disabled" rowspan="1" colspan="1">pv</th>
                                 <th style="width: 40px;text-align: center;" class="sorting_disabled" rowspan="1" colspan="1">操作</th>
                             </tr>
                             </thead>
