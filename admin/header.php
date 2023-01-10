@@ -1,7 +1,7 @@
 <?php
 
 require_once 'globals.php';
-$so = isset($_POST['so']) ? purge($_POST['so']) : '';
+$so = isset($_POST[ 'so' ]) ? purge($_POST[ 'so' ]) : '';
 ?>
 <!doctype html>
 <html lang="zh-cn">
@@ -15,9 +15,8 @@ $so = isset($_POST['so']) ? purge($_POST['so']) : '';
     <link rel="stylesheet"
           href="http://tool.qqshabi.cn/static/js/plugins/datatables-bs5/css/dataTables.bootstrap5.min.css">
     <link href="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-0-M/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
-    <!--<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>-->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/js-base64@3.7.2/base64.min.js"></script>
+    <script src="../assets/js/lib/base64.js"></script>
 
 </head>
 <body>
@@ -77,29 +76,37 @@ $so = isset($_POST['so']) ? purge($_POST['so']) : '';
                             </a>
                         </li>
                         <li class="nav-main-heading">导航</li>
-                        <?php foreach ($menu as $val) { ?>
+                        <?php
+                        foreach ($menu as $val) { ?>
                             <li class="nav-main-item">
                                 <a aria-expanded="false" aria-haspopup="true"
                                    class="nav-main-link nav-main-link-submenu" data-toggle="submenu" href="#">
-                                    <i class="nav-main-link-icon <?php echo $val['icons']; ?>"></i>
+                                    <i class="nav-main-link-icon <?php
+                                    echo $val[ 'icons' ]; ?>"></i>
                                     <span class="nav-main-link-name">
-											<?php echo $val['name']; ?>
+											<?php
+                                            echo $val[ 'name' ]; ?>
 										</span>
                                 </a>
                                 <ul class="nav-main-submenu">
-                                    <?php foreach ($val['side-nav-second-level'] as $v) {
-                                        if ($v['hidden'] == 'true') continue; ?>
+                                    <?php
+                                    foreach ($val[ 'side-nav-second-level' ] as $v) {
+                                        if ($v[ 'hidden' ] == 'true') continue; ?>
                                         <li class="nav-main-item">
-                                            <a class="nav-main-link" data-pjax href="./?<?php echo $v['file']; ?>">
+                                            <a class="nav-main-link" data-pjax href="./?<?php
+                                            echo $v[ 'file' ]; ?>">
 												<span class="nav-main-link-name">
-													<?php echo $v['name']; ?>
+													<?php
+                                                    echo $v[ 'name' ]; ?>
 												</span>
                                             </a>
                                         </li>
-                                    <?php } ?>
+                                    <?php
+                                    } ?>
                                 </ul>
                             </li>
-                        <?php } ?>
+                        <?php
+                        } ?>
 
                     </ul>
                 </div>
