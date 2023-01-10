@@ -832,4 +832,43 @@ class Db
         }
         return $link;
     }
+    //原生sql操作
+    public static function query($sql){
+        $obj = self::getInstance();
+        $link = $obj->objdb;
+        $str_arr = explode(' ', $sql);
+        $data = ['INSERT'=>'query_add','DELETE'=>'query_del','UPDATE'=>'query_update','SELECT'=>['count('=>'query_count','max('=>'query_max','min('=>'query_min','sum('=>'query_sum','avg('=>'query_avg']];
+        $func_name = '';
+        $a = strtoupper($str_arr[0]);
+        $b = strtolower($str_arr[1]);
+        foreach($data as $key=>$val){
+            if($key == $a){
+                if(is_string($val)){//属于增删改
+                    $func_name = $val;break;
+                }else if(is_array($val)){//属于查
+                    foreach($val as $k=>$v){
+                        if(strpos($b,$k) === 0){
+                            $func_name = $v;break;
+                        }else{
+                            $func_name = 'query_select';
+                        }
+                    }
+                }
+            }
+        }
+        if($func_name === ''){//sql不合法
+            die("sql: ".'不合法');
+        }else{
+            return $obj->$func_name($link,$sql);
+        }
+    }
+    //数据库安装
+    public static function establish($sql){
+        $link = self::getInstance()->objdb;
+        return mysqli_query($link,$sql);
+    }
+    //关闭连接
+    public function close_db($link){
+        mysqli_close($link);
+    }
 }
