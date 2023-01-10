@@ -34,13 +34,13 @@ CREATE TABLE `api_list`
     `name`          text comment '名称',
     `api_url`       text comment '接口地址',
     `des`           text comment '描述',
-    `key`           text comment '关键词',
+    `api_key`           text comment '关键词',
     `http_mode`     text comment '请求方法',
     `http_case`     text comment '请求示例',
     `return_format` text comment '返回格式',
     `return_case`   text comment '返回示例',
-    `demo_code`     text     not null comment '代码演示',
-    `pv`            int(10)  not null comment '浏览量',
+    `demo_code`     text comment '代码演示',
+    `pv`            int(10) default '0' comment '浏览量',
     `add_time`      datetime not null comment '添加时间'
 ) ENGINE = INNODB
   DEFAULT CHARSET = utf8;
