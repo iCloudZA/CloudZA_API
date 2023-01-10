@@ -62,7 +62,7 @@ $bnums = ( $page - 1 ) * $ENUMS;
                 <?php
                 $data = Db::table('api_list');
                 if ($so != '') {
-                    $list = $data->where('name' , 'like' , "%$so%")->whereOr('key' , 'like' , "%$so%");
+                    $list = $data->where('name', 'like', "%{$so}%");
                 } else {
                     $list = $data->order('id ASC')->limit($bnums , $ENUMS);
                 }
@@ -71,24 +71,34 @@ $bnums = ( $page - 1 ) * $ENUMS;
 
                 <div class="row">
                     <div class="col-sm-12 table-responsive">
-                        <table class="table table-bordered table-striped table-vcenter js-dataTable-responsive dataTable no-footer dtr-inline"
+                        <table class="table table-bordered table-striped table-vcenter js-dataTable-responsive  no-footer dtr-inline"
                                id="task-logs-list" data-type="sport"
                                aria-describedby="task-logs-list_info">
                             <thead>
                             <tr>
-                                <th style="width: 10px">
+                                <th style="width: 10px;text-align: center;">
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" class="custom-control-input" id="all"
                                                onclick="checkAll();" />
                                     </div>
                                 </th>
                                 <th style="text-align: center;" class="sorting_disabled" rowspan="1" colspan="1">ID</th>
-                                <th style="text-align: center;" class="sorting_disabled" rowspan="1" colspan="1">API名称</th>
-                                <th style="text-align: center;" class="sorting_disabled" rowspan="1" colspan="1">API地址</th>
-                                <th style="text-align: center;" class="sorting_disabled" rowspan="1" colspan="1">API介绍</th>
-                                <th style="text-align: center;" class="sorting_disabled" rowspan="1" colspan="1">添加时间</th>
+                                <th style="text-align: center;" class="sorting_disabled" rowspan="1" colspan="1">
+                                    API名称
+                                </th>
+                                <th style="text-align: center;" class="sorting_disabled" rowspan="1" colspan="1">
+                                    API地址
+                                </th>
+                                <th style="text-align: center;" class="sorting_disabled" rowspan="1" colspan="1">
+                                    API介绍
+                                </th>
+                                <th style="text-align: center;" class="sorting_disabled" rowspan="1" colspan="1">
+                                    添加时间
+                                </th>
                                 <th style="text-align: center;" class="sorting_disabled" rowspan="1" colspan="1">pv</th>
-                                <th style="width: 40px;text-align: center;" class="sorting_disabled" rowspan="1" colspan="1">操作</th>
+                                <th style="width: 40px;text-align: center;" class="sorting_disabled" rowspan="1"
+                                    colspan="1">操作
+                                </th>
                             </tr>
                             </thead>
                             <tbody>
@@ -107,7 +117,7 @@ $bnums = ( $page - 1 ) * $ENUMS;
 
                                 ?>
                                 <tr class="odd">
-                                    <td  style="text-align: center;">
+                                    <td style="text-align: center;">
                                         <div class="custom-control custom-checkbox">
                                             <input type="checkbox" name="ids[]"
                                                    value="<?php
@@ -117,19 +127,19 @@ $bnums = ( $page - 1 ) * $ENUMS;
                                             echo 'check_' . $row[ 'id' ]; ?>"></label>
                                         </div>
                                     </td>
-                                    <td  style="text-align: center;">
+                                    <td style="text-align: center;">
                                         <?php
                                         echo $row[ 'id' ]; ?>
                                     </td>
-                                    <td  style="text-align: center;">
+                                    <td style="text-align: center;">
                                         <?php
                                         echo $row[ 'name' ]; ?>
                                     </td>
-                                    <td  style="text-align: center;">
+                                    <td style="text-align: center;">
                                         <?php
                                         echo $row[ 'api_url' ]; ?>
                                     </td>
-                                    <td  style="text-align: center;">
+                                    <td style="text-align: center;">
                                         <?php
                                         echo $row[ 'des' ]; ?>
                                     </td>
@@ -137,7 +147,7 @@ $bnums = ( $page - 1 ) * $ENUMS;
                                         <?php
                                         echo $row[ 'add_time' ]; ?>
                                     </td>
-                                    <td  style="text-align: center;">
+                                    <td style="text-align: center;">
                                         <?php
                                         echo $row[ 'pv' ];
                                         ?>
@@ -236,15 +246,15 @@ $bnums = ( $page - 1 ) * $ENUMS;
                     </div>
 
                     <div class="block-content fs-sm">
-                        <div class="row mb-4">
+                        <div class="row">
                             <input type="hidden" name="fun" value="add">
                             <input type="hidden" name="api_id" value="">
-                            <div class="col-sm-5">
+                            <div class="col-sm-5 mb-4">
                                 <label class="form-label">API名称</label>
                                 <input type="text" class="form-control fs-sm" name="api_name"
                                        placeholder="例如：短网址生成" value="">
                             </div>
-                            <div class="col-sm-7">
+                            <div class="col-sm-7 mb-4">
                                 <label class="form-label">API地址</label>
                                 <input type="text" class="form-control fs-sm" name="api_url"
                                        placeholder="https://abc.com/api/dome" value="">
@@ -260,13 +270,13 @@ $bnums = ( $page - 1 ) * $ENUMS;
                             <input type="text" class="form-control fs-sm" name="api_key"
                                    placeholder="用英文逗号分开例如：短网址,短链接" value="">
                         </div>
-                        <div class="row mb-4">
-                            <div class="col-sm-6">
+                        <div class="row">
+                            <div class="col-sm-6 mb-4">
                                 <label class="form-label">请求方法</label>
                                 <input type="text" class="form-control fs-sm" name="http_mode"
                                        placeholder="例如：GET/POST" value="">
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-6 mb-4">
                                 <label class="form-label">返回格式</label>
                                 <input type="text" class="form-control fs-sm" name="return_format"
                                        placeholder="例如：JSON" value="">
@@ -318,24 +328,28 @@ $bnums = ( $page - 1 ) * $ENUMS;
             api['return_format'] = $("input[name='return_format']").val(); // 接口返回格式
             api['http_case'] = $("input[name='http_case']").val(); // 接口请求示例
             api['return_case'] = $("textarea[name='return_case']").val(); // 接口返回示例
-            x.ajax('ajax.php?act=control_' + a, api, (data)=> {
-                if (data.code == 200) {
+            x.ajax('ajax.php?act=control_' + a, api, (data) => {
+                if (data.code === '200') {
                     $('#modal-top').modal('hide');
                     setTimeout(() => {
                         x.notify(data.msg, 'success')
+                        setTimeout(()=>{
+                            x.pjax('?control_list');
+                        },300)
                     }, 300)
                 } else {
                     x.btn(data.msg)
                 }
-            },'POST');
+            }, 'POST');
         }
 
         function edit_modal (list = null)
         {
+
             if (list != null) {
                 let udata = decodeURI(list);
                 let data = JSON.parse(udata.replace(/\n/g, "\\n").replace(/\r/g, "\\r"));
-                console.log(data)
+                // console.log(data)
                 $("input[name='api_id']").val(data.api_id); // 接口ID
                 $("input[name='api_name']").val(data.api_name); // 接口名字
                 $("input[name='api_url']").val(data.api_url); // 接口地址
@@ -362,7 +376,9 @@ $bnums = ( $page - 1 ) * $ENUMS;
                 $("#title").html('新增API');
                 $('#modal-top').modal('show');
             }
-        };
+
+
+        }
 
         function checkAll ()
         {
@@ -390,26 +406,26 @@ $bnums = ( $page - 1 ) * $ENUMS;
                 id_array.push($(this).val());
             });
             //把复选框的值以数组形式存放
-            let chapterstr = id_array.join(',');
-            if (chapterstr.length <= 0) {
-                x.notify('请选择要删除的项目', 'warning')
-                return false;
-            }
+            // let chapterstr = id_array.join(',');
+            // if (chapterstr.length <= 0) {
+            //     x.notify('请选择要删除的项目', 'warning')
+            //     return false;
+            // }
             x.del('ajax.php?act=control_delSelect', {
-                chapterstr: chapterstr
+                id: id_array
             }, ((data) => {
                 if (200 === data.code) {
                     x.notify(data.msg, 'success')
+                    setTimeout(()=>{
+                        x.pjax('?control_list');
+                    },300)
                 } else {
                     x.notify(data.msg, 'warning')
                 }
             }), '你确定要删除选中的内容吗?')
         }
 
-        /**
-         * @param name 名称
-         * @param id ID
-         */
+
         function del (name, id)
         {
             x.del('ajax.php?act=control_delapi', {
@@ -417,6 +433,9 @@ $bnums = ( $page - 1 ) * $ENUMS;
             }, ((data) => {
                 if (200 === data.code) {
                     x.notify(data.msg, 'success')
+                    setTimeout(()=>{
+                        x.pjax('?control_list');
+                    },300)
                 } else {
                     x.notify(data.msg, 'warning')
                 }
