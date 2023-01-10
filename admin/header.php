@@ -17,6 +17,7 @@ $so = isset($_POST['so']) ? purge($_POST['so']) : '';
     <link href="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-0-M/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
     <!--<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>-->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-base64@3.7.2/base64.min.js"></script>
 
 </head>
 <body>
