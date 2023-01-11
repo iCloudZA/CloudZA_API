@@ -43,29 +43,7 @@ $bnums = ( $page - 1 ) * $ENUMS;
                         </button>
                     </div>
                 </div>
-                <div id="page-header">
-                    <div id="page-header-search" class="overlay-header bg-body-extra-light">
-                        <div class="content-header">
-                            <form class="w-100" action="" method="post">
-                                <div class="input-group">
-                                    <button type="button" class="btn btn-secondary btn-alt-info" data-toggle="layout"
-                                            data-action="header_search_off">
-                                        <i class="fa fa-fw fa-times"></i>
-                                    </button>
-                                    <input type="search" class="form-control form-control-alt"
-                                           placeholder="输入关键词进行搜索"
-                                           name="so"
-                                           value='<?php
-                                           echo $so; ?>'
-                                           aria-controls="task-logs-list">
-                                    <button type="submit" class="btn btn-alt-info">
-                                        <i class="fa fa-search"></i>
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+
 
                 <?php
                 $data = Db::table('api_list');
