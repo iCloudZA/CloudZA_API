@@ -34,28 +34,30 @@ $bnums = ( $page - 1 ) * $ENUMS;
         </div>
         <div class="block-content block-content-full">
             <div class="dataTables_wrapper dt-bootstrap5 no-footer">
-                <div class="row mb-2">
-                    <div class="col-3">
+                <div class="row mb-4">
+                    <div class="col-12">
                         <button type="button" class="btn btn-sm btn-alt-primary me-1" onclick="edit_modal(null)">添加API
+                        </button>
+                        <button type="submit" class="btn btn-sm btn-alt-info">
+                            <i class="fa fa-search"></i>
                         </button>
                     </div>
                     <div class="col-9">
-                        <div class="dataTables_filter">
-                            <form action="" method="post">
-                                <div class="input-group-sm">
-                                    <input type="search" class="form-control form-control-alt"
-                                           placeholder="输入关键词进行搜索"
-                                           name="so"
-                                           value='<?php
-                                           echo $so; ?>'
-                                           aria-controls="task-logs-list">
-                                    <button type="submit" class="btn btn-alt-info">
-                                        <i class="fa fa-search"></i>
-                                    </button>
-                                </div>
-                            </form>
-
-                        </div>
+<!--                        <div class="dataTables_filter">-->
+<!--                            <form action="" method="post">-->
+<!--                                <div class="input-group-sm">-->
+<!--                                    <input type="search" class="form-control form-control-alt"-->
+<!--                                           placeholder="输入关键词进行搜索"-->
+<!--                                           name="so"-->
+<!--                                           value='--><?php
+//                                           echo $so; ?><!--'-->
+<!--                                           aria-controls="task-logs-list">-->
+<!--                                    <button type="submit" class="btn btn-alt-info">-->
+<!--                                        <i class="fa fa-search"></i>-->
+<!--                                    </button>-->
+<!--                                </div>-->
+<!--                            </form>-->
+<!--                        </div>-->
                     </div>
                 </div>
 
