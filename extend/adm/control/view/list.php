@@ -317,7 +317,7 @@ $bnums = ( $page - 1 ) * $ENUMS;
                 http_case: x.getval('#http_case'),                  // 接口请求示例
                 return_case: x.getval('#return_case')               // 接口返回示例
             }, (data) => {
-                if (data.code === '200') {
+                if (data.code === 200) {
                     console.log('return =>', data)
                     $('#modal-top').modal('hide');
                     setTimeout(() => {

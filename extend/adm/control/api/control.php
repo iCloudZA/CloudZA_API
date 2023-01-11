@@ -1,6 +1,6 @@
 <?php
 if ( !isset($islogin)) header("Location: /");//非法访问
-// 添加
+// 添加API
 if ($act === 'add') {
     $data[ 'name' ] = isset($_POST[ 'name' ]) && !empty($_POST[ 'name' ]) ? purge($_POST[ 'name' ]) : '';                                       // 接口名字
     $data[ 'api_url' ] = isset($_POST[ 'api_url' ]) && !empty($_POST[ 'api_url' ]) ? purge($_POST[ 'api_url' ]) : '';                           // 接口地址
@@ -11,9 +11,9 @@ if ($act === 'add') {
     $data[ 'http_case' ] = isset($_POST[ 'http_case' ]) && !empty($_POST[ 'http_case' ]) ? purge($_POST[ 'http_case' ]) : '';                   // 接口请求示例
     $data[ 'return_case' ] = isset($_POST[ 'return_case' ]) && !empty($_POST[ 'return_case' ]) ? $_POST[ 'return_case' ] : '';
     $data[ 'add_time' ] = date("Y-m-d H:i:s"); // 添加时间
-    if(!f($data))exit(ReturnError('数据不完整'));
+    if ( !f($data)) exit(ReturnError('数据不完整'));
     if (Db::table('api_list')->add($data)) {
-        exit(return_msg('200' , '添加成功' , (array) $data));
+        exit(ReturnSuccess('添加成功'));
     } else {
         exit(ReturnError('添加失败'));
     }
@@ -21,6 +21,7 @@ if ($act === 'add') {
 
 //    exit(ReturnSuccess('添加成功'));
 }
+//修改API
 if ($act === 'edit') {
     $id = isset($_POST[ 'id' ]) && !empty($_POST[ 'id' ]) ? purge($_POST[ 'id' ]) : '';                                                         //id
     $data[ 'name' ] = isset($_POST[ 'name' ]) && !empty($_POST[ 'name' ]) ? purge($_POST[ 'name' ]) : '';                                       // 接口名字
@@ -31,23 +32,31 @@ if ($act === 'edit') {
     $data[ 'return_format' ] = isset($_POST[ 'return_format' ]) && !empty($_POST[ 'return_format' ]) ? purge($_POST[ 'return_format' ]) : '';   // 接口返回格式
     $data[ 'http_case' ] = isset($_POST[ 'http_case' ]) && !empty($_POST[ 'http_case' ]) ? purge($_POST[ 'http_case' ]) : '';                   // 接口请求示例
     $data[ 'return_case' ] = isset($_POST[ 'return_case' ]) && !empty($_POST[ 'return_case' ]) ? $_POST[ 'return_case' ] : '';
-    if(!f($data))exit(ReturnError('数据不完整'));
-    if (Db::table('api_list')->where('id' , $id)->update($data)) {
-        exit(return_msg('200' , '更新成功' , (array)$data));
+    if ( !f($data)) exit(ReturnError('数据不完整'));
+    $table = Db::table('api_list');
+    $origData = $table->where('id' , $id)->select();
+    // 对比原始数据
+    if (array_diff($origData[ 0 ] , (array)$data) && array_diff((array)$data , $origData[ 0 ])) {
+        if ($table->where('id' , $id)->update($data)) {
+            exit(ReturnSuccess('更新成功'));
+        } else {
+            exit(ReturnError('更新失败'));
+        }
     } else {
-        exit(ReturnError('更新失败'));
+        exit(ReturnError('你没有修改任何内容！'));
     }
 }
+
 // 删除选中
 if ($act === 'delSelect') {
     $id = $_POST[ 'id' ] ?? '';
     if ($id) {
         $ids = '';
-        foreach ( $id as $value) {
+        foreach ($id as $value) {
             $ids .= intval($value) . ",";
         }
-        $ids = rtrim($ids, ",");
-        $res = Db::table('api_list')->where('id','in','('.$ids.')')->del();
+        $ids = rtrim($ids , ",");
+        $res = Db::table('api_list')->where('id' , 'in' , '(' . $ids . ')')->del();
         if ($res) {
             exit(ReturnSuccess('删除成功'));
         } else {
@@ -67,6 +76,11 @@ if ($act === 'delapi') {
     }
 
 }
+/**
+ * 判断数组是否完整
+ * @param $arr
+ * @return bool
+ */
 function f ($arr): bool
 {
     $len1 = count($arr);
