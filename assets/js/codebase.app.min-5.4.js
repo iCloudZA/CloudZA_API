@@ -10128,15 +10128,15 @@
               },
               header_search_on: () => {
                 t._lHeaderSearch.classList.add("show"),
-                  t._lHeaderSearchInput.focus(),
+                  // t._lHeaderSearchInput.focus(),
                   document.addEventListener("keydown", (e) => {
                     ("Esc" !== e.key && "Escape" !== e.key) ||
                       t._uiApiLayout("header_search_off");
                   });
               },
               header_search_off: () => {
-                t._lHeaderSearch.classList.remove("show"),
-                  t._lHeaderSearchInput.blur();
+                t._lHeaderSearch.classList.remove("show")
+                  // t._lHeaderSearchInput.blur();
               },
               header_loader_on: () => {
                 t._lHeaderLoader.classList.add("show");

@@ -25,7 +25,6 @@ $bnums = ( $page - 1 ) * $ENUMS;
         </div>
     </div>
 </div>
-
 <div class="col-xl-12">
     <div class="block block-rounded">
         <div class="block-header">
@@ -38,33 +37,40 @@ $bnums = ( $page - 1 ) * $ENUMS;
                     <div class="col-12">
                         <button type="button" class="btn btn-sm btn-alt-primary me-1" onclick="edit_modal(null)">添加API
                         </button>
-                        <button type="submit" class="btn btn-sm btn-alt-info">
-                            <i class="fa fa-search"></i>
+                        <button type="button" class="btn btn-sm btn-alt-secondary btn-alt-info" data-toggle="layout"
+                                data-action="header_search_on">
+                            <i class="fa fa-fw fa-search"></i>
                         </button>
                     </div>
-                    <div class="col-9">
-<!--                        <div class="dataTables_filter">-->
-<!--                            <form action="" method="post">-->
-<!--                                <div class="input-group-sm">-->
-<!--                                    <input type="search" class="form-control form-control-alt"-->
-<!--                                           placeholder="输入关键词进行搜索"-->
-<!--                                           name="so"-->
-<!--                                           value='--><?php
-//                                           echo $so; ?><!--'-->
-<!--                                           aria-controls="task-logs-list">-->
-<!--                                    <button type="submit" class="btn btn-alt-info">-->
-<!--                                        <i class="fa fa-search"></i>-->
-<!--                                    </button>-->
-<!--                                </div>-->
-<!--                            </form>-->
-<!--                        </div>-->
+                </div>
+                <div id="page-header">
+                    <div id="page-header-search" class="overlay-header bg-body-extra-light">
+                        <div class="content-header">
+                            <form class="w-100" action="" method="post">
+                                <div class="input-group">
+                                    <button type="button" class="btn btn-secondary btn-alt-info" data-toggle="layout"
+                                            data-action="header_search_off">
+                                        <i class="fa fa-fw fa-times"></i>
+                                    </button>
+                                    <input type="search" class="form-control form-control-alt"
+                                           placeholder="输入关键词进行搜索"
+                                           name="so"
+                                           value='<?php
+                                           echo $so; ?>'
+                                           aria-controls="task-logs-list">
+                                    <button type="submit" class="btn btn-alt-info">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
 
                 <?php
                 $data = Db::table('api_list');
                 if ($so != '') {
-                    $list = $data->where('name' , 'like' , "%{$so}%");
+                    $list = $data->where('name' , 'like' , "%{$so}%")->whereOr('des' , 'like' , "%{$so}%");
                 } else {
                     $list = $data->order('id ASC')->limit($bnums , $ENUMS);
                 }
@@ -112,7 +118,7 @@ $bnums = ( $page - 1 ) * $ENUMS;
                                     $js = '<script>window.location="' . $url . '/?user_edit&id=' . $user_info[ 'id' ] . '"</script>';
                                     echo $js;
                                 }
-                                echo '<td colspan="8" class="dataTables_empty"><i class="si si-drawer fa-2x"></i><p class="text-muted fs-sm">暂无数据</p></td>';
+                                echo '<td style="text-align: center;" colspan="8" class="dataTables_empty"><i class="si si-drawer fa-2x"></i><p class="text-muted fs-sm">暂无数据</p></td>';
                             }
                             foreach ($res as $k => $v) {
                                 $row = $res[ $k ];
@@ -229,6 +235,8 @@ $bnums = ( $page - 1 ) * $ENUMS;
                 </div>
             </div>
         </div>
+
+
     </div>
 </div>
 <!--模态框-->
