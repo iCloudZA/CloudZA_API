@@ -1,14 +1,13 @@
 <?php
     if ( !isset($islogin)) header("Location: /"); //非法访问拦截
-    $WEB = Db::table('webset')->select();
-
+    $WEB = Db::table('webset')->find();
 ?>
 
 <div class="block block-rounded bg-primary-light mb-4">
     <div class="block-content bg-white-5">
         <div class="py-4 text-center">
-            <h1 class="h2 fw-bold text-white mb-2"><?php echo $WEB[ 0 ][ 'title' ] ?></h1>
-            <h2 class="h5 fw-medium text-white-75">一款开源的API系统</h2>
+            <h1 class="h2 fw-bold text-white mb-2"><?php echo $WEB[ 'web_title' ] ?></h1>
+            <h2 class="h5 fw-medium text-white-75"><?php echo $WEB['web_des'] ?></h2>
         </div>
     </div>
 </div>
