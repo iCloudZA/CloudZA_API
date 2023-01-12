@@ -2,18 +2,17 @@
 DROP TABLE IF EXISTS `webset`;
 CREATE TABLE `webset`
 (
-    `title`     text        not null comment '网站标题',
-    `des`       text        not null comment '网站描述',
-    `key`       text        not null comment '网站关键词',
-    `qq`        varchar(12) not null comment 'QQ号',
-    `beian`     text        not null comment '网站备案号',
-    `ban`       text        not null comment '网站底部版权',
-    `page_nums` int         not null comment '每页条数'
+    `web_title`     text        not null comment '网站标题',
+    `web_des`       text        not null comment '网站描述',
+    `web_key`       text        not null comment '网站关键词',
+    `web_qq`        varchar(12) not null comment 'QQ号',
+    `web_beian`     text        not null comment '网站备案号',
+    `web_ban`       text        not null comment '网站底部版权',
+    `web_page_nums` int default '10' comment '每页条数'
 ) ENGINE = INNODB
   DEFAULT CHARSET = utf8;
-INSERT INTO public_api.webset (title, des, `key`, beian, ban, page_nums)
-VALUES ('云之安API', '云之安API,提供API数据接口调用服务平台 - 我们致力于为用户提供稳定、快速的免费 API数据接口服务。',
-        'PI,聚合数据,API数据接口,免费API数据调用,', '京ICP备88888888号-8', 'CloudZA', '10');
+values ('CloudZA-API', '一款开源的API系统', 'API,云之安,API内容管理,免费API', '2922619853', '京ICP备8888888号',
+        'CloudZA', 10);
 
 -- 管理员账号密码设置
 DROP TABLE IF EXISTS `admin`;
