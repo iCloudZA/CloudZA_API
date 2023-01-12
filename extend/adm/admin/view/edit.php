@@ -10,10 +10,13 @@
 ?>
 
 <div class="content">
-
-
-    <h2 class="content-heading">修改密码</h2>
-
+    <div class="col-12">
+        <div class="block block-rounded">
+            <div class="block-header block-header-default">
+                <h3 class="block-title">修改密码</h3>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-12">
             <div class="card">
