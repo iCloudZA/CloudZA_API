@@ -34,9 +34,9 @@ if ($act === 'edit') {
     $data[ 'return_case' ] = isset($_POST[ 'return_case' ]) && !empty($_POST[ 'return_case' ]) ? $_POST[ 'return_case' ] : '';
     if ( !f($data)) exit(ReturnError('数据不完整'));
     $table = Db::table('api_list');
-    $origData = $table->where('id' , $id)->select();
+    $origData = $table->where('id' , $id)->find();
     // 对比原始数据
-    if (array_diff($origData[ 0 ] , (array)$data) && array_diff((array)$data , $origData[ 0 ])) {
+    if (array_diff($origData, (array)$data) && array_diff((array)$data , $origData)) {
         if ($table->where('id' , $id)->update($data)) {
             exit(ReturnSuccess('更新成功'));
         } else {
