@@ -2,16 +2,17 @@
 DROP TABLE IF EXISTS `webset`;
 CREATE TABLE `webset`
 (
-    `title`     varchar(255)  not null comment '网站标题',
-    `des`       varchar(255)  not null comment '网站描述',
-    `key`       varchar(255)  not null comment '网站关键词',
-    `beian`     varchar(255)  not null comment '网站备案号',
-    `ban`       varchar(1024) not null comment '网站底部版权',
-    `page_nums` varchar(255)  not null comment '每页条数'
+    `title`     text        not null comment '网站标题',
+    `des`       text        not null comment '网站描述',
+    `key`       text        not null comment '网站关键词',
+    `qq`        varchar(12) not null comment 'QQ号',
+    `beian`     text        not null comment '网站备案号',
+    `ban`       text        not null comment '网站底部版权',
+    `page_nums` int         not null comment '每页条数'
 ) ENGINE = INNODB
   DEFAULT CHARSET = utf8;
 INSERT INTO public_api.webset (title, des, `key`, beian, ban, page_nums)
-VALUES ('云之安API', '云之安API,提供API数据接口调用服务平台 - 我们致力于为用户提供稳定、快速的免费API数据接口服务。',
+VALUES ('云之安API', '云之安API,提供API数据接口调用服务平台 - 我们致力于为用户提供稳定、快速的免费 API数据接口服务。',
         'PI,聚合数据,API数据接口,免费API数据调用,', '京ICP备88888888号-8', 'CloudZA', '10');
 
 -- 管理员账号密码设置
@@ -34,12 +35,13 @@ CREATE TABLE `api_list`
     `name`          text comment '名称',
     `api_url`       text comment '接口地址',
     `des`           text comment '描述',
-    `api_key`           text comment '关键词',
+    `api_key`       text comment '关键词',
     `http_mode`     text comment '请求方法',
     `http_case`     text comment '请求示例',
     `return_format` text comment '返回格式',
     `return_case`   text comment '返回示例',
-    `demo_code`     text comment '代码演示',
+    `sing`          varchar(12) comment 'API标识',
+    `state`         int comment 'API状态', -- 正常/维护
     `pv`            int(10) default '0' comment '浏览量',
     `add_time`      datetime not null comment '添加时间'
 ) ENGINE = INNODB
