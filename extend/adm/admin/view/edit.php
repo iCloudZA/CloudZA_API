@@ -4,7 +4,7 @@
     Hidden:false
     icons:mdi mdi-account-edit
     Name:修改密码
-    Url:web_edit
+    Url:admin_edit
     */
     if ( !isset($islogin)) header("Location: /");//非法访问拦截
 ?>
@@ -70,7 +70,7 @@
         $.ajax({
             cache: false,
             type: "POST",//请求的方式
-            url: "ajax.php?act=web_pswd",//请求的文件名
+            url: "ajax.php?act=admin_pwd",//请求的文件名
             data: {user: user, pwd: pwd, okpwd: okpwd},
             dataType: 'json',
             success: function (data) {

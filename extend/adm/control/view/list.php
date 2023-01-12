@@ -334,7 +334,6 @@ $bnums = ( $page - 1 ) * $ENUMS;
 
         function edit_modal (list = null)
         {
-
             if (list != null) {
                 let udata = decodeURI(list);
                 let data = JSON.parse(udata.replace(/\n/g, "\\n").replace(/\r/g, "\\r"));

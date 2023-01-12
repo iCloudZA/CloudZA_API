@@ -49,7 +49,7 @@
         foreach ($nav_arr as $val) {
             $titlename = array_merge($titlename , [$val[ 'file' ] => $val[ 'name' ]]);
         }
-        if ($value == 'web') {//continue;
+        if ($value == 'admin') {//continue;
             $web = $nav_arr;
         } else {
             if ( !file_exists(FCPATH . ADM_EXTEND_MULU . $value . "/menu.php")) {//continue;

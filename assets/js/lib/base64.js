@@ -86,7 +86,7 @@
         return pad ? asc.slice(0, pad - 3) + "===".substring(pad) : asc;
     };
     /**
-     * does what `window.btoa` of web browsers do.
+     * does what `window.btoa` of admin browsers do.
      * @param {String} bin binary string
      * @returns {string} Base64-encoded string
      */
@@ -215,7 +215,7 @@
         return bin;
     };
     /**
-     * does what `window.atob` of web browsers do.
+     * does what `window.atob` of admin browsers do.
      * @param {String} asc Base64-encoded string
      * @returns {string} binary string
      */

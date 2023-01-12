@@ -14,7 +14,7 @@
         }
     }
 
-    if ($act === 'pswd'){
+    if ($act === 'pwd'){
         $data['user'] = isset($_POST[ 'user' ]) ? purge($_POST[ 'user' ]) : '';
         $data['password'] = isset($_POST[ 'pwd' ]) ? purge($_POST[ 'pwd' ]) : '';
         $okpwd = isset($_POST[ 'okpwd' ]) ? purge($_POST[ 'okpwd' ]) : '';

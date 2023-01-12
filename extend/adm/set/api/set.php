@@ -5,7 +5,7 @@ Name:系统配置API
 */
 if (!isset($islogin)) header("Location: /"); //非法访问
 
-if ($act == 'web') {
+if ($act == 'admin') {
     $data = array(
         'web_title' => $_POST['web_title'],
         'web_des' => $_POST['web_des'],
