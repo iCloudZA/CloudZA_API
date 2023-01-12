@@ -4,7 +4,7 @@
 
 ?>
 
-<div class="block block-rounded bg-gd-dusk mb-4">
+<div class="block block-rounded bg-primary-light mb-4">
     <div class="block-content bg-white-5">
         <div class="py-4 text-center">
             <h1 class="h2 fw-bold text-white mb-2"><?php echo $WEB[ 0 ][ 'title' ] ?></h1>
