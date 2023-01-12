@@ -324,7 +324,7 @@ $bnums = ( $page - 1 ) * $ENUMS;
                         x.notify(data.msg, 'success')
                         setTimeout(() => {
                             x.pjax('?control_list');
-                        }, 300)
+                        }, 1200)
                     }, 300)
                 } else {
                     x.btn(data.msg)
@@ -398,7 +398,7 @@ $bnums = ( $page - 1 ) * $ENUMS;
                     x.notify(data.msg, 'success')
                     setTimeout(() => {
                         x.pjax('?control_list');
-                    }, 300)
+                    }, 1200)
                 } else {
                     x.notify(data.msg, 'warning')
                 }
@@ -414,7 +414,7 @@ $bnums = ( $page - 1 ) * $ENUMS;
                     x.notify(data.msg, 'success')
                     setTimeout(() => {
                         x.pjax('?control_list');
-                    }, 300)
+                    }, 1200)
                 } else {
                     x.notify(data.msg, 'warning')
                 }
