@@ -6,14 +6,14 @@
  */
 
 require_once '../include/common.php';
-$WEB = Db::table('webset')->select();
+$WEB = Db::table('webset')->find();
 ?>
 <html lang="zh-cn">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
     <title><?php
-        echo $WEB[ 0 ][ 'title' ]; ?> - 后台登录</title>
+        echo $WEB[ 'web_title' ]; ?> - 后台登录</title>
     <link rel="icon" href="../assets/img/favicons/favicon.png" />
     <link rel="stylesheet" id="css-main" href="../assets/css/codebase.min-5.4.css" />
 </head>
@@ -27,7 +27,7 @@ $WEB = Db::table('webset')->select();
                         <div class="py-4 text-center">
                             <a class="link-fx fw-bold" href="./">
                                 <i class="fa fa-fire"></i>
-                                <span class="fs-4 text-body-color">cloudza</span>
+                                <span class="fs-4 text-body-color">CloudZA</span>
                                 <span class="fs-4">api</span>
                             </a>
                             <h1 class="h3 fw-bold mt-4 mb-2">
