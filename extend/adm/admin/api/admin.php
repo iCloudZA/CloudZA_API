@@ -4,16 +4,6 @@
     */
     if ( !isset($islogin)) header("Location: /");//非法访问
 
-    if ($act == 'set') {
-
-
-        if ($adm_res) {
-            ReturnSuccess(200 , '修改成功');
-        } else {
-            ReturnSuccess(201 , '修改失败');
-        }
-    }
-
     if ($act === 'pwd'){
         $data['user'] = isset($_POST[ 'user' ]) ? purge($_POST[ 'user' ]) : '';
         $data['password'] = isset($_POST[ 'pwd' ]) ? purge($_POST[ 'pwd' ]) : '';
@@ -32,6 +22,3 @@
 
 
     }
-
-
-?>
