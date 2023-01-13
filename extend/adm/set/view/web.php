@@ -74,7 +74,7 @@ $row = Db::table('webset')->find();
         x.ajax('ajax.php?act=set_web', {
             web_title: x.getval('#title'),
             web_des: x.getval('#des'),
-            web_key: x.getval('#des'),
+            web_key: x.getval('#key'),
             web_qq: x.getval('#qq'),
             web_beian: x.getval('#beian'),
             web_ban: x.getval('#ban'),

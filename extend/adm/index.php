@@ -1,13 +1,16 @@
 <?php
-    if ( !isset($islogin)) header("Location: /"); //非法访问拦截
-    $WEB = Db::table('webset')->find();
+if ( !isset($islogin)) header("Location: /"); //非法访问拦截
+$WEB = Db::table('webset')->find();
+echo KEY;
 ?>
 
 <div class="block block-rounded bg-primary-light mb-4">
     <div class="block-content bg-white-5">
         <div class="py-4 text-center">
-            <h1 class="h2 fw-bold text-white mb-2"><?php echo $WEB[ 'web_title' ] ?></h1>
-            <h2 class="h5 fw-medium text-white-75"><?php echo $WEB['web_des'] ?></h2>
+            <h1 class="h2 fw-bold text-white mb-2"><?php
+                echo $WEB[ 'web_title' ] ?></h1>
+            <h2 class="h5 fw-medium text-white-75"><?php
+                echo $WEB[ 'web_des' ] ?></h2>
         </div>
     </div>
 </div>
@@ -66,22 +69,17 @@
         </a>
     </div>
 </div>
-<div class="block block-rounded">
+<div class="block block-rounded block-mode-hidden">
     <div class="block-header block-header-default">
-        <h3 class="block-title">这里 <small>暂时还没想好</small>
+        <h3 class="block-title">公告 <small>作者寄语</small>
         </h3>
         <div class="block-options">
-            <button type="button" class="btn-block-option" data-toggle="block-option"
-                    data-action="fullscreen_toggle"></button>
-            <button type="button" class="btn-block-option" data-toggle="block-option" data-action="pinned_toggle">
-                <i class="si si-pin"></i>
-            </button>
             <button type="button" class="btn-block-option" data-toggle="block-option" data-action="state_toggle"
                     data-action-mode="demo">
                 <i class="si si-refresh"></i>
             </button>
-            <button type="button" class="btn-block-option" data-toggle="block-option"
-                    data-action="content_toggle"></button>
+            <button type="button" class="btn-block-option" data-toggle="block-option" data-action="content_toggle"><i
+                        class="si si-arrow-down"></i></button>
             <button type="button" class="btn-block-option" data-toggle="block-option" data-action="close">
                 <i class="si si-close"></i>
             </button>
@@ -91,20 +89,42 @@
         <p>这个估计会删掉，可能没什么用！</p>
     </div>
 </div>
+<div class="row">
 
-<div class="col-xl-12">
-    <div class="block block-rounded">
-        <div class="block-header block-header-default">
-            <h3 class="block-title">统计</h3>
-            <div class="block-options">
-                <button type="button" class="btn-block-option" data-toggle="block-option" data-action="state_toggle" data-action-mode="demo">
-                    <i class="si si-refresh"></i>
-                </button>
+    <div class="col-xl-6">
+        <div class="block block-rounded">
+            <div class="block-header block-header-default">
+                <h3 class="block-title">统计1</h3>
+                <div class="block-options">
+                    <button type="button" class="btn-block-option" data-toggle="block-option" data-action="state_toggle"
+                            data-action-mode="demo">
+                        <i class="si si-refresh"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="block-content block-content-full text-center">
+                <canvas id="js-chartjs-lines"></canvas>
             </div>
         </div>
-        <div class="block-content block-content-full text-center">
-            <canvas id="js-chartjs-lines"></canvas>
+    </div>
+
+    <div class="col-xl-6">
+        <div class="block block-rounded">
+            <div class="block-header block-header-default">
+                <h3 class="block-title"><span style="vertical-align: inherit;"><span
+                                style="vertical-align: inherit;">统计2</span></span></h3>
+                <div class="block-options">
+                    <button type="button" class="btn-block-option" data-toggle="block-option" data-action="state_toggle"
+                            data-action-mode="demo">
+                        <i class="si si-refresh"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="block-content block-content-full text-center">
+                <canvas id="js-chartjs-bars" width="1120" height="560"
+                        style="display: block; box-sizing: border-box; height: 140px; width: 280px;"></canvas>
+            </div>
         </div>
     </div>
-</div>
 
+</div>

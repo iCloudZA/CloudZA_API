@@ -10,7 +10,7 @@ Url:control_list
 $nums = $db::table('api_list')->count();
 $page = isset($_GET[ 'page' ]) ? intval($_GET[ 'page' ]) : 1;
 $url = "./?control_list&page=";
-$ENUMS = '10'; // 每页条数
+$ENUMS = PAGES; // 每页条数
 $bnums = ( $page - 1 ) * $ENUMS;
 ?>
 <style>
@@ -28,7 +28,7 @@ $bnums = ( $page - 1 ) * $ENUMS;
 <div class="col-xl-12">
     <div class="block block-rounded">
         <div class="block-header">
-            <h3 class="block-title">已经添加的API <small>每页展示10条数据</small>
+            <h3 class="block-title">已经添加的API <small>每页展示<?php echo PAGES; ?>条数据</small>
             </h3>
         </div>
         <div class="block-content block-content-full">

@@ -33,48 +33,82 @@
         });
     })
     // 图表类
-    Codebase.onLoad((() => class
-    {
-        static initChartsChartJS ()
-        {
-            Chart.defaults.color = "#818d96", Chart.defaults.scale.grid.color = "rgba(0,0,0,.04)", Chart.defaults.scale.grid.zeroLineColor = "rgba(0,0,0,.1)", Chart.defaults.scale.beginAtZero = !0, Chart.defaults.elements.line.borderWidth = 2, Chart.defaults.elements.point.radius = 5, Chart.defaults.elements.point.hoverRadius = 7, Chart.defaults.plugins.tooltip.radius = 3, Chart.defaults.plugins.legend.labels.boxWidth = 12;
-            let n = document.getElementById("js-chartjs-lines"),
-                c = {
-                    labels: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"],
-                    datasets: [{
-                        label: "访问量",
-                        fill: !0,
-                        backgroundColor: "rgba(2, 132, 199, .75)",
-                        borderColor: "rgba(2, 132, 199, 1)",
-                        pointBackgroundColor: "rgba(2, 132, 199, 1)",
-                        pointBorderColor: "#fff",
-                        pointHoverBackgroundColor: "#fff",
-                        pointHoverBorderColor: "rgba(2, 132, 199, 1)",
-                        data: [25, 38, 62, 45, 90, 115, 130]
-                    }, {
-                        label: "调用量",
-                        fill: !0,
-                        backgroundColor: "rgba(2, 132, 199, .25)",
-                        borderColor: "rgba(2, 132, 199, 1)",
-                        pointBackgroundColor: "rgba(2, 132, 199, 1)",
-                        pointBorderColor: "#fff",
-                        pointHoverBackgroundColor: "#fff",
-                        pointHoverBorderColor: "rgba(2, 132, 199, 1)",
-                        data: [112, 90, 142, 130, 170, 188, 196]
-                    }]
-                };
-            null !== n && (new Chart(n, {
-                type: "line",
-                data: c,
-                options: {tension: .4}
-            }))
-        }
 
-        static init ()
+    Codebase.onLoad(() =>
+        class
         {
-            this.initChartsChartJS()
-        }
-    }.init()));
+            static initChartsChartJS ()
+            {
+                (Chart.defaults.color = "#818d96"),
+                    (Chart.defaults.scale.grid.color = "rgba(0,0,0,.04)"),
+                    (Chart.defaults.scale.grid.zeroLineColor = "rgba(0,0,0,.1)"),
+                    (Chart.defaults.scale.beginAtZero = !0),
+                    (Chart.defaults.elements.line.borderWidth = 2),
+                    (Chart.defaults.elements.point.radius = 5),
+                    (Chart.defaults.elements.point.hoverRadius = 7),
+                    (Chart.defaults.plugins.tooltip.radius = 3),
+                    (Chart.defaults.plugins.legend.labels.boxWidth = 12);
+                let
+                    n = document.getElementById("js-chartjs-lines"),
+                    d = document.getElementById("js-chartjs-bars"),
+
+                    c = {
+                        labels: ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"],
+                        datasets: [
+                            {
+                                label: "This Week",
+                                fill: !0,
+                                backgroundColor: "rgba(2, 132, 199, .75)",
+                                borderColor: "rgba(2, 132, 199, 1)",
+                                pointBackgroundColor: "rgba(2, 132, 199, 1)",
+                                pointBorderColor: "#fff",
+                                pointHoverBackgroundColor: "#fff",
+                                pointHoverBorderColor: "rgba(2, 132, 199, 1)",
+                                data: [25, 38, 62, 45, 90, 115, 130]
+                            },
+                            {
+                                label: "Last Week",
+                                fill: !0,
+                                backgroundColor: "rgba(2, 132, 199, .25)",
+                                borderColor: "rgba(2, 132, 199, 1)",
+                                pointBackgroundColor: "rgba(2, 132, 199, 1)",
+                                pointBorderColor: "#fff",
+                                pointHoverBackgroundColor: "#fff",
+                                pointHoverBorderColor: "rgba(2, 132, 199, 1)",
+                                data: [112, 90, 142, 130, 170, 188, 196]
+                            }
+                        ]
+                    };
+                null !== n &&
+                (new Chart(n, {
+                    type: "line",
+                    data: c,
+                    options: {tension: 0.4}
+                })),
+                null !== d && (new Chart(d, {type: "bar", data: c}))
+            }
+
+            static initRandomEasyPieChart ()
+            {
+                document.querySelectorAll(".js-pie-randomize").forEach((a) => {
+                    a.addEventListener("click", (t) => {
+                        a.closest(".block")
+                            .querySelectorAll(".pie-chart")
+                            .forEach((a) => {
+                                jQuery(a)
+                                    .data("easyPieChart")
+                                    .update(Math.floor(100 * Math.random() + 1));
+                            });
+                    });
+                });
+            }
+
+            static init ()
+            {
+                this.initRandomEasyPieChart(), this.initChartsChartJS();
+            }
+        }.init()
+    );
 
 </script>
 </body>

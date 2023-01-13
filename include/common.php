@@ -4,14 +4,19 @@ require_once 'db.class.php';
 const ADM_EXTEND_MULU = 'extend/adm/';
 //adm扩展目录
 const API_EXTEND_MULU = 'extend/api/';
+$web_info = Db::table('webset' , 'as A')->find();
+define("TITLE" , ( $web_info[ 'web_title' ] ) ?: 'CloudZA-API');
+define("DESC" , ( $web_info[ 'web_des' ] ) ?: '一款开源的API系统');
+define("KEY" , ( $web_info[ 'web_key' ] ) ?: 'API,CloudZA-API,免费API,API内容管理系统');
 
+define("PAGES" , ( $web_info[ 'web_page_nums' ] ) ?: '10');
 define('FCPATH' , str_replace("\\" , '/' , dirname(dirname(__FILE__)) . '/'));
 // 网站根目录
 define('WEB_URL' , ( ( $_SERVER[ 'SERVER_PORT' ] == 443 ) ? 'https' : 'http' ) . '://' . $_SERVER[ 'HTTP_HOST' ] . str_replace($_SERVER[ 'DOCUMENT_ROOT' ] , ( substr($_SERVER[ 'DOCUMENT_ROOT' ] , -1) == '/' ) ? '/' : '' , dirname($_SERVER[ 'SCRIPT_FILENAME' ])));
-// 网站根目录
+
 
 /**
- * ADMIN导航配置方法
+ * 导航配置方法
  */
 function getPluginDataAd ($FilePath)
 {
@@ -42,7 +47,7 @@ function getPluginDataAd ($FilePath)
 /**
  * 实现遍历出目录及其子文件
  */
-function myScanDir ($dir , $type = 0)
+function myScanDir ($dir , $type = 0): array
 {
     $file_arr = scandir($dir);
     $new_arr = [];
@@ -65,7 +70,7 @@ function myScanDir ($dir , $type = 0)
 /**
  * 分页
  */
-function pagination ($count , $perlogs , $page , $url)
+function pagination ($count , $perlogs , $page , $url): string
 {
     $pnums = @ceil($count / $perlogs);
     $re = '';
@@ -107,7 +112,7 @@ function pagination ($count , $perlogs , $page , $url)
 /**
  * 取QQ号
  */
-function get_qqNum ($emil)
+function get_qqNum ($emil): array|string
 {
     $qq = str_replace('@qq.com' , '' , $emil);
     return $qq;
