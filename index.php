@@ -8,12 +8,6 @@
 include 'include/CheckRedis.php';
 require_once('include/common.php');
 CheckRedis::Run();
-// URL
-// $scriptpath = str_replace('\\', '/', $_SERVER['SCRIPT_NAME']);
-// $sitepath = substr($scriptpath, 0, strrpos($scriptpath, '/'));
-// $siteurl = ($_SERVER['SERVER_PORT'] == '443' ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'] . $sitepath . '/';
-// header('Location:./admin/login.php');
-// exit;
 ?>
 
 <!doctype html>
@@ -21,7 +15,7 @@ CheckRedis::Run();
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title>CloudZA API - 即将推出</title>
+    <title><?php echo TITLE ?> - <?php echo TITLE_DESC ?></title>
   <link rel="icon" href="../assets/img/favicons/favicon.png">
   <link rel="stylesheet" id="css-main" href="../assets/css/codebase.min-5.4.css">
 </head>
@@ -34,7 +28,7 @@ CheckRedis::Run();
       <div class="content content-full">
         <div class="row justify-content-center">
           <div class="col-md-6 py-4 text-center">
-            <h1 class="display-4 fw-bold text-white mb-2">API系统</h1>
+            <h1 class="display-4 fw-bold text-white mb-2">免费的API系统</h1>
             <h2 class="h4 fw-normal text-white-75 pb-4 mb-3 border-white-op-b">即将推出</h2>
             <div class="js-countdown mb-3"></div>
             <a class="btn rounded-pill btn-outline-warning" href="https://github.com/iCloudZA">
