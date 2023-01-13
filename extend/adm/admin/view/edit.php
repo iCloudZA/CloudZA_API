@@ -1,12 +1,14 @@
 <?php
-    /*
-    Sort:2
-    Hidden:false
-    icons:mdi mdi-account-edit
-    Name:修改密码
-    Url:admin_edit
-    */
-    if ( !isset($islogin)) header("Location: /");//非法访问拦截
+/*
+Sort:2
+Hidden:false
+icons:mdi mdi-account-edit
+Name:修改密码
+Url:admin_edit
+*/
+
+if ( !isset($islogin)) header("Location: /");//非法访问拦截
+$data = Db::table('admin')->find();
 ?>
 
 <div class="content">
@@ -24,7 +26,8 @@
                     <div class="block-content">
                         <div class="form-floating mb-4">
                             <input type="text" class="form-control" id="username" name="username" placeholder="用户账号"
-                                   value="<?php echo $user; ?>" required />
+                                   value="<?php
+                                   echo $data['user']; ?>" required />
                             <label class="form-label" for="login-username">账号</label>
                         </div>
                         <div class="form-floating mb-4">
