@@ -6,6 +6,7 @@ const API_EXTEND_MULU = 'extend/api/';
 
 $web_info = Db::table('webset' , 'as A')->find();
 define("TITLE" , ( $web_info[ 'web_title' ] ) ?: 'CloudZA-API');
+define("TITLE_DESC",( $web_info[ 'web_titleDesc' ] ) ?: '一款开源的API系统');
 define("DESC" , ( $web_info[ 'web_des' ] ) ?: '一款开源的API系统');
 define("KEY" , ( $web_info[ 'web_key' ] ) ?: 'API,CloudZA-API,免费API,API内容管理系统');
 define("BEIAN" , ( $web_info[ 'web_beian' ] ) ?: '京ICP备8888888号-8');
