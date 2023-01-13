@@ -29,6 +29,17 @@ CREATE TABLE `admin`
 INSERT INTO public_api.admin (user, password, cookie)
 VALUES ('admin', '123456', '5844a8e587c353ce2dfbca3def069981');
 
+-- 操作日志
+DROP TABLE IF EXISTS `web_log`;
+CREATE TABLE `web_log`
+(
+    `id`    int primary key auto_increment comment '主键',
+    `ip`    varchar(32) not null comment 'ip',
+    `time`  datetime    not null comment '时间',
+    `event` text        not null comment '事件'
+) ENGINE = INNODB
+  DEFAULT CHARSET = utf8;
+
 -- API接口列表
 DROP TABLE IF EXISTS `api_list`;
 CREATE TABLE `api_list`
