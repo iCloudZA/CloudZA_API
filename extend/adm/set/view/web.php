@@ -30,6 +30,11 @@ $row = Db::table('webset')->find();
                                type="text" value="<?php echo $row['web_title'] ?>">
                     </div>
                     <div class="mb-4">
+                        <label class="form-label" for="title_desc">副标题</label>
+                        <input class="form-control form-control-lg" id="title_desc" name="title_desc" placeholder="输入网站副标题"
+                               type="text" value="<?php echo $row['web_titleDesc'] ?>">
+                    </div>
+                    <div class="mb-4">
                         <label class="form-label" for="des">网站描述</label>
                         <input class="form-control form-control-lg" id="des" name="des" placeholder="输入网站描述"
                                type="text" value="<?php echo $row['web_des'] ?>">
@@ -74,6 +79,7 @@ $row = Db::table('webset')->find();
     {
         x.ajax('ajax.php?act=set_web', {
             web_title: x.getval('#title'),
+            web_titleDesc: x.getval('#title_desc'),
             web_des: x.getval('#des'),
             web_key: x.getval('#key'),
             web_qq: x.getval('#qq'),
