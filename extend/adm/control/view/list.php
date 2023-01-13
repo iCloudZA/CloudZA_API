@@ -7,7 +7,7 @@ Name:接口列表
 Url:control_list
 */
 
-if(!isset($islogin))header("Location: /");//非法访问
+if ( !isset($islogin)) header("Location: /");//非法访问
 $nums = $db::table('api_list')->count();
 $page = isset($_GET[ 'page' ]) ? intval($_GET[ 'page' ]) : 1;
 $url = "./?control_list&page=";
@@ -75,9 +75,6 @@ $bnums = ( $page - 1 ) * $ENUMS;
                                     API名称
                                 </th>
                                 <th style="text-align: center;" class="sorting_disabled" rowspan="1" colspan="1">
-                                    API地址
-                                </th>
-                                <th style="text-align: center;" class="sorting_disabled" rowspan="1" colspan="1">
                                     API介绍
                                 </th>
                                 <th style="text-align: center;" class="sorting_disabled" rowspan="1" colspan="1">
@@ -98,7 +95,7 @@ $bnums = ( $page - 1 ) * $ENUMS;
                                     $js = '<script>window.location="' . $url . '/?user_edit&id=' . $user_info[ 'id' ] . '"</script>';
                                     echo $js;
                                 }
-                                echo '<td style="text-align: center;" colspan="8" class="dataTables_empty"><i class="si si-drawer fa-2x"></i><p class="text-muted fs-sm">暂无数据</p></td>';
+                                echo '<td style="text-align: center;" colspan="7" class="dataTables_empty"><i class="si si-drawer fa-2x"></i><p class="text-muted fs-sm">暂无数据</p></td>';
                             }
                             foreach ($res as $k => $v) {
                                 $row = $res[ $k ];
@@ -123,13 +120,10 @@ $bnums = ( $page - 1 ) * $ENUMS;
                                         <?php
                                         echo $row[ 'name' ]; ?>
                                     </td>
+
                                     <td style="text-align: center;" class="fs-sm">
                                         <?php
-                                        echo $row[ 'api_url' ]; ?>
-                                    </td>
-                                    <td style="text-align: center;" class="fs-sm">
-                                        <?php
-                                        echo $row[ 'des' ]; ?>
+                                        echo ( strlen($row[ 'des' ]) > 33) ? mb_substr($row[ 'des' ] , 0 , 11).'...' : $row[ 'des' ] ?>
                                     </td>
                                     <td style="text-align: center;" class="fs-sm">
                                         <?php
