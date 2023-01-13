@@ -51,12 +51,11 @@
                 let
                     n = document.getElementById("js-chartjs-lines"),
                     d = document.getElementById("js-chartjs-bars"),
-
                     c = {
-                        labels: ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"],
+                        labels: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"],
                         datasets: [
                             {
-                                label: "This Week",
+                                label: "本周",
                                 fill: !0,
                                 backgroundColor: "rgba(2, 132, 199, .75)",
                                 borderColor: "rgba(2, 132, 199, 1)",
@@ -64,10 +63,37 @@
                                 pointBorderColor: "#fff",
                                 pointHoverBackgroundColor: "#fff",
                                 pointHoverBorderColor: "rgba(2, 132, 199, 1)",
-                                data: [25, 38, 62, 45, 90, 115, 130]
+                                data: [25, 38, 62, 45, 90, 123, 130]
                             },
                             {
-                                label: "Last Week",
+                                label: "上周",
+                                fill: !0,
+                                backgroundColor: "rgba(2, 132, 199, .25)",
+                                borderColor: "rgba(2, 132, 199, 1)",
+                                pointBackgroundColor: "rgba(2, 132, 199, 1)",
+                                pointBorderColor: "#fff",
+                                pointHoverBackgroundColor: "#fff",
+                                pointHoverBorderColor: "rgba(2, 132, 199, 1)",
+                                data: [112, 90, 142, 130, 170, 163, 196]
+                            }
+                        ]
+                    },
+                    f = {
+                        labels: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"],
+                        datasets: [
+                            {
+                                label: "本周",
+                                fill: !0,
+                                backgroundColor: "rgba(2, 132, 199, .75)",
+                                borderColor: "rgba(2, 132, 199, 1)",
+                                pointBackgroundColor: "rgba(2, 132, 199, 1)",
+                                pointBorderColor: "#fff",
+                                pointHoverBackgroundColor: "#fff",
+                                pointHoverBorderColor: "rgba(2, 132, 199, 1)",
+                                data: [32, 45, 72, 55, 120, 155, 130]
+                            },
+                            {
+                                label: "上周",
                                 fill: !0,
                                 backgroundColor: "rgba(2, 132, 199, .25)",
                                 borderColor: "rgba(2, 132, 199, 1)",
@@ -79,13 +105,19 @@
                             }
                         ]
                     };
+                // 曲线图
                 null !== n &&
                 (new Chart(n, {
                     type: "line",
                     data: c,
                     options: {tension: 0.4}
-                })),
-                null !== d && (new Chart(d, {type: "bar", data: c}))
+                }))
+                // 柱形图
+                null !== d &&
+                (new Chart(d, {
+                    type: "bar",
+                    data: f
+                }))
             }
 
             static initRandomEasyPieChart ()

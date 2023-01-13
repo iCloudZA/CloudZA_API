@@ -1,7 +1,8 @@
 <?php
 if ( !isset($islogin)) header("Location: /"); //非法访问拦截
-
-?>
+//$weekarray=["星期日","星期一","星期二","星期三","星期四","星期五","星期六"];
+//echo $weekarray[date("w",strtotime("2018-10-6"))];
+//echo $weekarray[date("w",time())];?>
 
 <div class="block block-rounded bg-primary-light mb-4">
     <div class="block-content bg-white-5">
@@ -61,7 +62,7 @@ if ( !isset($islogin)) header("Location: /"); //非法访问拦截
                     <i class="si si-fire fa-2x text-corporate-light"></i>
                 </div>
                 <div class="text-end">
-                    <div class="fs-3 fw-semibold text-pulse">423</div>
+                    <div class="fs-3 fw-semibold text-pulse">1230</div>
                     <div class="fs-sm fw-semibold text-uppercase text-muted">日均IP</div>
                 </div>
             </div>
@@ -93,7 +94,7 @@ if ( !isset($islogin)) header("Location: /"); //非法访问拦截
     <div class="col-xl-6">
         <div class="block block-rounded">
             <div class="block-header block-header-default">
-                <h3 class="block-title">统计1</h3>
+                <h3 class="block-title">用户趋势</h3>
                 <div class="block-options">
                     <button type="button" class="btn-block-option" data-toggle="block-option" data-action="state_toggle"
                             data-action-mode="demo">
@@ -111,7 +112,7 @@ if ( !isset($islogin)) header("Location: /"); //非法访问拦截
         <div class="block block-rounded">
             <div class="block-header block-header-default">
                 <h3 class="block-title"><span style="vertical-align: inherit;"><span
-                                style="vertical-align: inherit;">统计2</span></span></h3>
+                                style="vertical-align: inherit;">API统计</span></span></h3>
                 <div class="block-options">
                     <button type="button" class="btn-block-option" data-toggle="block-option" data-action="state_toggle"
                             data-action-mode="demo">

@@ -1,6 +1,5 @@
 <?php
 require_once 'db.class.php';
-
 const ADM_EXTEND_MULU = 'extend/adm/';
 //adm扩展目录
 const API_EXTEND_MULU = 'extend/api/';
