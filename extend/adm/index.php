@@ -10,7 +10,7 @@ if ( !isset($islogin)) header("Location: /"); //非法访问拦截
             <h1 class="h2 fw-bold text-white mb-2"><?php
                 echo TITLE ?></h1>
             <h2 class="h5 fw-medium text-white-75"><?php
-                echo DESC ?></h2>
+                echo TITLE_DESC ?></h2>
         </div>
     </div>
 </div>
