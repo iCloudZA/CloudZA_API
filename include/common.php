@@ -4,11 +4,13 @@ require_once 'db.class.php';
 const ADM_EXTEND_MULU = 'extend/adm/';
 //adm扩展目录
 const API_EXTEND_MULU = 'extend/api/';
+
 $web_info = Db::table('webset' , 'as A')->find();
 define("TITLE" , ( $web_info[ 'web_title' ] ) ?: 'CloudZA-API');
 define("DESC" , ( $web_info[ 'web_des' ] ) ?: '一款开源的API系统');
 define("KEY" , ( $web_info[ 'web_key' ] ) ?: 'API,CloudZA-API,免费API,API内容管理系统');
-
+define("BEIAN" , ( $web_info[ 'web_beian' ] ) ?: '京ICP备8888888号-8');
+define("FOOTER_BAN" , ( $web_info[ 'web_ban' ] ) ?: '云之安');
 define("PAGES" , ( $web_info[ 'web_page_nums' ] ) ?: '10');
 define('FCPATH' , str_replace("\\" , '/' , dirname(dirname(__FILE__)) . '/'));
 // 网站根目录
