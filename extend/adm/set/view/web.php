@@ -1,6 +1,7 @@
 <?php
 /*
 Sort:1
+icons:fa fa-gear
 Hidden:false
 Name:网站设置
 Url:set_web
