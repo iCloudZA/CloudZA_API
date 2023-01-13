@@ -1,16 +1,15 @@
 <?php
 if ( !isset($islogin)) header("Location: /"); //非法访问拦截
-$WEB = Db::table('webset')->find();
-echo KEY;
+
 ?>
 
 <div class="block block-rounded bg-primary-light mb-4">
     <div class="block-content bg-white-5">
         <div class="py-4 text-center">
             <h1 class="h2 fw-bold text-white mb-2"><?php
-                echo $WEB[ 'web_title' ] ?></h1>
+                echo TITLE ?></h1>
             <h2 class="h5 fw-medium text-white-75"><?php
-                echo $WEB[ 'web_des' ] ?></h2>
+                echo DESC ?></h2>
         </div>
     </div>
 </div>
