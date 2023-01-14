@@ -20,7 +20,7 @@ define('WEB_URL' , ( ( $_SERVER[ 'SERVER_PORT' ] == 443 ) ? 'https' : 'http' ) .
 /**
  * 导航配置方法
  */
-function getPluginDataAd ($FilePath)
+function getPluginDataAd ($FilePath): array
 {
     $file_arr = myScanDir(FCPATH . ADM_EXTEND_MULU . $FilePath . '/view' , 2);
     $nav_arr = [];
@@ -81,15 +81,10 @@ function pagination ($count , $perlogs , $page , $url): string
         if ($i > 0) {
             if ($i == $page) {
                 $re .= "<li class=\"page-item active\"><a class=\"page-link\">$i</a></li>";
-                //$re ."<li class=\"page-item active\"><a class=\"page-link\" >$i</a></li>";
-                //$re .= "<li><span>$i</span></li>";
-
             } elseif ($i == 1) {
-                $re .= "<li class=\"page-item\"><a class=\"page-link\" href=\"$urlHome\">$i</a></li>";
+                $re .= "<li class=\"page-item\"><a class=\"page-link\" data-pjax href=\"$urlHome\">$i</a></li>";
             } else {
-                $re .= "<li class=\"page-item\"><a class=\"page-link\" href=\"$url$i\">$i</a></li>";
-                //$re .= "<li><a href=\"$url$i\">$i</a></li>";
-
+                $re .= "<li class=\"page-item\"><a class=\"page-link\" data-pjax href=\"$url$i\">$i</a></li>";
             }
         }
     }
@@ -104,10 +99,10 @@ function pagination ($count , $perlogs , $page , $url): string
     } else {
         $after = $page;
     }
-    $re = "<li class=\"page-item\">	<a class=\"page-link\" href=\"$url$after\" aria-label=\"Previous\">		<span aria-hidden=\"true\">&laquo;</span>		<span class=\"sr-only\">Previous</span>	</a> </li>$re";
-    $re .= "<li class=\"page-item\"><a class=\"page-link\" href=\"$url$go\" aria-label=\"Next\"><span aria-hidden=\"true\">&raquo;</span><span class=\"sr-only\">Next</span></a></li>";
+    $re = "<li class=\"page-item\"><a class=\"page-link\" data-pjax href=\"$url$after\" aria-label=\"Previous\"><span aria-hidden=\"true\"><i class=\"fa fa-angle-left\"></i></span> <span class=\"sr-only\"><span style=\"vertical-align: inherit;\"><span style=\"vertical-align: inherit;\">Previous</span></span></span></a></li>$re";
+    $re .= "<li class=\"page-item\"><a class=\"page-link\" data-pjax href=\"$url$go\" aria-label=\"Next\"><span aria-hidden=\"true\"><i class=\"fa fa-angle-right\"></i></span> <span class=\"sr-only\"><sapn style=\"vertical-align: inherit;\"><sapn style=\"vertical-align: inherit;\">Next</sapn></sapn></span></a></li>";
     if ($pnums <= 1) $re = '';
-    return "<ul class=\"pagination justify-content-end\">" . $re . "</ul>";
+    return "<ul class=\"pagination pagination-sm\">" . $re . "</ul>";
 }
 
 

@@ -70,7 +70,6 @@ $bnums = ( $page - 1 ) * $ENUMS;
                                                onclick="checkAll();" />
                                     </div>
                                 </th>
-                                <th style="text-align: center;" class="sorting_disabled" rowspan="1" colspan="1">ID</th>
                                 <th style="text-align: center;" class="sorting_disabled" rowspan="1" colspan="1">
                                     API名称
                                 </th>
@@ -95,7 +94,7 @@ $bnums = ( $page - 1 ) * $ENUMS;
                                     $js = '<script>window.location="' . $url . '/?user_edit&id=' . $user_info[ 'id' ] . '"</script>';
                                     echo $js;
                                 }
-                                echo '<td style="text-align: center;" colspan="7" class="dataTables_empty"><i class="si si-drawer fa-2x"></i><p class="text-muted fs-sm">暂无数据</p></td>';
+                                echo '<td style="text-align: center;" colspan="6" class="dataTables_empty"><i class="si si-drawer fa-2x"></i><p class="text-muted fs-sm">暂无数据</p></td>';
                             }
                             foreach ($res as $k => $v) {
                                 $row = $res[ $k ];
@@ -112,10 +111,7 @@ $bnums = ( $page - 1 ) * $ENUMS;
                                             echo 'check_' . $row[ 'id' ]; ?>"></label>
                                         </div>
                                     </td>
-                                    <td style="text-align: center;" class="fs-sm">
-                                        <?php
-                                        echo $row[ 'id' ]; ?>
-                                    </td>
+
                                     <td style="text-align: center;" class="fs-sm">
                                         <?php
                                         echo $row[ 'name' ]; ?>
@@ -178,32 +174,7 @@ $bnums = ( $page - 1 ) * $ENUMS;
                     </div>
                     <div class="col-sm-12 col-md-7">
                         <div class="dataTables_paginate paging_full_numbers" id="task-logs-list_paginate">
-                            <ul class="pagination">
-                                <li class="paginate_button page-item first disabled" id="task-logs-list_first">
-                                    <a href="#" aria-controls="task-logs-list" data-dt-idx="0" tabindex="0"
-                                       class="page-link">
-                                        <i class="fa fa-angle-double-left"></i>
-                                    </a>
-                                </li>
-                                <li class="paginate_button page-item previous disabled" id="task-logs-list_previous">
-                                    <a href="#" aria-controls="task-logs-list" data-dt-idx="1" tabindex="0"
-                                       class="page-link">
-                                        <i class="fa fa-angle-left"></i>
-                                    </a>
-                                </li>
-                                <li class="paginate_button page-item next disabled" id="task-logs-list_next">
-                                    <a href="#" aria-controls="task-logs-list" data-dt-idx="2" tabindex="0"
-                                       class="page-link">
-                                        <i class="fa fa-angle-right"></i>
-                                    </a>
-                                </li>
-                                <li class="paginate_button page-item last disabled" id="task-logs-list_last">
-                                    <a href="#" aria-controls="task-logs-list" data-dt-idx="3" tabindex="0"
-                                       class="page-link">
-                                        <i class="fa fa-angle-double-right"></i>
-                                    </a>
-                                </li>
-                            </ul>
+                            <?php if(!$so){echo pagination($nums,$ENUMS,$page,$url);}?>
                         </div>
                     </div>
                 </div>
