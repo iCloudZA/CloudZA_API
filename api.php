@@ -4,7 +4,8 @@ $_GET     && SafeFilter($_GET);
 $_POST    && SafeFilter($_POST);
 $_COOKIE  && SafeFilter($_COOKIE);
 
-function SafeFilter (&$arr){
+function SafeFilter (&$arr): void
+{
   $ra=Array('/([\x00-\x08,\x0b-\x0c,\x0e-\x19])/','/script/','/javascript/','/vbscript/','/expression/','/applet/','/meta/','/xml/','/blink/','/link/','/style/','/embed/','/object/','/frame/','/layer/','/title/','/bgsound/','/base/','/onload/','/onunload/','/onchange/','/onsubmit/','/onreset/','/onselect/','/onblur/','/onfocus/','/onabort/','/onkeydown/','/onkeypress/','/onkeyup/','/onclick/','/ondblclick/','/onmousedown/','/onmousemove/','/onmouseout/','/onmouseover/','/onmouseup/','/onunload/');
   if (is_array($arr)){
     foreach ($arr as $key => $value){
@@ -20,13 +21,8 @@ function SafeFilter (&$arr){
     }
   }
 }
-
 require 'include/common.php';
 $act = isset($_GET['act']) ? purge($_GET['act'],true,false) : null;
-// $appid = isset($_GET['app']) ? intval($_GET['app']) : 0;//appid
-// $sign = isset($_POST['sign']) ? (purge($_POST['sign'])) : (isset($_GET['sign']) ? purge($_GET['sign']) : '');//数据签名
-// $data = isset($_POST['data']) ? (purge($_POST['data'])) : (isset($_GET['data']) ? purge($_GET['data']) : '');//加密数据
-
 if($act){
 	if(file_exists(FCPATH.API_EXTEND_MULU.$act.'.php')){
 		require FCPATH.API_EXTEND_MULU.$act.'.php';
