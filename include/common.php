@@ -133,22 +133,6 @@ function purge ($string , $trim = true , $filter = true , $force = 0 , $strip = 
 }
 
 
-//数组维度判断
-function foreachArray ($array = [] , $count = 0)
-{
-
-    if ( !is_array($array)) {
-        return $count;
-    }
-    foreach ($array as $value) {
-        $count++;
-        if ( !is_array($value)) {
-            return $count;
-        }
-        return foreachArray($value , $count);
-    }
-}
-
 
 function txt_Arr ($txt): array
 {
