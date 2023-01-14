@@ -34,20 +34,18 @@ function SafeFilter (&$arr): void
 //define('FCPATH' , str_replace("\\" , '/' , dirname(dirname(__FILE__)) . '/'));
 
 $uri = $_SERVER[ 'REQUEST_URI' ];
-$uri_parts = explode('/' , $uri);
-$uri_parts = explode('?' , $uri_parts[ 3 ]);
-$path = $uri_parts[ 0 ];
-if (str_contains($uri , '/index.php/api/')) {
-    if ($path) {
-        if (file_exists(FCPATH . API_EXTEND_MULU . $path . '/index.php')) {
-            require FCPATH . API_EXTEND_MULU . $path . '/index.php';
+if (str_contains($uri , '/api/')) {
+    $uri_parts = explode('/' , $uri);
+    $uri_parts = explode('?' , $uri_parts[ 2 ]);
+    if ($uri_parts[ 0 ]) {
+        if (file_exists(FCPATH . API_EXTEND_MULU . $uri_parts[ 0 ] . '/index.php')) {
+            require FCPATH . API_EXTEND_MULU . $uri_parts[ 0 ] . '/index.php';
             exit;
         } else {
-            echo ReturnError('错误的参数');
+            exit(ReturnError('暂无此接口'));
         }
     }
 }
-
 
 ?>
 
