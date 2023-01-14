@@ -156,7 +156,7 @@ $so = isset($_POST[ 'so' ]) ? purge($_POST[ 'so' ]) : '';
                         </div>
                         <div class="p-2">
                             <a class="dropdown-item d-flex align-items-center justify-content-between space-x-1"
-                               data-pjax href="./?set_web">
+                               data-pjax href="./?control_web">
                                 <span>网站设置</span>
                                 <i class="fa fa-fw fa-network-wired opacity-25"></i>
                             </a>
