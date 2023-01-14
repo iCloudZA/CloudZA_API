@@ -143,15 +143,16 @@ function purge ($string , $trim = true , $filter = true , $force = 0 , $strip = 
 }
 
 
-function check_email ($email)
+function check_email ($email): bool
 {
     //匹配邮箱
     return preg_match('/^[a-z0-9]+([._-][a-z0-9]+)*@([0-9a-z]+\.[a-z]{2,14}(\.[a-z]{2})?)$/i' , $email) ? true : false;
 }
 
+//数组维度判断
 function foreachArray ($array = [] , $count = 0)
 {
-    //数组维度判断
+
     if ( !is_array($array)) {
         return $count;
     }
@@ -165,7 +166,7 @@ function foreachArray ($array = [] , $count = 0)
 }
 
 
-function txt_Arr ($txt)
+function txt_Arr ($txt): array
 {
     //文本转数组
     $arr = explode('&' , $txt);
@@ -179,7 +180,7 @@ function txt_Arr ($txt)
     return $array;
 }
 
-function txt_zhong ($str , $leftStr , $rightStr)
+function txt_zhong ($str , $leftStr , $rightStr): bool|string
 {
     //取文本中间
     $left = strpos($str , $leftStr);
@@ -190,7 +191,7 @@ function txt_zhong ($str , $leftStr , $rightStr)
     return substr($str , $left + strlen($leftStr) , $right - $left - strlen($leftStr));
 }
 
-function txt_you ($str , $leftStr)
+function txt_you ($str , $leftStr): bool|string
 {
     //取文本右边
     $left = strpos($str , $leftStr);
@@ -206,7 +207,7 @@ function txt_zuo ($str , $rightStr)
 
 
 //获取当个ip所在的省份
-function get_ip_address ($ip)
+function getIPAddress ($ip): string
 {
     //访问api接口获取ip地址http://ip-api.com/json/ip地址?lang=zh-CN
     //获取当前ip所在的省份
@@ -227,7 +228,7 @@ function get_ip_address ($ip)
  * @param bool $adv
  * @return mixed
  */
-function get_user_ip ($type = 0 , $adv = true): mixed
+function get_ip (int $type = 0 , bool $adv = true): mixed
 {
     $type = $type ? 1 : 0;
     $ip = NULL;

@@ -5,7 +5,7 @@ Name:系统配置API
 */
 if (!isset($islogin)) header("Location: /"); //非法访问
 
-if($act == 'web') {
+if($act == 'set') {
     $data[ 'web_title' ] = isset($_POST[ 'web_title' ]) && !empty($_POST[ 'web_title' ]) ? purge($_POST[ 'web_title' ]) : '';
     $data['web_titleDesc'] = isset($_POST[ 'web_titleDesc' ]) && !empty($_POST[ 'web_titleDesc' ]) ? purge($_POST[ 'web_titleDesc' ]) : '';
     $data[ 'web_des' ] = isset($_POST[ 'web_des' ]) && !empty($_POST[ 'web_des' ]) ? purge($_POST[ 'web_des' ]) : '';

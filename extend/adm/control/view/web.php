@@ -1,10 +1,16 @@
 <?php
 /*
+ * @LastEditors: CloudZA(云之安) <admin@osuu.cc>
+ * @hitokoto: 一场秋雨一场凉，秋心酌满泪为霜。
+ * Copyright (c) 2022 by CloudZA, All Rights Reserved.
+ */
+
+/*
 Sort:1
 icons:fa fa-gear
 Hidden:false
 Name:网站设置
-Url:set_web
+Url:control_web
 */
 $row = Db::table('webset')->find();
 ?>
@@ -77,7 +83,7 @@ $row = Db::table('webset')->find();
 <script>
     function submit ()
     {
-        x.ajax('ajax.php?act=set_web', {
+        x.ajax('ajax.php?act=control_web_set', {
             web_title: x.getval('#title'),
             web_titleDesc: x.getval('#title_desc'),
             web_des: x.getval('#des'),
