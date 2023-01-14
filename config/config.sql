@@ -16,7 +16,6 @@ INSERT INTO public_api.webset (web_title, web_titleDesc, web_des, web_key, web_q
 VALUES ('CloudZA-API', '一款开源的API系统', 'CloudZA-API， 我们致力于为用户提供稳定、快速的免费API数据接口服务。',
         'API,云之安,API内容管理,免费API', '2922619853', '京ICP备8888888号', '云之安', 10);
 
-
 -- 管理员账号密码设置
 DROP TABLE IF EXISTS `admin`;
 CREATE TABLE `admin`
