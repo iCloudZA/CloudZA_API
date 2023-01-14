@@ -49,11 +49,11 @@ $bnums = ( $page - 1 ) * $ENUMS;
                                     </div>
                                 </th>
                                 <th style="text-align: center;" rowspan="1" colspan="1">
-                                    IP
+                                    事件
                                 </th>
                                 <th style="text-align: center" rowspan="1" colspan="1">详细地址</th>
                                 <th style="text-align: center;" rowspan="1" colspan="1">
-                                    事件
+                                    IP
                                 </th>
                                 <th style="text-align: center;" rowspan="1" colspan="1">
                                     时间
@@ -89,7 +89,7 @@ $bnums = ( $page - 1 ) * $ENUMS;
 
                                     <td style="text-align: center;" class="fs-sm">
                                         <?php
-                                        echo $row[ 'ip' ]; ?>
+                                        echo $row[ 'event']; ?>
                                     </td>
                                     <td style="text-align: center">
                                         <?php
@@ -97,7 +97,7 @@ $bnums = ( $page - 1 ) * $ENUMS;
                                     </td>
                                     <td style="text-align: center;" class="fs-sm">
                                         <?php
-                                        echo $row[ 'event' ]; ?>
+                                        echo $row[ 'ip' ]; ?>
                                     </td>
                                     <td style="text-align: center;" class="fs-sm">
                                         <?php
