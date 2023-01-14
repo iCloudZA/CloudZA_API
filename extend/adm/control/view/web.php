@@ -7,7 +7,7 @@
 
 /*
 Sort:1
-icons:fa fa-gear
+icons:si si-settings
 Hidden:false
 Name:网站设置
 Url:control_web

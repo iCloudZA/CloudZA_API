@@ -71,7 +71,7 @@ $so = isset($_POST[ 'so' ]) ? purge($_POST[ 'so' ]) : '';
                     <ul class="nav-main">
                         <li class="nav-main-item">
                             <a class="nav-main-link" data-pjax href="./?index">
-                                <i class="nav-main-link-icon fa fa-fire-flame-simple"></i>
+                                <i class="nav-main-link-icon si si-drop"></i>
                                 <span class="nav-main-link-name">首页</span>
                             </a>
                         </li>

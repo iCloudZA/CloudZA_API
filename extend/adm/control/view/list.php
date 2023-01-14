@@ -1,7 +1,7 @@
 <?php
 /*
 Sort:1
-icons:fa fa-cloud
+icons:si si-energy
 Hidden:false
 Name:接口列表
 Url:control_list
