@@ -14,6 +14,7 @@ if($act == 'web') {
     $data[ 'web_beian' ] = isset($_POST[ 'web_beian' ]) && !empty($_POST[ 'web_beian' ]) ? purge($_POST[ 'web_beian' ]) : '';
     $data[ 'web_ban' ] = isset($_POST[ 'web_ban' ]) && !empty($_POST[ 'web_ban' ]) ? purge($_POST[ 'web_ban' ]) : '';
     $data[ 'web_page_nums' ] = isset($_POST[ 'web_page_nums' ]) && !empty($_POST[ 'web_page_nums' ]) ? purge($_POST[ 'web_page_nums' ]) : '';
+    if($data['web_page_nums']<10) exit(ReturnError('分页最低设置10条'));
     if ( !f($data)) exit(ReturnError('数据不完整'));
     $table = Db::table('webset');
     $origData = $table->find();
