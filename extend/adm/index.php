@@ -94,6 +94,7 @@ if ( !isset($islogin)) header("Location: /"); //非法访问拦截
     <div class="col-xl-6">
         <div class="block block-rounded">
             <div class="block-header block-header-default">
+                <i class="fa fa-chart-line me-1 text-muted"></i>
                 <h3 class="block-title">用户趋势</h3>
                 <div class="block-options">
                     <button type="button" class="btn-block-option" data-toggle="block-option" data-action="state_toggle"
@@ -111,8 +112,9 @@ if ( !isset($islogin)) header("Location: /"); //非法访问拦截
     <div class="col-xl-6">
         <div class="block block-rounded">
             <div class="block-header block-header-default">
-                <h3 class="block-title"><span style="vertical-align: inherit;"><span
-                                style="vertical-align: inherit;">API统计</span></span></h3>
+                <h3 class="block-title">
+                        <i class="fa fa-chart-bar me-1 text-muted"></i>API统计
+                </h3>
                 <div class="block-options">
                     <button type="button" class="btn-block-option" data-toggle="block-option" data-action="state_toggle"
                             data-action-mode="demo">
