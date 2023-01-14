@@ -27,6 +27,7 @@
 <script src="../assets/js/app.min.js"></script>
 
 <script>
+
     $(function () {
         $(function () {
             Codebase.helpers('jq-slimscroll');
