@@ -158,12 +158,12 @@ $so = isset($_POST[ 'so' ]) ? purge($_POST[ 'so' ]) : '';
                             <a class="dropdown-item d-flex align-items-center justify-content-between space-x-1"
                                data-pjax href="./?control_web">
                                 <span>网站设置</span>
-                                <i class="fa fa-fw fa-network-wired opacity-25"></i>
+                                <i class="si si-settings opacity-25"></i>
                             </a>
                             <a class="dropdown-item d-flex align-items-center justify-content-between space-x-1"
                                data-pjax href="./?admin_edit">
                                 <span>修改密码</span>
-                                <i class="fa fa-fw fa-wrench opacity-25"></i>
+                                <i class="si si-wrench opacity-25"></i>
                             </a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item d-flex align-items-center justify-content-between space-x-1"
