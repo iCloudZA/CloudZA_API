@@ -63,7 +63,7 @@ $bnums = ( $page - 1 ) * $ENUMS;
                             <tbody>
 
                             <?php
-                            $res = Db::table('web_log')->order('id ASC')->limit($bnums , $ENUMS)->select();
+                            $res = Db::table('web_log')->order('id DESC')->limit($bnums , $ENUMS)->select();
                             if (json_encode($res) == '[]') {
                                 if ( !empty($_GET[ 'page' ])) {
                                     $url = ( ( $_SERVER[ 'SERVER_PORT' ] == 443 ) ? 'https' : 'http' ) . '://' . $_SERVER[ 'HTTP_HOST' ] . str_replace($_SERVER[ 'DOCUMENT_ROOT' ] , ( substr($_SERVER[ 'DOCUMENT_ROOT' ] , -1) == '/' ) ? '/' : '' , dirname($_SERVER[ 'SCRIPT_FILENAME' ]));

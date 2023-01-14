@@ -256,22 +256,7 @@ function toarr ($para)
     return $arr;
 }
 
-function sign ($arr , $key , $sha1 = true)
-{ //数组签名
-    unset($arr[ 'sign' ]);
-    unset($arr[ 'act' ]);
-    unset($arr[ 'clientid' ]);
-    $sign = '';
-    foreach ($arr as $k => $v) {
-        $sign = $sign . $k . '=' . $v . '&';
-    }
-    $sign = $sign . $key;
-    if ($sha1) {
-        return sha1($sign);
-    } else {
-        return $sign;
-    }
-}
+
 
 /**
  * 发送HTTP请求方法
@@ -282,7 +267,7 @@ function sign ($arr , $key , $sha1 = true)
  * @return bool|string  $data   响应数据
  * @throws Exception
  */
-function http ($url , array $params , string $method = 'GET' , array $header = array()): bool|string
+function http (string $url , array $params , string $method = 'GET' , array $header = array()): bool|string
 {
     $opts = array(CURLOPT_TIMEOUT => 30 , CURLOPT_RETURNTRANSFER => 1 , CURLOPT_SSL_VERIFYPEER => false , CURLOPT_SSL_VERIFYHOST => false , CURLOPT_HTTPHEADER => $header);
     /* 根据请求类型设置特定参数 */
@@ -314,6 +299,7 @@ function http ($url , array $params , string $method = 'GET' , array $header = a
 }
 
 /**
+ * 返回带数据
  * @param $code int 响应代码
  * @param $msg  string 描述字符串
  * @param $data array 返回的数据
@@ -327,18 +313,18 @@ function return_msg ($code , $msg , array $data = []): bool|string
     return json_encode($return_data);
 }
 
-//成功返回不带数据
-
 /**
+ * 成功返回不带数据
  * @param $msg string 描述
  */
-function ReturnSuccess (string $msg)
+function ReturnSuccess (string $msg): bool|string
 {
     $result = ['code' => 200 , 'msg' => $msg ,];
     return json_encode($result);
 }
 
 /**
+ * 失败返回
  * @param $msg string 描述
  */
 function ReturnError ($msg)
@@ -347,9 +333,26 @@ function ReturnError ($msg)
     return json_encode($result);
 }
 
-// 耗时
-function microtime_float ()
+/**
+ * 记录日志
+ * @param $msg
+ * @return bool
+ */
+function writeLog($msg): bool
 {
-    list($usec , $sec) = explode(" " , microtime());
-    return ( (float)$usec + (float)$sec );
+    if(empty($msg)){
+        return false;
+    }
+    $ip = get_ip();
+    $implement = Db::table('web_log')->add([
+        'ip' => $ip,
+        'time' => date('Y-m-d H:i:s'),
+        'event' => $msg,
+        'detailed' => getIPAddress($ip)
+    ]);
+    if($implement) {
+        return true;
+    } else {
+        return false;
+    }
 }

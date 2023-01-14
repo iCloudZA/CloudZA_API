@@ -96,7 +96,7 @@ $row = Db::table('webset')->find();
             if (data.code === 200) {
                 x.notify(data.msg, 'success')
                 setTimeout(() => {
-                    x.pjax('?set_web')
+                    x.pjax('?control_web')
                 }, 1200)
             } else {
                 x.notify(data.msg, 'warning')

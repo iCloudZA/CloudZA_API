@@ -36,7 +36,8 @@ CREATE TABLE `web_log`
     `id`    int primary key auto_increment comment '主键',
     `ip`    varchar(32) not null comment 'ip',
     `time`  datetime    not null comment '时间',
-    `event` text        not null comment '事件'
+    `event` text        not null comment '事件',
+    `detailed` text not null comment '地址'
 ) ENGINE = INNODB
   DEFAULT CHARSET = utf8;
 

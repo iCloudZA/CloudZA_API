@@ -22,6 +22,7 @@ if ($action == 'login') {
         if ( !Db::table('admin')->update(['cookie' => $COOKIE])) {
             exit(ReturnError('Sever Error!'));
         }
+        writeLog('登录后台');
         setcookie('ADMIN_COOKIE' , $COOKIE , time() + 36000 , '/');
         exit(return_msg('200' , '登录成功' , array('url' => '/admin?index')));
     } else {
