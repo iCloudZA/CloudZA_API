@@ -1,8 +1,4 @@
 <?php
-
-/*
-Name:系统配置API
-*/
 if (!isset($islogin)) header("Location: /"); //非法访问
 
 if($act == 'set') {
@@ -27,6 +23,26 @@ if($act == 'set') {
         }
     } else {
         exit(ReturnError('你没有修改任何内容！'));
+    }
+}
+
+// 删除日志
+if ($act === 'delCheck') {
+    $id = $_POST[ 'id' ] ?? '';
+    if ($id) {
+        $ids = '';
+        foreach ($id as $value) {
+            $ids .= intval($value) . ",";
+        }
+        $ids = rtrim($ids , ",");
+        $res = Db::table('web_log')->where('id' , 'in' , '(' . $ids . ')')->del();
+        if ($res) {
+            exit(ReturnSuccess('删除成功'));
+        } else {
+            exit(ReturnError('删除失败'));
+        }
+    } else {
+        exit(ReturnError('没有需要删除的数据'));
     }
 }
 function f ($arr): bool
