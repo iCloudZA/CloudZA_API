@@ -48,13 +48,14 @@ $bnums = ( $page - 1 ) * $ENUMS;
                                                onclick="checkAll();" />
                                     </div>
                                 </th>
-                                <th style="text-align: center;" class="sorting_disabled" rowspan="1" colspan="1">
+                                <th style="text-align: center;" rowspan="1" colspan="1">
                                     IP
                                 </th>
-                                <th style="text-align: center;" class="sorting_disabled" rowspan="1" colspan="1">
+                                <th style="text-align: center" rowspan="1" colspan="1">详细地址</th>
+                                <th style="text-align: center;" rowspan="1" colspan="1">
                                     事件
                                 </th>
-                                <th style="text-align: center;" class="sorting_disabled" rowspan="1" colspan="1">
+                                <th style="text-align: center;" rowspan="1" colspan="1">
                                     时间
                                 </th>
                             </tr>
@@ -69,7 +70,7 @@ $bnums = ( $page - 1 ) * $ENUMS;
                                     $js = '<script>window.location="' . $url . '/?user_edit&id=' . $user_info[ 'id' ] . '"</script>';
                                     echo $js;
                                 }
-                                echo '<td style="text-align: center;" colspan="4" class="dataTables_empty"><i class="si si-drawer fa-2x"></i><p class="text-muted fs-sm">暂无数据</p></td>';
+                                echo '<td style="text-align: center;" colspan="5" class="dataTables_empty"><i class="si si-drawer fa-2x"></i><p class="text-muted fs-sm">暂无数据</p></td>';
                             }
                             foreach ($res as $k => $v) {
                                 $row = $res[ $k ];
@@ -90,7 +91,10 @@ $bnums = ( $page - 1 ) * $ENUMS;
                                         <?php
                                         echo $row[ 'ip' ]; ?>
                                     </td>
-
+                                    <td style="text-align: center">
+                                        <?php
+                                        echo getIPAddress($row[ 'ip' ]) ?>
+                                    </td>
                                     <td style="text-align: center;" class="fs-sm">
                                         <?php
                                         echo $row[ 'event' ]; ?>
@@ -117,7 +121,8 @@ $bnums = ( $page - 1 ) * $ENUMS;
                     </div>
                     <div class="col-sm-12 col-md-7">
                         <div class="dataTables_paginate paging_full_numbers" id="task-logs-list_paginate">
-                            <?php echo pagination($nums , $ENUMS , $page , $url);?>
+                            <?php
+                            echo pagination($nums , $ENUMS , $page , $url); ?>
                         </div>
                     </div>
                 </div>

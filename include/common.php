@@ -105,16 +105,6 @@ function pagination ($count , $perlogs , $page , $url): string
     return "<ul class=\"pagination pagination-sm\">" . $re . "</ul>";
 }
 
-
-/**
- * 取QQ号
- */
-function get_qqNum ($emil): array|string
-{
-    $qq = str_replace('@qq.com' , '' , $emil);
-    return $qq;
-}
-
 function purge ($string , $trim = true , $filter = true , $force = 0 , $strip = false)
 {
     //递归addslashes  对参数进行净化
@@ -142,12 +132,6 @@ function purge ($string , $trim = true , $filter = true , $force = 0 , $strip = 
     return $string;
 }
 
-
-function check_email ($email): bool
-{
-    //匹配邮箱
-    return preg_match('/^[a-z0-9]+([._-][a-z0-9]+)*@([0-9a-z]+\.[a-z]{2,14}(\.[a-z]{2})?)$/i' , $email) ? true : false;
-}
 
 //数组维度判断
 function foreachArray ($array = [] , $count = 0)

@@ -2,7 +2,10 @@
 if ( !isset($islogin)) header("Location: /"); //非法访问拦截
 //$weekarray=["星期日","星期一","星期二","星期三","星期四","星期五","星期六"];
 //echo $weekarray[date("w",strtotime("2018-10-6"))];
-//echo $weekarray[date("w",time())];?>
+//echo $weekarray[date("w",time())];
+
+
+?>
 
 <div class="block block-rounded bg-primary-light mb-4">
     <div class="block-content bg-white-5">
