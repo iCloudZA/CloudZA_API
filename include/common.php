@@ -1,8 +1,10 @@
 <?php
 require_once 'db.class.php';
 const ADM_EXTEND_MULU = 'extend/adm/';
-//adm扩展目录
+//API存放路径
 const API_EXTEND_MULU = 'extend/api/';
+// API展示路径
+const APIURI = 'api/';
 
 $web_info = Db::table('webset' , 'as A')->find();
 define("TITLE" , ( $web_info[ 'web_title' ] ) ?: 'CloudZA-API');
@@ -13,8 +15,8 @@ define("BEIAN" , ( $web_info[ 'web_beian' ] ) ?: '京ICP备8888888号-8');
 define("FOOTER_BAN" , ( $web_info[ 'web_ban' ] ) ?: '云之安');
 define("PAGES" , ( $web_info[ 'web_page_nums' ] ) ?: '10');
 define('FCPATH' , str_replace("\\" , '/' , dirname(dirname(__FILE__)) . '/'));
-// 网站根目录
-define('WEB_URL' , ( ( $_SERVER[ 'SERVER_PORT' ] == 443 ) ? 'https' : 'http' ) . '://' . $_SERVER[ 'HTTP_HOST' ] . str_replace($_SERVER[ 'DOCUMENT_ROOT' ] , ( substr($_SERVER[ 'DOCUMENT_ROOT' ] , -1) == '/' ) ? '/' : '' , dirname($_SERVER[ 'SCRIPT_FILENAME' ])));
+define('WEB_URL', ( ( $_SERVER[ 'SERVER_PORT' ] == 443 ) ? 'https' : 'http' ) . '://' . $_SERVER[ 'HTTP_HOST' ].'/');
+define('WEB_URL_FILE' , ( ( $_SERVER[ 'SERVER_PORT' ] == 443 ) ? 'https' : 'http' ) . '://' . $_SERVER[ 'HTTP_HOST' ] . str_replace($_SERVER[ 'DOCUMENT_ROOT' ] , ( substr($_SERVER[ 'DOCUMENT_ROOT' ] , -1) == '/' ) ? '/' : '' , dirname($_SERVER[ 'SCRIPT_FILENAME' ])));
 
 
 /**
@@ -232,6 +234,21 @@ function get_ip (int $type = 0 , bool $adv = true): mixed
     return $ip[ $type ];
 }
 
+/**
+ * 生成随机字符串
+ * @param $length int 长度
+ * @return string|null
+ */
+function getRand($length): ?string
+{
+    $str = null;
+    $strPol = "ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678";
+    $max = strlen($strPol) - 1;
+    for ($i = 0;$i < $length;$i++) {
+        $str.= $strPol[rand(0, $max) ];
+    }
+    return $str;
+}
 // url参数转数组
 function toarr ($para)
 {
