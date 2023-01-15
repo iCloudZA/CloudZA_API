@@ -2,14 +2,16 @@
 DROP TABLE IF EXISTS `webset`;
 CREATE TABLE `webset`
 (
-    `web_title`     text        not null comment '网站标题',
-    `web_titleDesc` text        not null comment '标题描述',
-    `web_des`       text        not null comment '网站描述',
-    `web_key`       text        not null comment '网站关键词',
-    `web_qq`        varchar(12) not null comment 'QQ号',
-    `web_beian`     text        not null comment '网站备案号',
-    `web_ban`       text        not null comment '网站底部版权',
-    `web_page_nums` int default '10' comment '每页条数'
+    `web_title`     text                       not null comment '网站标题',
+    `web_titleDesc` text                       not null comment '标题描述',
+    `web_des`       text                       not null comment '网站描述',
+    `web_key`       text                       not null comment '网站关键词',
+    `web_qq`        varchar(12)                not null comment 'QQ号',
+#     `extent_api`    text default 'extend/api/' not null comment 'API路径',
+#     `api_uri`       text default '/api/'       not null comment 'API目录',
+    `web_beian`     text                       not null comment '网站备案号',
+    `web_ban`       text                       not null comment '网站底部版权',
+    `web_page_nums` int  default '10' comment '每页条数'
 ) ENGINE = INNODB
   DEFAULT CHARSET = utf8;
 INSERT INTO public_api.webset (web_title, web_titleDesc, web_des, web_key, web_qq, web_beian, web_ban, web_page_nums)
@@ -32,11 +34,11 @@ VALUES ('admin', '123456', '5844a8e587c353ce2dfbca3def069981');
 DROP TABLE IF EXISTS `web_log`;
 CREATE TABLE `web_log`
 (
-    `id`    int primary key auto_increment comment '主键',
-    `ip`    varchar(32) not null comment 'ip',
-    `time`  datetime    not null comment '时间',
-    `event` text        not null comment '事件',
-    `detailed` text not null comment '地址'
+    `id`       int primary key auto_increment comment '主键',
+    `ip`       varchar(32) not null comment 'ip',
+    `time`     datetime    not null comment '时间',
+    `event`    text        not null comment '事件',
+    `detailed` text        not null comment '地址'
 ) ENGINE = INNODB
   DEFAULT CHARSET = utf8;
 
@@ -44,19 +46,21 @@ CREATE TABLE `web_log`
 DROP TABLE IF EXISTS `api_list`;
 CREATE TABLE `api_list`
 (
-    `id`            int primary key auto_increment comment '主键',
+    `id`            int(10)     NOT NULL auto_increment comment '主键',
     `name`          text comment '名称',
     `api_url`       text comment '接口地址',
     `des`           text comment '描述',
-    `api_key`       text comment '关键词',
     `http_mode`     text comment '请求方法',
     `http_case`     text comment '请求示例',
     `return_format` text comment '返回格式',
     `return_case`   text comment '返回示例',
-    `sing`          varchar(12) comment 'API标识',
-    `state`         int comment 'API状态', -- 正常/维护
-    `pv`            int(10) default '0' comment '浏览量',
-    `add_time`      datetime not null comment '添加时间'
+    `sign`          varchar(12) not null comment 'API标识',
+    `type`          varchar(12) not null comment '类型', -- 本地||外部
+    `state`         int comment 'API状态',               -- 正常/维护
+    `pv`            int(10)     not null default '0' comment '浏览量',
+    `add_time`      datetime    not null comment '添加时间',
+    primary key (`sign`),
+    KEY `id` (`id`)
 ) ENGINE = INNODB
   DEFAULT CHARSET = utf8;
 
