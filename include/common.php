@@ -239,10 +239,10 @@ function get_ip (int $type = 0 , bool $adv = true): mixed
  * @param $length int 长度
  * @return string|null
  */
-function getRand($length): ?string
+function getRand(int $length): ?string
 {
     $str = null;
-    $strPol = "ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678";
+    $strPol = "abcdefhijkmnprstwxyz";
     $max = strlen($strPol) - 1;
     for ($i = 0;$i < $length;$i++) {
         $str.= $strPol[rand(0, $max) ];
@@ -250,7 +250,7 @@ function getRand($length): ?string
     return $str;
 }
 // url参数转数组
-function toarr ($para)
+function toarr ($para): ?array
 {
     $str = mb_substr($para , stripos($para , "?") + 1);
     parse_str($str , $arr);
