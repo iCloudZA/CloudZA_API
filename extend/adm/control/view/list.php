@@ -266,8 +266,8 @@ $bnums = ( $page - 1 ) * $ENUMS;
                         <div class="mb-4">
                             <label class="form-label" for="state">API状态</label>
                             <select class="form-control" id="state" name="state">
-                                <option value="off">维护</option>
                                 <option value="on">正常</option>
+                                <option value="off">维护</option>
                             </select>
                         </div>
                     </div>
