@@ -119,7 +119,7 @@ $bnums = ( $page - 1 ) * $ENUMS;
 
                                     <td style="text-align: center;" class="fs-sm">
                                         <?php
-                                        echo ( strlen($row[ 'des' ]) > 33) ? mb_substr($row[ 'des' ] , 0 , 11).'...' : $row[ 'des' ] ?>
+                                        echo ( strlen($row[ 'des' ]) > 33 ) ? mb_substr($row[ 'des' ] , 0 , 11) . '...' : $row[ 'des' ] ?>
                                     </td>
                                     <td style="text-align: center;" class="fs-sm">
                                         <?php
@@ -136,8 +136,8 @@ $bnums = ( $page - 1 ) * $ENUMS;
                                                 echo $row[ 'id' ] ?>%22,%22api_name%22:%22<?php
                                                 echo $row[ 'name' ] ?>%22,%22api_url%22:%22<?php
                                                 echo $row[ 'api_url' ] ?>%22,%22api_des%22:%22<?php
-                                                echo $row[ 'des' ] ?>%22,%22api_key%22:%22<?php
-                                                echo $row[ 'api_key' ] ?>%22,%22http_mode%22:%22<?php
+                                                echo $row[ 'des' ] ?>%22,%22type%22:%22<?php
+                                                echo $row[ 'type' ] ?>%22,%22http_mode%22:%22<?php
                                                 echo $row[ 'http_mode' ] ?>%22,%22return_format%22:%22<?php
                                                 echo $row[ 'return_format' ] ?>%22,%22http_case%22:%22<?php
                                                 echo $row[ 'http_case' ] ?>%22,%22return_case%22:%22<?php
@@ -174,7 +174,10 @@ $bnums = ( $page - 1 ) * $ENUMS;
                     </div>
                     <div class="col-sm-12 col-md-7">
                         <div class="dataTables_paginate paging_full_numbers" id="task-logs-list_paginate">
-                            <?php if(!$so){echo pagination($nums,$ENUMS,$page,$url);}?>
+                            <?php
+                            if ( !$so) {
+                                echo pagination($nums , $ENUMS , $page , $url);
+                            } ?>
                         </div>
                     </div>
                 </div>
@@ -201,30 +204,34 @@ $bnums = ( $page - 1 ) * $ENUMS;
                     </div>
 
                     <div class="block-content fs-sm">
-                        <div class="row">
-                            <input type="hidden" name="fun" id="fun" value="add">
-                            <input type="hidden" name="api_id" id="api_id" value="">
-                            <div class="col-sm-5 mb-4">
-                                <label class="form-label">API名称</label>
-                                <input type="text" class="form-control fs-sm" name="api_name" id="api_name"
-                                       placeholder="例如：短网址生成" value="">
+                        <input type="hidden" name="fun" id="fun" value="add">
+                        <input type="hidden" name="api_id" id="api_id" value="">
+                        <div class="mb-4">
+                            <label class="form-label">API名称</label>
+                            <input type="text" class="form-control fs-sm" name="api_name" id="api_name"
+                                   placeholder="例如：短网址生成" value="">
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label" for="type">接口类型</label>
+                            <div id="api_type">
+                                <select class="form-control" id="type" name="type" default="local">
+                                    <option value="local">本地</option>
+                                    <option value="external">外部</option>
+                                </select>
                             </div>
-                            <div class="col-sm-7 mb-4">
-                                <label class="form-label">API地址</label>
-                                <input type="text" class="form-control fs-sm" name="api_url" id="api_url"
-                                       placeholder="https://abc.com/api/dome" value="">
-                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label" id="label_title">API目录名</label>
+                            <input type="text" class="form-control fs-sm" name="api_url" id="api_url"
+                                   placeholder="输入API目录名，例如：dwz" value="">
                         </div>
                         <div class="mb-4">
                             <label class="form-label" for="example-textarea-input">API介绍</label>
                             <textarea class="form-control fs-sm " name="api_des" id="api_des" rows="2"
                                       placeholder="例如：将长网址进行缩短，支持百度、新浪、腾讯短网址等等..."></textarea>
                         </div>
-                        <div class="mb-4">
-                            <label class="form-label">关键词</label>
-                            <input type="text" class="form-control fs-sm" name="api_key" id="api_key"
-                                   placeholder="用英文逗号分开例如：短网址,短链接" value="">
-                        </div>
+
                         <div class="row">
                             <div class="col-sm-6 mb-4">
                                 <label class="form-label">请求方法</label>
@@ -271,14 +278,32 @@ $bnums = ( $page - 1 ) * $ENUMS;
         </div>
     </div>
     <script>
+        // 监听select
+        $("#api_type select").change(() => {
+            if ($('select').val() === 'external') {
+                $("#label_title").html("API地址");
+                $("#api_url").attr("placeholder", "输入API链接，例如：https://domain/api/dwz");
+            } else {
+                $("#label_title").html("API目录名");
+                $("#api_url").attr("placeholder", "输入API目录名，例如：dwz");
+            }
+        });
+        // 监听input失去焦点
+        $("#api_url").blur(() => {
+            // 判断当前接口是本地还是外部
+            if (x.getval("#type") === 'local') {
+                $("#http_case").attr("placeholder", "输入API目录名加参数例如：" + x.getval('#api_url') + "?abc=123");
+            }
+        });
+
         function add_api ()
         {
             x.ajax('ajax.php?act=control_' + x.getval('#fun'), {
                 id: x.getval('#api_id'),                            // 接口ID
                 name: x.getval('#api_name'),                        // 接口名字
+                type: x.getval('#type'),                            // 接口类型
                 api_url: x.getval('#api_url'),                      // 接口地址
                 des: x.getval('#api_des'),                          // 接口介绍
-                api_key: x.getval('#api_key'),                      // 接口关键词
                 http_mode: x.getval('#http_mode'),                  // 接口请求方法
                 return_format: x.getval('#return_format'),          // 接口返回格式
                 http_case: x.getval('#http_case'),                  // 接口请求示例
@@ -306,9 +331,9 @@ $bnums = ( $page - 1 ) * $ENUMS;
                 let data = JSON.parse(udata.replace(/\n/g, "\\n").replace(/\r/g, "\\r"));
                 $("input[name='api_id']").val(data.api_id); // 接口ID
                 $("input[name='api_name']").val(data.api_name); // 接口名字
+                $("select[name='type']").val(data.type); // 接口类型
                 $("input[name='api_url']").val(data.api_url); // 接口地址
                 $("textarea[name='api_des']").val(data.api_des); // 接口介绍
-                $("input[name='api_key']").val(data.api_key); // 接口关键词
                 $("input[name='http_mode']").val(data.http_mode); // 接口请求方法
                 $("input[name='return_format']").val(data.return_format); // 接口返回格式
                 $("input[name='http_case']").val(data.http_case); // 接口请求示例
@@ -321,7 +346,6 @@ $bnums = ( $page - 1 ) * $ENUMS;
                 $("input[name='api_name']").val(null); // 接口名字
                 $("input[name='api_url']").val(null); // 接口地址
                 $("textarea[name='api_des']").val(null); // 接口介绍
-                $("input[name='api_key']").val(null); // 接口关键词
                 $("input[name='http_mode']").val(null); // 接口请求方法
                 $("input[name='return_format']").val(null); // 接口返回格式
                 $("input[name='http_case']").val(null); // 接口请求示例
