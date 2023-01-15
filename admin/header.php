@@ -52,7 +52,7 @@ $so = isset($_POST[ 'so' ]) ? purge($_POST[ 'so' ]) : '';
                     </div>
                     <div class="smini-hidden text-center mx-auto">
                         <a class="img-link" data-pjax href="./?index">
-                            <img class="img-avatar" src="https://api.test.zhian.pro/assets/images/users/avatar-1.jpg"
+                            <img class="img-avatar" src="http://q2.qlogo.cn/g?b=qq&nk=<?php echo QQ ?>&s=100"/>
                                  alt="">
                         </a>
                         <ul class="list-inline mt-3 mb-0">
