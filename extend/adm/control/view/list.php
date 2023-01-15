@@ -127,7 +127,7 @@ $bnums = ( $page - 1 ) * $ENUMS;
                                     </td>
                                     <td style="text-align: center;" class="fs-sm">
                                         <?php
-                                        echo $row[ 'pv' ];
+                                        echo ( $row[ 'type' ] == 'external' ) ? 'NULL' : $row[ 'pv' ];
                                         ?>
                                     </td>
                                     <td style="text-align: center;">
