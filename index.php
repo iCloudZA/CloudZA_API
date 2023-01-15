@@ -38,9 +38,12 @@ if (str_contains($uri , '/api/')) {
     $uri_parts = explode('/' , $uri);
     $uri_parts = explode('?' , $uri_parts[ 2 ]);
     if ($uri_parts[ 0 ]) {
-        $sign = Db::table('api_list')->where('sign' , $uri_parts[ 0 ])->find();
+        $table = Db::table('api_list');
+        $sign = $table->where('sign' , $uri_parts[ 0 ])->find();
         if ($sign && file_exists(FCPATH . API_EXTEND_MULU . $uri_parts[ 0 ] . '/index.php')) {
             require FCPATH . API_EXTEND_MULU . $uri_parts[ 0 ] . '/index.php';
+            $pv = $sign[ 'pv' ] + 1;
+            $table->where('sign' , $uri_parts[ 0 ])->update(['pv' => $pv]);
             exit;
         } else {
             exit(ReturnError('暂无此接口'));
