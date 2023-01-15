@@ -141,7 +141,8 @@ $bnums = ( $page - 1 ) * $ENUMS;
                                                 echo $row[ 'http_mode' ] ?>%22,%22return_format%22:%22<?php
                                                 echo $row[ 'return_format' ] ?>%22,%22http_case%22:%22<?php
                                                 echo $row[ 'http_case' ] ?>%22,%22return_case%22:%22<?php
-                                                echo base64_encode($row[ 'return_case' ]) ?>%22%7D');">
+                                                echo base64_encode($row[ 'return_case' ]) ?>%22,%22state%22:%22<?php
+                                                echo $row[ 'state' ] ?>%22%7D');">
                                             修改
                                         </button>
                                         <button type="button" class="btn btn-sm btn-alt-primary me-1">
@@ -262,7 +263,13 @@ $bnums = ( $page - 1 ) * $ENUMS;
     }
 }'></textarea>
                         </div>
-
+                        <div class="mb-4">
+                            <label class="form-label" for="state">API状态</label>
+                            <select class="form-control" id="state" name="state">
+                                <option value="off">维护</option>
+                                <option value="on">正常</option>
+                            </select>
+                        </div>
                     </div>
 
                     <div class="block-content block-content-full block-content-sm text-end border-top">
@@ -307,7 +314,8 @@ $bnums = ( $page - 1 ) * $ENUMS;
                 http_mode: x.getval('#http_mode'),                  // 接口请求方法
                 return_format: x.getval('#return_format'),          // 接口返回格式
                 http_case: x.getval('#http_case'),                  // 接口请求示例
-                return_case: x.getval('#return_case')               // 接口返回示例
+                return_case: x.getval('#return_case'),              // 接口返回示例
+                state: x.getval('#state')                            // 接口状态
             }, (data) => {
                 if (data.code === 200) {
                     console.log('return =>', data)
@@ -338,6 +346,7 @@ $bnums = ( $page - 1 ) * $ENUMS;
                 $("input[name='return_format']").val(data.return_format); // 接口返回格式
                 $("input[name='http_case']").val(data.http_case); // 接口请求示例
                 $("textarea[name='return_case']").val(Base64.decode(data.return_case)); // 接口返回示例
+                $("select[name='state']").val(data.state); // 接口状态
                 $("input[name='fun']").val('edit') // 编辑
                 $("#title").html('编辑API');
                 $('#modal-top').modal('show');
@@ -350,6 +359,7 @@ $bnums = ( $page - 1 ) * $ENUMS;
                 $("input[name='return_format']").val(null); // 接口返回格式
                 $("input[name='http_case']").val(null); // 接口请求示例
                 $("textarea[name='return_case']").val(null); // 接口返回示例
+                $("select[name='state']").val('on'); // 接口状态
                 $("input[name='fun']").val('add') // 新增
                 $("#title").html('新增API');
                 $('#modal-top').modal('show');

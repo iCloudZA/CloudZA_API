@@ -2,21 +2,22 @@
 if ( !isset($islogin)) header("Location: /");//非法访问
 // 添加API
 if ($act === 'add') {
-    $data[ 'name' ] = isset($_POST[ 'name' ]) && !empty($_POST[ 'name' ]) ? purge($_POST[ 'name' ]) : '';
-    $data[ 'type' ] = isset($_POST[ 'type' ]) && !empty($_POST[ 'type' ]) ? purge($_POST[ 'type' ]) : '';       // 接口名字
+    $data[ 'name' ] = isset($_POST[ 'name' ]) && !empty($_POST[ 'name' ]) ? purge($_POST[ 'name' ]) : '';                                       // 接口名字
+    $data[ 'type' ] = isset($_POST[ 'type' ]) && !empty($_POST[ 'type' ]) ? purge($_POST[ 'type' ]) : '';                                       // 接口类型
     $data[ 'api_url' ] = isset($_POST[ 'api_url' ]) && !empty($_POST[ 'api_url' ]) ? purge($_POST[ 'api_url' ]) : '';                           // 接口地址
-    $data[ 'des' ] = isset($_POST[ 'des' ]) && !empty($_POST[ 'des' ]) ? purge($_POST[ 'des' ]) : '';                                           // 接口介绍     // 接口关键词
+    $data[ 'des' ] = isset($_POST[ 'des' ]) && !empty($_POST[ 'des' ]) ? purge($_POST[ 'des' ]) : '';                                           // 接口介绍
     $data[ 'http_mode' ] = isset($_POST[ 'http_mode' ]) && !empty($_POST[ 'http_mode' ]) ? purge($_POST[ 'http_mode' ]) : '';                   // 接口请求方法
     $data[ 'return_format' ] = isset($_POST[ 'return_format' ]) && !empty($_POST[ 'return_format' ]) ? purge($_POST[ 'return_format' ]) : '';   // 接口返回格式
     $data[ 'http_case' ] = isset($_POST[ 'http_case' ]) && !empty($_POST[ 'http_case' ]) ? purge($_POST[ 'http_case' ]) : '';                   // 接口请求示例
-    $data[ 'return_case' ] = isset($_POST[ 'return_case' ]) && !empty($_POST[ 'return_case' ]) ? $_POST[ 'return_case' ] : '';
+    $data[ 'return_case' ] = isset($_POST[ 'return_case' ]) && !empty($_POST[ 'return_case' ]) ? $_POST[ 'return_case' ] : '';                  // 接口返回示例
+    $data[ 'state' ] = isset($_POST['state']) && !empty($_POST['state']) ? purge($_POST['state']) : '';                                         // 接口状态
     $data[ 'add_time' ] = date("Y-m-d H:i:s"); // 添加时间
     if($data['type'] == 'local'){
         $data['sign'] = $data[ 'api_url' ];
 //        $data['api_url'] = WEB_URL.APIURI.$data['api_url'];
 //        $data[ 'http_case' ] = WEB_URL.APIURI.$data[ 'http_case' ];
     } else if($data['type'] == 'external') {
-        $data['sign'] = 'API_' . getRand(4);
+        $data['sign'] = 'api-' . getRand(4);
     } else {
         exit(ReturnError('Form error!'));
     }
@@ -31,21 +32,22 @@ if ($act === 'add') {
 }
 //修改API
 if ($act === 'edit') {
-    $id = isset($_POST[ 'id' ]) && !empty($_POST[ 'id' ]) ? purge($_POST[ 'id' ]) : '';                                                         //id
-    $data[ 'name' ] = isset($_POST[ 'name' ]) && !empty($_POST[ 'name' ]) ? purge($_POST[ 'name' ]) : '';
-    $data[ 'type' ] = isset($_POST[ 'type' ]) && !empty($_POST[ 'type' ]) ? purge($_POST[ 'type' ]) : '';       // 接口名字
+    $id = isset($_POST[ 'id' ]) && !empty($_POST[ 'id' ]) ? purge($_POST[ 'id' ]) : '';                                                         // id
+    $data[ 'name' ] = isset($_POST[ 'name' ]) && !empty($_POST[ 'name' ]) ? purge($_POST[ 'name' ]) : '';                                       // 接口名字
+    $data[ 'type' ] = isset($_POST[ 'type' ]) && !empty($_POST[ 'type' ]) ? purge($_POST[ 'type' ]) : '';                                       // 接口类型
     $data[ 'api_url' ] = isset($_POST[ 'api_url' ]) && !empty($_POST[ 'api_url' ]) ? purge($_POST[ 'api_url' ]) : '';                           // 接口地址
-    $data[ 'des' ] = isset($_POST[ 'des' ]) && !empty($_POST[ 'des' ]) ? purge($_POST[ 'des' ]) : '';                                           // 接口介绍     // 接口关键词
+    $data[ 'des' ] = isset($_POST[ 'des' ]) && !empty($_POST[ 'des' ]) ? purge($_POST[ 'des' ]) : '';                                           // 接口介绍
     $data[ 'http_mode' ] = isset($_POST[ 'http_mode' ]) && !empty($_POST[ 'http_mode' ]) ? purge($_POST[ 'http_mode' ]) : '';                   // 接口请求方法
     $data[ 'return_format' ] = isset($_POST[ 'return_format' ]) && !empty($_POST[ 'return_format' ]) ? purge($_POST[ 'return_format' ]) : '';   // 接口返回格式
     $data[ 'http_case' ] = isset($_POST[ 'http_case' ]) && !empty($_POST[ 'http_case' ]) ? purge($_POST[ 'http_case' ]) : '';                   // 接口请求示例
-    $data[ 'return_case' ] = isset($_POST[ 'return_case' ]) && !empty($_POST[ 'return_case' ]) ? $_POST[ 'return_case' ] : '';
+    $data[ 'return_case' ] = isset($_POST[ 'return_case' ]) && !empty($_POST[ 'return_case' ]) ? $_POST[ 'return_case' ] : '';                  // 接口返回示例
+    $data[ 'state' ] = isset($_POST[ 'state' ]) && !empty($_POST[ 'state' ]) ? $_POST[ 'state' ] : '';                                          // 接口状态
     if($data['type'] == 'local'){
         $data['sign'] = $data[ 'api_url' ];
 //        $data['api_url'] = WEB_URL.APIURI.$data['api_url'];
 //        $data[ 'http_case' ] = WEB_URL.APIURI.$data[ 'http_case' ];
     } else if($data['type'] == 'external') {
-//        $data['sign'] = 'API_' . getRand(4);
+//        $data['sign'] = 'api-' . getRand(4);
     } else {
         exit(ReturnError('Form error!'));
     }
