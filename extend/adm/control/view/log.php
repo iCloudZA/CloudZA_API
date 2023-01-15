@@ -35,6 +35,11 @@ $bnums = ( $page - 1 ) * $ENUMS;
         </div>
         <div class="block-content block-content-full">
             <div class="dataTables_wrapper dt-bootstrap5 no-footer">
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <button type="button" class="btn btn-sm btn-alt-primary me-1" onclick="delLog()">清空日志</button>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-sm-12 table-responsive">
                         <table class="table table-bordered table-striped table-vcenter js-dataTable-responsive  no-footer dtr-inline"
@@ -147,7 +152,19 @@ $bnums = ( $page - 1 ) * $ENUMS;
             }
         }
     }
-
+    function delLog ()
+    {
+        x.del('ajax.php?act=control_web_delLog',null,(data)=>{
+            if (200 === data.code) {
+                x.notify(data.msg, 'success')
+                setTimeout(() => {
+                    x.pjax('?control_log');
+                }, 1200)
+            } else {
+                x.notify(data.msg, 'warning')
+            }
+        },'你确定要清空所有日志吗?')
+    }
     function delSelect ()
     {
         let id_array = [];

@@ -1,16 +1,16 @@
 <?php
-if (!isset($islogin)) header("Location: /"); //非法访问
+if ( !isset($islogin)) header("Location: /"); //非法访问
 
-if($act == 'set') {
+if ($act == 'set') {
     $data[ 'web_title' ] = isset($_POST[ 'web_title' ]) && !empty($_POST[ 'web_title' ]) ? purge($_POST[ 'web_title' ]) : '';
-    $data['web_titleDesc'] = isset($_POST[ 'web_titleDesc' ]) && !empty($_POST[ 'web_titleDesc' ]) ? purge($_POST[ 'web_titleDesc' ]) : '';
+    $data[ 'web_titleDesc' ] = isset($_POST[ 'web_titleDesc' ]) && !empty($_POST[ 'web_titleDesc' ]) ? purge($_POST[ 'web_titleDesc' ]) : '';
     $data[ 'web_des' ] = isset($_POST[ 'web_des' ]) && !empty($_POST[ 'web_des' ]) ? purge($_POST[ 'web_des' ]) : '';
     $data[ 'web_key' ] = isset($_POST[ 'web_key' ]) && !empty($_POST[ 'web_key' ]) ? purge($_POST[ 'web_key' ]) : '';
     $data[ 'web_qq' ] = isset($_POST[ 'web_qq' ]) && !empty($_POST[ 'web_qq' ]) ? purge($_POST[ 'web_qq' ]) : '';
     $data[ 'web_beian' ] = isset($_POST[ 'web_beian' ]) && !empty($_POST[ 'web_beian' ]) ? purge($_POST[ 'web_beian' ]) : '';
     $data[ 'web_ban' ] = isset($_POST[ 'web_ban' ]) && !empty($_POST[ 'web_ban' ]) ? purge($_POST[ 'web_ban' ]) : '';
     $data[ 'web_page_nums' ] = isset($_POST[ 'web_page_nums' ]) && !empty($_POST[ 'web_page_nums' ]) ? purge($_POST[ 'web_page_nums' ]) : '';
-    if($data['web_page_nums']<10) exit(ReturnError('分页最低设置10条'));
+    if ($data[ 'web_page_nums' ] < 10) exit(ReturnError('分页最低设置10条'));
     if ( !f($data)) exit(ReturnError('数据不完整'));
     $table = Db::table('webset');
     $origData = $table->find();
@@ -26,7 +26,13 @@ if($act == 'set') {
         exit(ReturnError('你没有修改任何内容！'));
     }
 }
-
+if ($act === 'delLog') {
+    if (Db::table('web_log')->del()) {
+        exit(ReturnSuccess('删除成功'));
+    } else {
+        exit(ReturnError('删除失败'));
+    }
+}
 // 删除日志
 if ($act === 'delCheck') {
     $id = $_POST[ 'id' ] ?? '';
