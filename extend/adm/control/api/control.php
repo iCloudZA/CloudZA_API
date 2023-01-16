@@ -10,6 +10,7 @@ if ($act === 'add') {
     $data[ 'return_format' ] = isset($_POST[ 'return_format' ]) && !empty($_POST[ 'return_format' ]) ? purge($_POST[ 'return_format' ]) : '';   // 接口返回格式
     $data[ 'http_case' ] = isset($_POST[ 'http_case' ]) && !empty($_POST[ 'http_case' ]) ? purge($_POST[ 'http_case' ]) : '';                   // 接口请求示例
     $data[ 'return_case' ] = isset($_POST[ 'return_case' ]) && !empty($_POST[ 'return_case' ]) ? $_POST[ 'return_case' ] : '';                  // 接口返回示例
+    $data[ 'code_case' ] = isset($_POST[ 'code_case' ]) && !empty($_POST[ 'code_case' ]) ? $_POST[ 'code_case' ] : '';                          // 接口代码示例
     $data[ 'state' ] = isset($_POST['state']) && !empty($_POST['state']) ? purge($_POST['state']) : '';                                         // 接口状态
     $data[ 'add_time' ] = date("Y-m-d H:i:s"); // 添加时间
     if($data['type'] == 'local'){
@@ -41,6 +42,7 @@ if ($act === 'edit') {
     $data[ 'return_format' ] = isset($_POST[ 'return_format' ]) && !empty($_POST[ 'return_format' ]) ? purge($_POST[ 'return_format' ]) : '';   // 接口返回格式
     $data[ 'http_case' ] = isset($_POST[ 'http_case' ]) && !empty($_POST[ 'http_case' ]) ? purge($_POST[ 'http_case' ]) : '';                   // 接口请求示例
     $data[ 'return_case' ] = isset($_POST[ 'return_case' ]) && !empty($_POST[ 'return_case' ]) ? $_POST[ 'return_case' ] : '';                  // 接口返回示例
+    $data[ 'code_case' ] = isset($_POST[ 'code_case' ]) && !empty($_POST[ 'code_case' ]) ? $_POST[ 'code_case' ] : '';                          // 接口代码示例
     $data[ 'state' ] = isset($_POST[ 'state' ]) && !empty($_POST[ 'state' ]) ? $_POST[ 'state' ] : '';                                          // 接口状态
     if($data['type'] == 'local'){
         $data['sign'] = $data[ 'api_url' ];

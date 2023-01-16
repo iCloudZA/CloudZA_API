@@ -2,16 +2,16 @@
 DROP TABLE IF EXISTS `webset`;
 CREATE TABLE `webset`
 (
-    `web_title`     text                       not null comment '网站标题',
-    `web_titleDesc` text                       not null comment '标题描述',
-    `web_des`       text                       not null comment '网站描述',
-    `web_key`       text                       not null comment '网站关键词',
-    `web_qq`        varchar(12)                not null comment 'QQ号',
+    `web_title`     text        not null comment '网站标题',
+    `web_titleDesc` text        not null comment '标题描述',
+    `web_des`       text        not null comment '网站描述',
+    `web_key`       text        not null comment '网站关键词',
+    `web_qq`        varchar(12) not null comment 'QQ号',
 #     `extent_api`    text default 'extend/api/' not null comment 'API路径',
 #     `api_uri`       text default '/api/'       not null comment 'API目录',
-    `web_beian`     text                       not null comment '网站备案号',
-    `web_ban`       text                       not null comment '网站底部版权',
-    `web_page_nums` int  default '10' comment '每页条数'
+    `web_beian`     text        not null comment '网站备案号',
+    `web_ban`       text        not null comment '网站底部版权',
+    `web_page_nums` int default '10' comment '每页条数'
 ) ENGINE = INNODB
   DEFAULT CHARSET = utf8;
 INSERT INTO public_api.webset (web_title, web_titleDesc, web_des, web_key, web_qq, web_beian, web_ban, web_page_nums)
@@ -54,9 +54,10 @@ CREATE TABLE `api_list`
     `http_case`     text comment '请求示例',
     `return_format` text comment '返回格式',
     `return_case`   text comment '返回示例',
+    `code_case`     text comment '代码示例',
     `sign`          varchar(12) not null comment 'API标识',
     `type`          varchar(12) not null comment '类型', -- 本地||外部
-    `state`         int comment 'API状态',               -- 正常/维护
+    `state`         varchar(3) comment 'API状态',               -- 正常/维护
     `pv`            int(10)     not null default '0' comment '浏览量',
     `add_time`      datetime    not null comment '添加时间',
     primary key (`sign`),

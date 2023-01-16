@@ -64,25 +64,26 @@ $bnums = ( $page - 1 ) * $ENUMS;
                                aria-describedby="task-logs-list_info">
                             <thead>
                             <tr>
-                                <th style="width: 10px;text-align: center;">
+                                <th style="letter-spacing: initial;width: 10px;text-align: center;">
                                     <div class="custom-control custom-checkbox">
                                         <label for="all"></label>
                                         <input type="checkbox" class="custom-control-input" id="all"
                                                onclick="checkAll();" />
                                     </div>
                                 </th>
-                                <th style="text-align: center;" rowspan="1" colspan="1">
+                                <th style="letter-spacing: initial;text-align: center;" rowspan="1" colspan="1">
                                     API名称
                                 </th>
-                                <th style="text-align: center;" rowspan="1" colspan="1">
+                                <th style="letter-spacing: initial;text-align: center;" rowspan="1" colspan="1">
                                     API介绍
                                 </th>
-                                <th style="width:40px;text-align: center;" rowspan="1" colspan="1">
+                                <th style="text-align: center;" rowspan="1" colspan="1">
                                     添加时间
                                 </th>
-                                <th style="text-align: center;" rowspan="1" colspan="1">pv</th>
-                                <th style="text-align: center;" rowspan="1" colspan="1">类型</th>
-                                <th style="width: 20px;text-align: center;" rowspan="1"
+                                <th style="letter-spacing: initial;text-align: center;" rowspan="1" colspan="1">pv</th>
+                                <th style="letter-spacing: initial;text-align: center;" rowspan="1" colspan="1">类型</th>
+                                <th style="letter-spacing: initial;text-align: center;" rowspan="1" colspan="1">状态</th>
+                                <th style="letter-spacing: initial;width: 20px;text-align: center;" rowspan="1"
                                     colspan="1">操作
                                 </th>
                             </tr>
@@ -96,7 +97,7 @@ $bnums = ( $page - 1 ) * $ENUMS;
                                     $js = '<script>window.location="' . $url . '/?user_edit&id=' . $user_info[ 'id' ] . '"</script>';
                                     echo $js;
                                 }
-                                echo '<td style="text-align: center;" colspan="6" class="dataTables_empty"><i class="si si-drawer fa-2x"></i><p class="text-muted fs-sm">暂无数据</p></td>';
+                                echo '<td style="text-align: center;" colspan="8" class="dataTables_empty"><i class="si si-drawer fa-2x"></i><p class="text-muted fs-sm">暂无数据</p></td>';
                             }
                             foreach ($res as $k => $v) {
                                 $row = $res[ $k ];
@@ -138,6 +139,13 @@ $bnums = ( $page - 1 ) * $ENUMS;
                                         ?>
                                     </td>
                                     <td style="text-align: center;">
+                                        <?php if($row['state'] == 'on'){  ?>
+                                            <i class="far fa-circle-check text-success"></i>
+                                        <?php } else {?>
+                                            <i class="far fa-circle-xmark text-danger"></i>
+                                        <?php } ?>
+                                    </td>
+                                    <td style="text-align: center;">
                                         <button type="button" class="btn btn-sm btn-alt-primary dropdown-toggle"
                                                 id="dropdown-default-alt-primary" data-bs-toggle="dropdown"
                                                 aria-haspopup="true" aria-expanded="false">
@@ -154,10 +162,11 @@ $bnums = ( $page - 1 ) * $ENUMS;
                                                echo $row[ 'http_mode' ] ?>%22,%22return_format%22:%22<?php
                                                echo $row[ 'return_format' ] ?>%22,%22http_case%22:%22<?php
                                                echo $row[ 'http_case' ] ?>%22,%22return_case%22:%22<?php
-                                               echo base64_encode($row[ 'return_case' ]) ?>%22,%22state%22:%22<?php
-                                               echo $row[ 'state' ] ?>%22%7D');"">修改</a>
-                                            <a class="dropdown-item" href="javascript:void(0)">代码示例</a>
-                                            <a class="dropdown-item" href="javascript:void(0)">错误代码</a>
+                                               echo base64_encode($row[ 'return_case' ]) ?>%22,%22code_case%22:%22<?php
+                                               echo base64_encode($row[ 'code_case' ]) ?>%22,%22state%22:%22<?php
+                                               echo $row[ 'state' ] ?>%22%7D');">修改</a>
+                                            <a class="dropdown-item" href="javascript:void(0)">请求参数</a>
+                                            <a class="dropdown-item" href="javascript:void(0)">返回参数</a>
                                             <div class="dropdown-divider"></div>
                                             <a class="dropdown-item" href="javascript:void(0)" onclick="del('<?php
                                             echo $row[ 'name' ] ?>',<?php
@@ -219,20 +228,22 @@ $bnums = ( $page - 1 ) * $ENUMS;
                             <input type="text" class="form-control fs-sm" name="api_name" id="api_name"
                                    placeholder="例如：短网址生成" value="">
                         </div>
-                        <div class="mb-4">
-                            <label class="form-label" for="type">接口类型</label>
-                            <div id="api_type">
-                                <select class="form-control" id="type" name="type" default="local">
-                                    <option value="local">本地</option>
-                                    <option value="external">外部</option>
-                                </select>
+                        <div class="row mb-4">
+                            <div class="col-6">
+                                <label class="form-label" for="type">接口类型</label>
+                                <div id="api_type">
+                                    <select class="form-control fs-sm" id="type" name="type" default="local">
+                                        <option value="local">本地</option>
+                                        <option value="external">外部</option>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="mb-4">
-                            <label class="form-label" id="label_title" for="api_url">API目录名</label>
-                            <input type="text" class="form-control fs-sm" name="api_url" id="api_url"
-                                   placeholder="输入API目录名，例如：dwz" value="">
+                            <div class="col-6">
+                                <label class="form-label" id="label_title" for="api_url">API目录名</label>
+                                <input type="text" class="form-control fs-sm" name="api_url" id="api_url"
+                                       placeholder="例如：dwz" value="">
+                            </div>
                         </div>
                         <div class="mb-4">
                             <label class="form-label" for="api_des">API介绍</label>
@@ -271,6 +282,11 @@ $bnums = ( $page - 1 ) * $ENUMS;
 }'></textarea>
                         </div>
                         <div class="mb-4">
+                            <label class="form-label" for="code_case">代码示例</label>
+                            <textarea class="form-control fs-sm " name="code_case" id="code_case" rows="4"
+                                      placeholder='hello word'></textarea>
+                        </div>
+                        <div class="mb-4">
                             <label class="form-label" for="state">API状态</label>
                             <select class="form-control" id="state" name="state">
                                 <option value="on">正常</option>
@@ -296,10 +312,10 @@ $bnums = ( $page - 1 ) * $ENUMS;
         $("#api_type select").change(() => {
             if ($('select').val() === 'external') {
                 $("#label_title").html("API地址");
-                $("#api_url").attr("placeholder", "输入API链接，例如：https://domain/api/dwz");
+                $("#api_url").attr("placeholder", "例如：https://domain/api/dwz");
             } else {
                 $("#label_title").html("API目录名");
-                $("#api_url").attr("placeholder", "输入API目录名，例如：dwz");
+                $("#api_url").attr("placeholder", "例如：dwz");
             }
         });
         // 监听input失去焦点
@@ -322,6 +338,7 @@ $bnums = ( $page - 1 ) * $ENUMS;
                 return_format: x.getval('#return_format'),          // 接口返回格式
                 http_case: x.getval('#http_case'),                  // 接口请求示例
                 return_case: x.getval('#return_case'),              // 接口返回示例
+                code_case: x.getval('#code_case'),                  // 接口代码示例
                 state: x.getval('#state')                            // 接口状态
             }, (data) => {
                 if (data.code === 200) {
@@ -353,6 +370,7 @@ $bnums = ( $page - 1 ) * $ENUMS;
                 $("input[name='return_format']").val(data.return_format); // 接口返回格式
                 $("input[name='http_case']").val(data.http_case); // 接口请求示例
                 $("textarea[name='return_case']").val(Base64.decode(data.return_case)); // 接口返回示例
+                $("textarea[name='code_case']").val(Base64.decode(data.code_case)); // 接口代码示例
                 $("select[name='state']").val(data.state); // 接口状态
                 $("input[name='fun']").val('edit') // 编辑
                 $("#title").html('编辑API');
@@ -366,6 +384,7 @@ $bnums = ( $page - 1 ) * $ENUMS;
                 $("input[name='return_format']").val(null); // 接口返回格式
                 $("input[name='http_case']").val(null); // 接口请求示例
                 $("textarea[name='return_case']").val(null); // 接口返回示例
+                $("textarea[name='code_case']").val(null); // 接口代码示例
                 $("select[name='state']").val('on'); // 接口状态
                 $("input[name='fun']").val('add') // 新增
                 $("#title").html('新增API');
