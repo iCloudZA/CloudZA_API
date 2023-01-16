@@ -40,10 +40,16 @@ if (str_contains($uri , '/api/')) {
     if ($uri_parts[ 0 ]) {
         $table = Db::table('api_list');
         $sign = $table->where('sign' , $uri_parts[ 0 ])->find();
+        // 判断数据库中&&本地接口是否存在
         if ($sign && file_exists(FCPATH . API_EXTEND_MULU . $uri_parts[ 0 ] . '/index.php')) {
-            require FCPATH . API_EXTEND_MULU . $uri_parts[ 0 ] . '/index.php';
-            $pv = $sign[ 'pv' ] + 1;
-            $table->where('sign' , $uri_parts[ 0 ])->update(['pv' => $pv]);
+            // 判断接口是否正常
+            if ($sign[ 'state' ] === 'on') {
+                require FCPATH . API_EXTEND_MULU . $uri_parts[ 0 ] . '/index.php';
+                $pv = $sign[ 'pv' ] + 1;
+                $table->where('sign' , $uri_parts[ 0 ])->update(['pv' => $pv]);
+            } else {
+                exit(ReturnError('接口维护中'));
+            }
             exit;
         } else {
             exit(ReturnError('暂无此接口'));
@@ -62,12 +68,12 @@ if (str_contains($uri , '/api/')) {
         echo TITLE ?> - <?php
         echo TITLE_DESC ?></title>
     <link rel="icon" href="/assets/img/favicons/favicon.png">
-    <link rel="stylesheet" id="css-main" href="../assets/css/codebase.min-5.4.css">
+    <link rel="stylesheet" id="css-main" href="/assets/css/codebase.min-5.4.css">
 </head>
 <body>
 <div id="page-container" class="main-content-boxed">
     <main id="main-container">
-        <div class="bg-image" style="background-image: url('../assets/img/photo23@2x.jpg');">
+        <div class="bg-image" style="background-image: url('/assets/img/photo23@2x.jpg');">
             <div class="hero bg-black-50">
                 <div class="hero-inner">
                     <div class="content content-full">
@@ -87,6 +93,6 @@ if (str_contains($uri , '/api/')) {
         </div>
     </main>
 </div>
-<script src="../assets/js/codebase.app.min-5.4.js"></script>
+<script src="/assets/js/codebase.app.min-5.4.js"></script>
 </body>
 </html>

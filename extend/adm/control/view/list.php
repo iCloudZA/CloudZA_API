@@ -50,7 +50,7 @@ $bnums = ( $page - 1 ) * $ENUMS;
                 <?php
                 $data = Db::table('api_list');
                 if ($so != '') {
-                    $list = $data->where('name' , 'like' , "%{$so}%")->whereOr('des' , 'like' , "%{$so}%");
+                    $list = $data->where('name' , 'like' , "%$so%")->whereOr('des' , 'like' , "%$so%");
                 } else {
                     $list = $data->order('id ASC')->limit($bnums , $ENUMS);
                 }
@@ -66,6 +66,7 @@ $bnums = ( $page - 1 ) * $ENUMS;
                             <tr>
                                 <th style="width: 10px;text-align: center;">
                                     <div class="custom-control custom-checkbox">
+                                        <label for="all"></label>
                                         <input type="checkbox" class="custom-control-input" id="all"
                                                onclick="checkAll();" />
                                     </div>
@@ -76,11 +77,12 @@ $bnums = ( $page - 1 ) * $ENUMS;
                                 <th style="text-align: center;" rowspan="1" colspan="1">
                                     API介绍
                                 </th>
-                                <th style="text-align: center;" rowspan="1" colspan="1">
+                                <th style="width:40px;text-align: center;" rowspan="1" colspan="1">
                                     添加时间
                                 </th>
                                 <th style="text-align: center;" rowspan="1" colspan="1">pv</th>
-                                <th style="width: 40px;text-align: center;" rowspan="1"
+                                <th style="text-align: center;" rowspan="1" colspan="1">类型</th>
+                                <th style="width: 20px;text-align: center;" rowspan="1"
                                     colspan="1">操作
                                 </th>
                             </tr>
@@ -90,7 +92,7 @@ $bnums = ( $page - 1 ) * $ENUMS;
                             <?php
                             if (json_encode($res) == '[]') {
                                 if ( !empty($_GET[ 'page' ])) {
-                                    $url = ( ( $_SERVER[ 'SERVER_PORT' ] == 443 ) ? 'https' : 'http' ) . '://' . $_SERVER[ 'HTTP_HOST' ] . str_replace($_SERVER[ 'DOCUMENT_ROOT' ] , ( substr($_SERVER[ 'DOCUMENT_ROOT' ] , -1) == '/' ) ? '/' : '' , dirname($_SERVER[ 'SCRIPT_FILENAME' ]));
+                                    $url = ( ( $_SERVER[ 'SERVER_PORT' ] == 443 ) ? 'https' : 'http' ) . '://' . $_SERVER[ 'HTTP_HOST' ] . str_replace($_SERVER[ 'DOCUMENT_ROOT' ] , ( str_ends_with($_SERVER[ 'DOCUMENT_ROOT' ] , '/') ) ? '/' : '' , dirname($_SERVER[ 'SCRIPT_FILENAME' ]));
                                     $js = '<script>window.location="' . $url . '/?user_edit&id=' . $user_info[ 'id' ] . '"</script>';
                                     echo $js;
                                 }
@@ -130,33 +132,38 @@ $bnums = ( $page - 1 ) * $ENUMS;
                                         echo ( $row[ 'type' ] == 'external' ) ? 'NULL' : $row[ 'pv' ];
                                         ?>
                                     </td>
+                                    <td style="text-align: center;" class="fs-sm">
+                                        <?php
+                                        echo ( $row[ 'type' ] == 'external' ) ? '外部' : '本地';
+                                        ?>
+                                    </td>
                                     <td style="text-align: center;">
-                                        <button type="button" class="btn btn-sm btn-alt-primary me-1"
-                                                onclick="edit_modal('%7B%22api_id%22:%22<?php
-                                                echo $row[ 'id' ] ?>%22,%22api_name%22:%22<?php
-                                                echo $row[ 'name' ] ?>%22,%22api_url%22:%22<?php
-                                                echo $row[ 'api_url' ] ?>%22,%22api_des%22:%22<?php
-                                                echo $row[ 'des' ] ?>%22,%22type%22:%22<?php
-                                                echo $row[ 'type' ] ?>%22,%22http_mode%22:%22<?php
-                                                echo $row[ 'http_mode' ] ?>%22,%22return_format%22:%22<?php
-                                                echo $row[ 'return_format' ] ?>%22,%22http_case%22:%22<?php
-                                                echo $row[ 'http_case' ] ?>%22,%22return_case%22:%22<?php
-                                                echo base64_encode($row[ 'return_case' ]) ?>%22,%22state%22:%22<?php
-                                                echo $row[ 'state' ] ?>%22%7D');">
-                                            修改
+                                        <button type="button" class="btn btn-sm btn-alt-primary dropdown-toggle"
+                                                id="dropdown-default-alt-primary" data-bs-toggle="dropdown"
+                                                aria-haspopup="true" aria-expanded="false">
+                                            设置
                                         </button>
-                                        <button type="button" class="btn btn-sm btn-alt-primary me-1">
-                                            代码示例
-                                        </button>
-                                        <button type="button" class="btn btn-sm btn-alt-primary me-1">
-                                            错误代码
-                                        </button>
-                                        <button type="button" class="btn btn-sm btn-alt-primary me-1"
-                                                onclick="del('<?php
-                                                echo $row[ 'name' ] ?>',<?php
-                                                echo $row[ 'id' ] ?>)">
-                                            删除
-                                        </button>
+                                        <div class="dropdown-menu fs-sm" aria-labelledby="dropdown-default-alt-primary">
+                                            <a class="dropdown-item" href="javascript:void(0)"
+                                               onclick="edit_modal('%7B%22api_id%22:%22<?php
+                                               echo $row[ 'id' ] ?>%22,%22api_name%22:%22<?php
+                                               echo $row[ 'name' ] ?>%22,%22api_url%22:%22<?php
+                                               echo $row[ 'api_url' ] ?>%22,%22api_des%22:%22<?php
+                                               echo $row[ 'des' ] ?>%22,%22type%22:%22<?php
+                                               echo $row[ 'type' ] ?>%22,%22http_mode%22:%22<?php
+                                               echo $row[ 'http_mode' ] ?>%22,%22return_format%22:%22<?php
+                                               echo $row[ 'return_format' ] ?>%22,%22http_case%22:%22<?php
+                                               echo $row[ 'http_case' ] ?>%22,%22return_case%22:%22<?php
+                                               echo base64_encode($row[ 'return_case' ]) ?>%22,%22state%22:%22<?php
+                                               echo $row[ 'state' ] ?>%22%7D');"">修改</a>
+                                            <a class="dropdown-item" href="javascript:void(0)">代码示例</a>
+                                            <a class="dropdown-item" href="javascript:void(0)">错误代码</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="javascript:void(0)" onclick="del('<?php
+                                            echo $row[ 'name' ] ?>',<?php
+                                            echo $row[ 'id' ] ?>)">删除</a>
+                                        </div>
+
                                     </td>
                                 </tr>
                                 <?php
@@ -208,7 +215,7 @@ $bnums = ( $page - 1 ) * $ENUMS;
                         <input type="hidden" name="fun" id="fun" value="add">
                         <input type="hidden" name="api_id" id="api_id" value="">
                         <div class="mb-4">
-                            <label class="form-label">API名称</label>
+                            <label class="form-label" for="api_name">API名称</label>
                             <input type="text" class="form-control fs-sm" name="api_name" id="api_name"
                                    placeholder="例如：短网址生成" value="">
                         </div>
@@ -223,35 +230,35 @@ $bnums = ( $page - 1 ) * $ENUMS;
                         </div>
 
                         <div class="mb-4">
-                            <label class="form-label" id="label_title">API目录名</label>
+                            <label class="form-label" id="label_title" for="api_url">API目录名</label>
                             <input type="text" class="form-control fs-sm" name="api_url" id="api_url"
                                    placeholder="输入API目录名，例如：dwz" value="">
                         </div>
                         <div class="mb-4">
-                            <label class="form-label" for="example-textarea-input">API介绍</label>
+                            <label class="form-label" for="api_des">API介绍</label>
                             <textarea class="form-control fs-sm " name="api_des" id="api_des" rows="2"
                                       placeholder="例如：将长网址进行缩短，支持百度、新浪、腾讯短网址等等..."></textarea>
                         </div>
 
                         <div class="row">
                             <div class="col-sm-6 mb-4">
-                                <label class="form-label">请求方法</label>
+                                <label class="form-label" for="http_mode">请求方法</label>
                                 <input type="text" class="form-control fs-sm" name="http_mode" id="http_mode"
                                        placeholder="例如：GET/POST" value="">
                             </div>
                             <div class="col-sm-6 mb-4">
-                                <label class="form-label">返回格式</label>
+                                <label class="form-label" for="return_format">返回格式</label>
                                 <input type="text" class="form-control fs-sm" name="return_format" id="return_format"
                                        placeholder="例如：JSON" value="">
                             </div>
                         </div>
                         <div class="mb-4">
-                            <label class="form-label">请求示例</label>
+                            <label class="form-label" for="http_case">请求示例</label>
                             <input type="text" class="form-control fs-sm" name="http_case" id="http_case"
                                    placeholder="https://abc.com/api/dome?url=http://baidu.com" value="">
                         </div>
                         <div class="mb-4">
-                            <label class="form-label" for="example-textarea-input">返回示例</label>
+                            <label class="form-label" for="return_case">返回示例</label>
                             <textarea class="form-control fs-sm " name="return_case" id="return_case" rows="5"
                                       placeholder='{
     "code": 1,
