@@ -63,36 +63,150 @@ if (str_contains($uri , '/api/')) {
 <html lang="zn-cn">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title><?php
         echo TITLE ?> - <?php
         echo TITLE_DESC ?></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="/assets/img/favicons/favicon.png">
     <link rel="stylesheet" id="css-main" href="/assets/css/codebase.min-5.4.css">
+    <!-- 表格样式 -->
+    <link rel="stylesheet"
+          href="/assets/css/dataTables.bootstrap5.min.css">
+    <link href="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-0-M/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-<div id="page-container" class="main-content-boxed">
+<div id="page-container" class="enable-page-overlay side-scroll page-header-fixed main-content-boxed remember-theme side-trans-enabled">
+    <header id="page-header">
+        <div class="content-header ">
+            <div class="space-x-1">
+                <div class="content-header justify-content-lg-center">
+                    <div>
+                    <span class="smini-visible fw-bold tracking-wide fs-lg">
+								c<span class="text-primary">c</span>
+							</span>
+                        <a class="link-fx fw-bold tracking-wide mx-auto" data-pjax="" href="./">
+                            <span class="smini-hidden">
+                                <i class="fa fa-fire text-primary"></i>
+                                <span class="fs-4 text-dual">cloudza</span>
+                                <span class="fs-4 text-primary">api</span>
+                            </span>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+            <div class="space-x-1">
+                <a class="btn btn-sm btn-alt-secondary" href="https://github.com/iCloudZA" target="_blank">
+                    <i class="fab fa-github-alt m-1"></i>Github</a>
+            </div>
+        </div>
+        <div id="page-header-loader" class="overlay-header bg-primary">
+            <div class="content-header">
+                <div class="w-100 text-center">
+                    <i class="far fa-sun fa-spin text-white"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
     <main id="main-container">
-        <div class="bg-image" style="background-image: url('/assets/img/photo23@2x.jpg');">
-            <div class="hero bg-black-50">
-                <div class="hero-inner">
-                    <div class="content content-full">
+        <div class="content">
+            <div class="block block-rounded">
+                <div class="block-content block-content-full">
+                    <div class="py-3 text-center">
+                        <h2 class="fw-bold mb-3"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;">
+                                    <?php
+                                    echo TITLE ?>
+                                </span></span></h2>
+                        <h3 class="fs-base fw-medium text-muted mb-3">
+                            <span style="vertical-align: inherit;"><span style="vertical-align: inherit;">
+                                    <?php
+                                    echo DESC ?>
+                                </span></span></h3>
+                        <p class="fs-sm fw-medium text-muted mb-4">共收录的xx个接口</p>
                         <div class="row justify-content-center">
-                            <div class="col-md-6 py-4 text-center">
-                                <h1 class="display-4 fw-bold text-white mb-2">免费的API系统</h1>
-                                <h2 class="h4 fw-normal text-white-75 pb-4 mb-3 border-white-op-b">即将推出</h2>
-                                <div class="js-countdown mb-3"></div>
-                                <a class="btn rounded-pill btn-outline-warning" href="https://github.com/iCloudZA">
-                                    <i class="fa fa-arrow-right opacity-50 me-1"></i> Go to my Github
-                                </a>
+                            <div class="col-md-10 col-lg-8 col-xl-6">
+                                <form action="" method="POST">
+                                    <div class="input-group input-group-lg">
+                                        <input type="text" class="form-control" name="search" id="search" placeholder="搜索API">
+                                        <button type="submit" class="btn btn-alt-primary">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+            <div class="row" id="list"></div>
     </main>
+
+    <footer id="page-footer">
+        <div class="content py-3">
+            <div class="row fs-sm">
+                <div class="col-sm-6 order-sm-2 py-1 text-center text-sm-end">
+                    Crafted with <i class="fa fa-heart text-danger"></i> by
+                    <a class="fw-semibold" href="https://github.com/iCloudZA" target="_blank">CloudZA</a>
+                </div>
+                <div class="col-sm-6 order-sm-1 py-1 text-center text-sm-start">
+                    <a class="fw-semibold" href="javascript:void (0);">云之安 </a> ©
+                    <span data-toggle="year-copy" class="js-year-copy-enabled">2023</span>
+                </div>
+            </div>
+        </div>
+    </footer>
 </div>
+<script>
+
+    $.ajax({
+        url: "extend/api.php",
+        dataType: "json",
+        success: function (data) {
+            var listContainer = $("#list");
+            for (var i = 0; i < data.length; i++) {
+                var title = data[i].title;
+                var desc = data[i].desc;
+                var pv = data[i].pv;
+                var state = data[i].state;
+                var stateInfo = data[i].stateInfo;
+                var uri = data[i].uri;
+                var itemHtml = '<div class="col-sm-6"><a class="block block-rounded d-flex align-items-stretch" href="javascript:void(0)" onclick="goToApiDoc(\'' + state + '\',\'' + uri + '\')">' +
+                    '<div class="block-content block-sticky-options pt-5 bg-white">' +
+                    '<div class="block-options block-options-left">' +
+                    '<h2 class="fs-sm text-muted">' + title + '</h2>' +
+                    '</div>' +
+                    '<div class="block-options">' +
+                    '<div class="block-options-item text-muted fs-sm">' +
+                    '<i class="far fa-bookmark m-1"></i>' + stateInfo +
+                    '<i class="si si-eye m-1"></i>' + pv +
+                    '</div>' +
+                    '</div>' +
+                    '<h3 class="fs-sm fw-medium text-muted">' + desc + '</h3>' +
+                    '</div>' +
+                    '</a></div>';
+                listContainer.append(itemHtml);
+            }
+        }
+    });
+
+    function goToApiDoc (state, uri)
+    {
+        if (state === 'on') {
+            x.notify(uri, 'success');
+        } else {
+            x.notify('此接口维护中', 'warning');
+        }
+    }
+
+</script>
 <script src="/assets/js/codebase.app.min-5.4.js"></script>
+<script src="/assets/js/plugins/jquery-pjax/jquery.pjax.js"></script>
+<script src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-0-M/nprogress/0.2.0/nprogress.min.js"></script>
+<script src="/assets/js/dashboard.js"></script>
+<script src="/assets/js/bootstrap-notify.min.js"></script>
+<script src="/assets/js/layer.js"></script>
+<script src="/assets/js/app.min.js"></script>
 </body>
 </html>
