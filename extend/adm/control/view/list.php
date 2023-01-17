@@ -169,7 +169,7 @@ $bnums = ( $page - 1 ) * $ENUMS;
                                                echo $row[ 'http_case' ] ?>%22,%22return_case%22:%22<?php
                                                echo base64_encode($row[ 'return_case' ]) ?>%22,%22code_case%22:%22<?php
                                                echo base64_encode($row[ 'code_case' ]) ?>%22,%22state%22:%22<?php
-                                               echo $row[ 'state' ] ?>%22%7D');">修改</a>
+                                               echo $row[ 'state' ] ?>%22%7D');">修改接口</a>
                                             <a class="dropdown-item" href="javascript:void(0)" onclick="httpParam(<?php
                                             echo $row[ 'id' ] ?>)">添加请求参数</a>
                                             <a class="dropdown-item" href="javascript:void(0)">修改请求参数</a>
@@ -178,7 +178,7 @@ $bnums = ( $page - 1 ) * $ENUMS;
                                             <div class="dropdown-divider"></div>
                                             <a class="dropdown-item" href="javascript:void(0)" onclick="del('<?php
                                             echo $row[ 'name' ] ?>',<?php
-                                            echo $row[ 'id' ] ?>)">删除</a>
+                                            echo $row[ 'id' ] ?>)">删除接口</a>
                                         </div>
 
                                     </td>
