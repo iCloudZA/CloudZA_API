@@ -75,6 +75,7 @@ if ($act === 'httpParam') {
     $must = $_POST[ 'must' ] ?? array();        //是否必填
     $explain = $_POST[ 'explain' ] ?? array();  //参数说明
     $API_ID = $_POST[ 'API_ID' ] ?? '';         //API ID
+    if(!f($name) && !f($type) && !f($must) && !f($explain)) exit(ReturnError('表单不完整'));
     foreach ($name as $k => $v) {
         $dat[ $k ][ 'name' ] = $v;
     }
