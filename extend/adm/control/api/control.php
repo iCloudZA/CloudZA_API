@@ -11,21 +11,21 @@ if ($act === 'add') {
     $data[ 'http_case' ] = isset($_POST[ 'http_case' ]) && !empty($_POST[ 'http_case' ]) ? purge($_POST[ 'http_case' ]) : '';                   // 接口请求示例
     $data[ 'return_case' ] = isset($_POST[ 'return_case' ]) && !empty($_POST[ 'return_case' ]) ? $_POST[ 'return_case' ] : '';                  // 接口返回示例
     $data[ 'code_case' ] = isset($_POST[ 'code_case' ]) && !empty($_POST[ 'code_case' ]) ? $_POST[ 'code_case' ] : '';                          // 接口代码示例
-    $data[ 'state' ] = isset($_POST['state']) && !empty($_POST['state']) ? purge($_POST['state']) : '';                                         // 接口状态
+    $data[ 'state' ] = isset($_POST[ 'state' ]) && !empty($_POST[ 'state' ]) ? purge($_POST[ 'state' ]) : '';                                         // 接口状态
     $data[ 'add_time' ] = date("Y-m-d H:i:s"); // 添加时间
-    if($data['type'] == 'local'){
-        $data['sign'] = $data[ 'api_url' ];
-//        $data['api_url'] = WEB_URL.APIURI.$data['api_url'];
-//        $data[ 'http_case' ] = WEB_URL.APIURI.$data[ 'http_case' ];
-    } else if($data['type'] == 'external') {
-        $data['sign'] = 'api-' . getRand(4);
+    if ($data[ 'type' ] == 'local') {
+        $data[ 'sign' ] = $data[ 'api_url' ];
+        //        $data['api_url'] = WEB_URL.APIURI.$data['api_url'];
+        //        $data[ 'http_case' ] = WEB_URL.APIURI.$data[ 'http_case' ];
+    } else if ($data[ 'type' ] == 'external') {
+        $data[ 'sign' ] = 'api-' . getRand(4);
     } else {
         exit(ReturnError('Form error!'));
     }
     if ( !f($data)) exit(ReturnError('数据不完整'));
-    if(Db::table('api_list')->where('sign',$data['sign'])->find()) exit(ReturnError('【'.$data['sign'].'】'.'已存在，请更换'));
+    if (Db::table('api_list')->where('sign' , $data[ 'sign' ])->find()) exit(ReturnError('【' . $data[ 'sign' ] . '】' . '已存在，请更换'));
     if (Db::table('api_list')->add($data)) {
-        writeLog('添加API：['.$data['name'].']');
+        writeLog('添加API：[' . $data[ 'name' ] . ']');
         exit(ReturnSuccess('添加成功'));
     } else {
         exit(ReturnError('添加失败'));
@@ -44,12 +44,12 @@ if ($act === 'edit') {
     $data[ 'return_case' ] = isset($_POST[ 'return_case' ]) && !empty($_POST[ 'return_case' ]) ? $_POST[ 'return_case' ] : '';                  // 接口返回示例
     $data[ 'code_case' ] = isset($_POST[ 'code_case' ]) && !empty($_POST[ 'code_case' ]) ? $_POST[ 'code_case' ] : '';                          // 接口代码示例
     $data[ 'state' ] = isset($_POST[ 'state' ]) && !empty($_POST[ 'state' ]) ? $_POST[ 'state' ] : '';                                          // 接口状态
-    if($data['type'] == 'local'){
-        $data['sign'] = $data[ 'api_url' ];
-//        $data['api_url'] = WEB_URL.APIURI.$data['api_url'];
-//        $data[ 'http_case' ] = WEB_URL.APIURI.$data[ 'http_case' ];
-    } else if($data['type'] == 'external') {
-//        $data['sign'] = 'api-' . getRand(4);
+    if ($data[ 'type' ] == 'local') {
+        $data[ 'sign' ] = $data[ 'api_url' ];
+        //        $data['api_url'] = WEB_URL.APIURI.$data['api_url'];
+        //        $data[ 'http_case' ] = WEB_URL.APIURI.$data[ 'http_case' ];
+    } else if ($data[ 'type' ] == 'external') {
+        //        $data['sign'] = 'api-' . getRand(4);
     } else {
         exit(ReturnError('Form error!'));
     }
@@ -57,9 +57,9 @@ if ($act === 'edit') {
     $table = Db::table('api_list');
     $origData = $table->where('id' , $id)->find();
     // 对比原始数据
-    if (array_diff($origData, (array)$data) && array_diff((array)$data , $origData)) {
+    if (array_diff($origData , (array)$data) && array_diff((array)$data , $origData)) {
         if ($table->where('id' , $id)->update($data)) {
-            writeLog('修改API：['.$data['name'].']');
+            writeLog('修改API：[' . $data[ 'name' ] . ']');
             exit(ReturnSuccess('更新成功'));
         } else {
             exit(ReturnError('更新失败'));
@@ -68,7 +68,34 @@ if ($act === 'edit') {
         exit(ReturnError('你没有修改任何内容！'));
     }
 }
-
+// 添加请求参数说明
+if ($act === 'httpParam') {
+    $name = $_POST[ 'name' ] ?? array();        //参数名称
+    $type = $_POST[ 'type' ] ?? array();        //参数类型
+    $must = $_POST[ 'must' ] ?? array();        //是否必填
+    $explain = $_POST[ 'explain' ] ?? array();  //参数说明
+    $API_ID = $_POST[ 'API_ID' ] ?? '';         //API ID
+    foreach ($name as $k => $v) {
+        $dat[ $k ][ 'name' ] = $v;
+    }
+    foreach ($must as $k => $v) {
+        $dat[ $k ][ 'must' ] = $v;
+    }
+    foreach ($type as $k => $v) {
+        $dat[ $k ][ 'type' ] = $v;
+    }
+    foreach ($explain as $k => $v) {
+        $dat[ $k ][ 'explain' ] = $v;
+    }
+    foreach ($dat as $k => $v) {
+        $ADD = Db::table('api_content_http')->add(['name' => $v[ 'name' ] , 'type' => $v[ 'type' ] , 'must' => $v[ 'must' ] , 'explain' => $v[ 'explain' ] , 'API_ID' => $API_ID]);
+    }
+    if ($ADD) {
+        exit(ReturnSuccess('添加成功'));
+    } else {
+        exit(ReturnSuccess('添加失败'));
+    }
+}
 // 删除选中
 if ($act === 'delSelect') {
     $id = $_POST[ 'id' ] ?? '';
@@ -80,7 +107,7 @@ if ($act === 'delSelect') {
         $ids = rtrim($ids , ",");
         $res = Db::table('api_list')->where('id' , 'in' , '(' . $ids . ')')->del();
         if ($res) {
-            writeLog('删除了'.count($_POST[ 'id' ]).'个API');
+            writeLog('删除了' . count($_POST[ 'id' ]) . '个API');
             exit(ReturnSuccess('删除成功'));
         } else {
             exit(ReturnError('删除失败'));

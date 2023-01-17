@@ -81,8 +81,10 @@ $bnums = ( $page - 1 ) * $ENUMS;
                                     添加时间
                                 </th>
                                 <th style="letter-spacing: initial;text-align: center;" rowspan="1" colspan="1">pv</th>
-                                <th style="letter-spacing: initial;text-align: center;" rowspan="1" colspan="1">类型</th>
-                                <th style="letter-spacing: initial;text-align: center;" rowspan="1" colspan="1">状态</th>
+                                <th style="letter-spacing: initial;text-align: center;" rowspan="1" colspan="1">类型
+                                </th>
+                                <th style="letter-spacing: initial;text-align: center;" rowspan="1" colspan="1">状态
+                                </th>
                                 <th style="letter-spacing: initial;width: 20px;text-align: center;" rowspan="1"
                                     colspan="1">操作
                                 </th>
@@ -139,11 +141,14 @@ $bnums = ( $page - 1 ) * $ENUMS;
                                         ?>
                                     </td>
                                     <td style="text-align: center;">
-                                        <?php if($row['state'] == 'on'){  ?>
+                                        <?php
+                                        if ($row[ 'state' ] == 'on') { ?>
                                             <i class="far fa-circle-check text-success"></i>
-                                        <?php } else {?>
+                                            <?php
+                                        } else { ?>
                                             <i class="far fa-circle-xmark text-danger"></i>
-                                        <?php } ?>
+                                            <?php
+                                        } ?>
                                     </td>
                                     <td style="text-align: center;">
                                         <button type="button" class="btn btn-sm btn-alt-primary dropdown-toggle"
@@ -165,8 +170,11 @@ $bnums = ( $page - 1 ) * $ENUMS;
                                                echo base64_encode($row[ 'return_case' ]) ?>%22,%22code_case%22:%22<?php
                                                echo base64_encode($row[ 'code_case' ]) ?>%22,%22state%22:%22<?php
                                                echo $row[ 'state' ] ?>%22%7D');">修改</a>
-                                            <a class="dropdown-item" href="javascript:void(0)">请求参数</a>
-                                            <a class="dropdown-item" href="javascript:void(0)">返回参数</a>
+                                            <a class="dropdown-item" href="javascript:void(0)" onclick="httpParam(<?php
+                                            echo $row[ 'id' ] ?>)">添加请求参数</a>
+                                            <a class="dropdown-item" href="javascript:void(0)">修改请求参数</a>
+                                            <a class="dropdown-item" href="javascript:void(0)">添加返回参数</a>
+                                            <a class="dropdown-item" href="javascript:void(0)">修改返回参数</a>
                                             <div class="dropdown-divider"></div>
                                             <a class="dropdown-item" href="javascript:void(0)" onclick="del('<?php
                                             echo $row[ 'name' ] ?>',<?php
@@ -307,144 +315,282 @@ $bnums = ( $page - 1 ) * $ENUMS;
             </div>
         </div>
     </div>
-    <script>
-        // 监听select
-        $("#api_type select").change(() => {
-            if ($('select').val() === 'external') {
-                $("#label_title").html("API地址");
-                $("#api_url").attr("placeholder", "例如：https://domain/api/dwz");
-            } else {
-                $("#label_title").html("API目录名");
-                $("#api_url").attr("placeholder", "例如：dwz");
-            }
-        });
-        // 监听input失去焦点
-        $("#api_url").blur(() => {
-            // 判断当前接口是本地还是外部
-            if (x.getval("#type") === 'local') {
-                $("#http_case").attr("placeholder", "输入API目录名加参数例如：" + x.getval('#api_url') + "?abc=123");
-            }
-        });
+</div>
+<!--请求参数-->
+<div class="modal  fade" id="modal-httpParam" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="block block-rounded shadow-none mb-0">
+                    <div class="block-header block-header-default">
+                        <h3 class="block-title" id="title">请求参数</h3>
+                        <div class="block-options">
+                            <button type="button" class="btn-block-option" data-bs-dismiss="modal" aria-label="Close">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="block-content fs-sm">
+                        <form id="httpParamFrom" method="post" onsubmit="return check()">
+                            <input type="hidden" name="API_ID" value="0">
+                            <div id="httpParamInputList">
+                                <div class="row mb-1">
+                                    <div class="col-sm-3">
+                                        <label class="form-label" for="name0">名称</label>
+                                        <input type="text" class="form-control fs-sm" name="name[0]" id="name0"
+                                               placeholder="参数名" value="">
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label class="form-label" for="must0">必填</label>
+                                        <input type="text" class="form-control fs-sm" name="must[0]" id="must0"
+                                               placeholder="是/否" value="">
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label class="form-label" for="type0">类型</label>
+                                        <input type="text" class="form-control fs-sm" name="type[0]" id="type0"
+                                               placeholder="string" value="">
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label class="form-label" for="explain0">说明</label>
+                                        <input type="text" class="form-control fs-sm" name="explain[0]" id="explain0"
+                                               placeholder="参数说明" value="">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="text-center">
+                            <a href="javascript:void(0);" class="btn btm-sm btn-alt-primary fs-sm mb-2" id="addHttpInput" onclick="addHttpParam()"><i class="fa fa-lg fa-plus text-primary"></i>加一组</a>
+                        </div>
+                    </div>
 
-        function add_api ()
-        {
-            x.ajax('ajax.php?act=control_' + x.getval('#fun'), {
-                id: x.getval('#api_id'),                            // 接口ID
-                name: x.getval('#api_name'),                        // 接口名字
-                type: x.getval('#type'),                            // 接口类型
-                api_url: x.getval('#api_url'),                      // 接口地址
-                des: x.getval('#api_des'),                          // 接口介绍
-                http_mode: x.getval('#http_mode'),                  // 接口请求方法
-                return_format: x.getval('#return_format'),          // 接口返回格式
-                http_case: x.getval('#http_case'),                  // 接口请求示例
-                return_case: x.getval('#return_case'),              // 接口返回示例
-                code_case: x.getval('#code_case'),                  // 接口代码示例
-                state: x.getval('#state')                            // 接口状态
-            }, (data) => {
-                if (data.code === 200) {
-                    console.log('return =>', data)
-                    $('#modal-top').modal('hide');
-                    setTimeout(() => {
-                        x.notify(data.msg, 'success')
-                        setTimeout(() => {
-                            x.pjax('?control_list');
-                        }, 1200)
-                    }, 300)
-                } else {
-                    x.btn(data.msg)
-                }
-            });
+
+                    <div class="block-content block-content-full block-content-sm text-end border-top">
+                        <button type="button" class="btn btn-alt-secondary" data-bs-dismiss="modal">
+                            取消
+                        </button>
+                        <button type="button" class="btn btn-alt-primary" onclick="add_HttpParam()">
+                            提交
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // 监听select
+    $("#api_type select").change(() => {
+        if ($('select').val() === 'external') {
+            $("#label_title").html("API地址");
+            $("#api_url").attr("placeholder", "例如：https://domain/api/dwz");
+        } else {
+            $("#label_title").html("API目录名");
+            $("#api_url").attr("placeholder", "例如：dwz");
         }
-
-        function edit_modal (list = null)
-        {
-            if (list != null) {
-                let udata = decodeURI(list);
-                let data = JSON.parse(udata.replace(/\n/g, "\\n").replace(/\r/g, "\\r"));
-                $("input[name='api_id']").val(data.api_id); // 接口ID
-                $("input[name='api_name']").val(data.api_name); // 接口名字
-                $("select[name='type']").val(data.type); // 接口类型
-                $("input[name='api_url']").val(data.api_url); // 接口地址
-                $("textarea[name='api_des']").val(data.api_des); // 接口介绍
-                $("input[name='http_mode']").val(data.http_mode); // 接口请求方法
-                $("input[name='return_format']").val(data.return_format); // 接口返回格式
-                $("input[name='http_case']").val(data.http_case); // 接口请求示例
-                $("textarea[name='return_case']").val(Base64.decode(data.return_case)); // 接口返回示例
-                $("textarea[name='code_case']").val(Base64.decode(data.code_case)); // 接口代码示例
-                $("select[name='state']").val(data.state); // 接口状态
-                $("input[name='fun']").val('edit') // 编辑
-                $("#title").html('编辑API');
-                $('#modal-top').modal('show');
-            } else {
-                $("inpit[name='api_id']").val(null); // 接口ID
-                $("input[name='api_name']").val(null); // 接口名字
-                $("input[name='api_url']").val(null); // 接口地址
-                $("textarea[name='api_des']").val(null); // 接口介绍
-                $("input[name='http_mode']").val(null); // 接口请求方法
-                $("input[name='return_format']").val(null); // 接口返回格式
-                $("input[name='http_case']").val(null); // 接口请求示例
-                $("textarea[name='return_case']").val(null); // 接口返回示例
-                $("textarea[name='code_case']").val(null); // 接口代码示例
-                $("select[name='state']").val('on'); // 接口状态
-                $("input[name='fun']").val('add') // 新增
-                $("#title").html('新增API');
-                $('#modal-top').modal('show');
-            }
-
+    });
+    // 监听input失去焦点
+    $("#api_url").blur(() => {
+        // 判断当前接口是本地还是外部
+        if (x.getval("#type") === 'local') {
+            $("#http_case").attr("placeholder", "输入API目录名加参数例如：" + x.getval('#api_url') + "?abc=123");
         }
+    });
 
-        function checkAll ()
-        {
-            let code_Values = document.getElementsByTagName("input");
-            let all = document.getElementById("all");
-            if (code_Values.length) {
-                for (let i = 0; i < code_Values.length; i++) {
-                    if (code_Values[i].type === "checkbox") {
-                        code_Values[i].checked = all.checked;
-                    }
-                }
-            } else {
-                if (code_Values.type === "checkbox") {
-                    code_Values.checked = all.checked;
-                }
-            }
-        }
-
-        function delSelect ()
-        {
-            let id_array = [];
-            //获取界面复选框的所有值
-            $("input[name='ids[]']:checked").each(function () {
-                //向数组中添加元素
-                id_array.push($(this).val());
-            });
-            x.del('ajax.php?act=control_delSelect', {
-                id: id_array
-            }, ((data) => {
-                if (200 === data.code) {
+    function add_api ()
+    {
+        x.ajax('ajax.php?act=control_' + x.getval('#fun'), {
+            id: x.getval('#api_id'),                            // 接口ID
+            name: x.getval('#api_name'),                        // 接口名字
+            type: x.getval('#type'),                            // 接口类型
+            api_url: x.getval('#api_url'),                      // 接口地址
+            des: x.getval('#api_des'),                          // 接口介绍
+            http_mode: x.getval('#http_mode'),                  // 接口请求方法
+            return_format: x.getval('#return_format'),          // 接口返回格式
+            http_case: x.getval('#http_case'),                  // 接口请求示例
+            return_case: x.getval('#return_case'),              // 接口返回示例
+            code_case: x.getval('#code_case'),                  // 接口代码示例
+            state: x.getval('#state')                            // 接口状态
+        }, (data) => {
+            if (data.code === 200) {
+                console.log('return =>', data)
+                $('#modal-top').modal('hide');
+                setTimeout(() => {
                     x.notify(data.msg, 'success')
                     setTimeout(() => {
                         x.pjax('?control_list');
                     }, 1200)
-                } else {
-                    x.notify(data.msg, 'warning')
-                }
-            }), '你确定要删除选中的内容吗?')
+                }, 300)
+            } else {
+                x.btn(data.msg)
+            }
+        });
+    }
+
+    function edit_modal (list = null)
+    {
+        if (list != null) {
+            let udata = decodeURI(list);
+            let data = JSON.parse(udata.replace(/\n/g, "\\n").replace(/\r/g, "\\r"));
+            $("input[name='api_id']").val(data.api_id); // 接口ID
+            $("input[name='api_name']").val(data.api_name); // 接口名字
+            $("select[name='type']").val(data.type); // 接口类型
+            $("input[name='api_url']").val(data.api_url); // 接口地址
+            $("textarea[name='api_des']").val(data.api_des); // 接口介绍
+            $("input[name='http_mode']").val(data.http_mode); // 接口请求方法
+            $("input[name='return_format']").val(data.return_format); // 接口返回格式
+            $("input[name='http_case']").val(data.http_case); // 接口请求示例
+            $("textarea[name='return_case']").val(Base64.decode(data.return_case)); // 接口返回示例
+            $("textarea[name='code_case']").val(Base64.decode(data.code_case)); // 接口代码示例
+            $("select[name='state']").val(data.state); // 接口状态
+            $("input[name='fun']").val('edit') // 编辑
+            $("#title").html('编辑API');
+            $('#modal-top').modal('show');
+        } else {
+            $("inpit[name='api_id']").val(null); // 接口ID
+            $("input[name='api_name']").val(null); // 接口名字
+            $("input[name='api_url']").val(null); // 接口地址
+            $("textarea[name='api_des']").val(null); // 接口介绍
+            $("input[name='http_mode']").val(null); // 接口请求方法
+            $("input[name='return_format']").val(null); // 接口返回格式
+            $("input[name='http_case']").val(null); // 接口请求示例
+            $("textarea[name='return_case']").val(null); // 接口返回示例
+            $("textarea[name='code_case']").val(null); // 接口代码示例
+            $("select[name='state']").val('on'); // 接口状态
+            $("input[name='fun']").val('add') // 新增
+            $("#title").html('新增API');
+            $('#modal-top').modal('show');
         }
 
-        function del (name, id)
-        {
-            x.del('ajax.php?act=control_delapi', {
-                id: id
-            }, ((data) => {
-                if (200 === data.code) {
-                    x.notify(data.msg, 'success')
+    }
+
+    function httpParam (id)
+    {
+        $("input[name='API_ID']").val(id) // ID
+        $('#modal-httpParam').modal('show');
+    }
+
+    $("form").click((event) => {
+        event.preventDefault();
+    });
+    let add_id = 0;
+
+    function addHttpParam ()
+    {
+        add_id += 1;
+        console.log(add_id)
+        $("#httpParamInputList").append('<div class="row mb-1" id="http-param-' + add_id + '">' +
+            '<div class="col-sm-3">' +
+            '<label class="form-label" for="name' + add_id + '">名称</label>' +
+            '<input type="text" class="form-control fs-sm" name="name[' + add_id + ']" id="name' + add_id + '" placeholder="参数名" value="">' +
+            '</div>' +
+            '<div class="col-sm-3">' +
+            '<label class="form-label" for="must' + add_id + '">必填</label>' +
+            '<input type="text" class="form-control fs-sm" name="must[' + add_id + ']" id="must' + add_id + '" placeholder="参数名" value="">' +
+            '</div>' +
+            '<div class="col-sm-3">' +
+            '<label class="form-label" for="type' + add_id + '">类型</label>' +
+            '<input type="text" class="form-control fs-sm" name="type[' + add_id + ']" id="type' + add_id + '" placeholder="参数名" value="">' +
+            '</div>' +
+            '<div class="col-sm-3">' +
+            '<label class="form-label" for="explain' + add_id + '">说明</label>' +
+            '<input type="text" class="form-control fs-sm" name="explain[' + add_id + ']" id="explain' + add_id + '" placeholder="参数名" value="">' +
+            '</div>' +
+            '<div class="col-sm-12 text-center mt-2 mb-2">' +
+            '<button type="button" class="btn btn-alt-primary btn-sm" onclick="deleteHttpParam(' + add_id + ')">删除</button>' +
+            '</div>' +
+            '</div>');
+    }
+
+    function deleteHttpParam (id)
+    {
+        $('#http-param-' + id).remove();
+    }
+
+    function add_HttpParam ()
+    {
+        let From = new FormData(document.getElementById('httpParamFrom'));
+        $.ajax({
+            url: 'ajax.php?act=control_httpParam',
+            type: "POST",
+            data: From,
+            contentType: false,
+            processData: false,/*阻止ajax序列化表单data*/
+            success: function (data) {
+                let i = JSON.parse(data)
+                if (i.code === 200) {
+                    $('#modal-httpParam').modal('hide');
+                    x.notify(i.msg, 'success')
                     setTimeout(() => {
                         x.pjax('?control_list');
                     }, 1200)
                 } else {
-                    x.notify(data.msg, 'warning')
+                    $('#modal-httpParam').modal('hide');
+                    x.notify(i.msg, 'warning')
+                    setTimeout(() => {
+                        x.pjax('?control_list');
+                    }, 1200)
                 }
-            }), (name.length <= 5) ? '你确定要删除【' + name + '】吗?' : '你确定要删除【' + name.substring(0, 5) + "..." + '】吗?')
+            },
+            error: function (err) {
+                console.log(err)
+            }
+        });
+    }
+
+    function checkAll ()
+    {
+        let code_Values = document.getElementsByTagName("input");
+        let all = document.getElementById("all");
+        if (code_Values.length) {
+            for (let i = 0; i < code_Values.length; i++) {
+                if (code_Values[i].type === "checkbox") {
+                    code_Values[i].checked = all.checked;
+                }
+            }
+        } else {
+            if (code_Values.type === "checkbox") {
+                code_Values.checked = all.checked;
+            }
         }
-    </script>
+    }
+
+    function delSelect ()
+    {
+        let id_array = [];
+        //获取界面复选框的所有值
+        $("input[name='ids[]']:checked").each(function () {
+            //向数组中添加元素
+            id_array.push($(this).val());
+        });
+        x.del('ajax.php?act=control_delSelect', {
+            id: id_array
+        }, ((data) => {
+            if (200 === data.code) {
+                x.notify(data.msg, 'success')
+                setTimeout(() => {
+                    x.pjax('?control_list');
+                }, 1200)
+            } else {
+                x.notify(data.msg, 'warning')
+            }
+        }), '你确定要删除选中的内容吗?')
+    }
+
+    function del (name, id)
+    {
+        x.del('ajax.php?act=control_delapi', {
+            id: id
+        }, ((data) => {
+            if (200 === data.code) {
+                x.notify(data.msg, 'success')
+                setTimeout(() => {
+                    x.pjax('?control_list');
+                }, 1200)
+            } else {
+                x.notify(data.msg, 'warning')
+            }
+        }), (name.length <= 5) ? '你确定要删除【' + name + '】吗?' : '你确定要删除【' + name.substring(0, 5) + "..." + '】吗?')
+    }
+</script>
