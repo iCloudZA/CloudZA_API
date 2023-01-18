@@ -9,6 +9,8 @@ if ($act === 'add') {
     $data[ 'http_mode' ] = isset($_POST[ 'http_mode' ]) && !empty($_POST[ 'http_mode' ]) ? purge($_POST[ 'http_mode' ]) : '';                   // 接口请求方法
     $data[ 'return_format' ] = isset($_POST[ 'return_format' ]) && !empty($_POST[ 'return_format' ]) ? purge($_POST[ 'return_format' ]) : '';   // 接口返回格式
     $data[ 'http_case' ] = isset($_POST[ 'http_case' ]) && !empty($_POST[ 'http_case' ]) ? purge($_POST[ 'http_case' ]) : '';                   // 接口请求示例
+    $data['http_param'] = isset($_POST[ 'http_param' ]) && !empty($_POST[ 'http_param' ]) ? purge($_POST[ 'http_param' ]) : '';                 // 接口请求参数
+    $data['return_param'] = isset($_POST[ 'return_param' ]) && !empty($_POST[ 'return_param' ]) ? purge($_POST[ 'return_param' ]) : '';         // 接口返回参数
     $data[ 'return_case' ] = isset($_POST[ 'return_case' ]) && !empty($_POST[ 'return_case' ]) ? $_POST[ 'return_case' ] : '';                  // 接口返回示例
     $data[ 'code_case' ] = isset($_POST[ 'code_case' ]) && !empty($_POST[ 'code_case' ]) ? $_POST[ 'code_case' ] : '';                          // 接口代码示例
     $data[ 'state' ] = isset($_POST[ 'state' ]) && !empty($_POST[ 'state' ]) ? purge($_POST[ 'state' ]) : '';                                         // 接口状态
@@ -41,6 +43,8 @@ if ($act === 'edit') {
     $data[ 'http_mode' ] = isset($_POST[ 'http_mode' ]) && !empty($_POST[ 'http_mode' ]) ? purge($_POST[ 'http_mode' ]) : '';                   // 接口请求方法
     $data[ 'return_format' ] = isset($_POST[ 'return_format' ]) && !empty($_POST[ 'return_format' ]) ? purge($_POST[ 'return_format' ]) : '';   // 接口返回格式
     $data[ 'http_case' ] = isset($_POST[ 'http_case' ]) && !empty($_POST[ 'http_case' ]) ? purge($_POST[ 'http_case' ]) : '';                   // 接口请求示例
+    $data['http_param'] = isset($_POST[ 'http_param' ]) && !empty($_POST[ 'http_param' ]) ? purge($_POST[ 'http_param' ]) : '';                 // 接口请求参数
+    $data['return_param'] = isset($_POST[ 'return_param' ]) && !empty($_POST[ 'return_param' ]) ? purge($_POST[ 'return_param' ]) : '';         // 接口返回参数
     $data[ 'return_case' ] = isset($_POST[ 'return_case' ]) && !empty($_POST[ 'return_case' ]) ? $_POST[ 'return_case' ] : '';                  // 接口返回示例
     $data[ 'code_case' ] = isset($_POST[ 'code_case' ]) && !empty($_POST[ 'code_case' ]) ? $_POST[ 'code_case' ] : '';                          // 接口代码示例
     $data[ 'state' ] = isset($_POST[ 'state' ]) && !empty($_POST[ 'state' ]) ? $_POST[ 'state' ] : '';                                          // 接口状态
@@ -66,35 +70,6 @@ if ($act === 'edit') {
         }
     } else {
         exit(ReturnError('你没有修改任何内容！'));
-    }
-}
-// 添加请求参数说明
-if ($act === 'httpParam') {
-    $name = $_POST[ 'name' ] ?? array();        //参数名称
-    $type = $_POST[ 'type' ] ?? array();        //参数类型
-    $must = $_POST[ 'must' ] ?? array();        //是否必填
-    $explain = $_POST[ 'explain' ] ?? array();  //参数说明
-    $API_ID = $_POST[ 'API_ID' ] ?? '';         //API ID
-    if(!f($name) || !f($type) || !f($must) || !f($explain)) exit(ReturnError('表单不完整'));
-    foreach ($name as $k => $v) {
-        $dat[ $k ][ 'name' ] = $v;
-    }
-    foreach ($must as $k => $v) {
-        $dat[ $k ][ 'must' ] = $v;
-    }
-    foreach ($type as $k => $v) {
-        $dat[ $k ][ 'type' ] = $v;
-    }
-    foreach ($explain as $k => $v) {
-        $dat[ $k ][ 'explain' ] = $v;
-    }
-    foreach ($dat as $k => $v) {
-        $ADD = Db::table('api_content_http')->add(['name' => $v[ 'name' ] , 'type' => $v[ 'type' ] , 'must' => $v[ 'must' ] , 'explain' => $v[ 'explain' ] , 'API_ID' => $API_ID]);
-    }
-    if ($ADD) {
-        exit(ReturnSuccess('添加成功'));
-    } else {
-        exit(ReturnSuccess('添加失败'));
     }
 }
 // 删除选中

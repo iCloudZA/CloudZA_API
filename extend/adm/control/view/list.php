@@ -166,21 +166,17 @@ $bnums = ( $page - 1 ) * $ENUMS;
                                                echo $row[ 'type' ] ?>%22,%22http_mode%22:%22<?php
                                                echo $row[ 'http_mode' ] ?>%22,%22return_format%22:%22<?php
                                                echo $row[ 'return_format' ] ?>%22,%22http_case%22:%22<?php
-                                               echo $row[ 'http_case' ] ?>%22,%22return_case%22:%22<?php
+                                               echo $row[ 'http_case' ] ?>%22,%22http_param%22:%22<?php
+                                               echo $row[ 'http_param' ] ?>%22,%22return_param%22:%22<?php
+                                               echo $row[ 'return_param' ] ?>%22, %22return_case%22:%22<?php
                                                echo base64_encode($row[ 'return_case' ]) ?>%22,%22code_case%22:%22<?php
                                                echo base64_encode($row[ 'code_case' ]) ?>%22,%22state%22:%22<?php
                                                echo $row[ 'state' ] ?>%22%7D');">修改接口</a>
-                                            <a class="dropdown-item" href="javascript:void(0)" onclick="httpParam(<?php
-                                            echo $row[ 'id' ] ?>)">添加请求参数</a>
-                                            <a class="dropdown-item" href="javascript:void(0)">修改请求参数</a>
-                                            <a class="dropdown-item" href="javascript:void(0)">添加返回参数</a>
-                                            <a class="dropdown-item" href="javascript:void(0)">修改返回参数</a>
                                             <div class="dropdown-divider"></div>
                                             <a class="dropdown-item" href="javascript:void(0)" onclick="del('<?php
                                             echo $row[ 'name' ] ?>',<?php
                                             echo $row[ 'id' ] ?>)">删除接口</a>
                                         </div>
-
                                     </td>
                                 </tr>
                                 <?php
@@ -213,7 +209,7 @@ $bnums = ( $page - 1 ) * $ENUMS;
     </div>
 </div>
 <!--模态框-->
-<div class="modal fade" id="modal-top" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+<div class="modal modal-lg fade" id="modal-top" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
      aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-dialog" role="document">
@@ -277,6 +273,76 @@ $bnums = ( $page - 1 ) * $ENUMS;
                                    placeholder="https://abc.com/api/dome?url=http://baidu.com" value="">
                         </div>
                         <div class="mb-4">
+                            <label class="form-label" for="http_param">请求参数</label>
+                            <textarea class="form-control fs-sm " name="http_param" id="http_param" rows="5"
+                                      placeholder='<!-- 系统推荐以下表单均使用此表格样式 -->
+<thead>
+	<tr>
+		<th>名称</th>
+		<th>必填</th>
+		<th>类型</th>
+		<th>说明</th>
+	</tr>
+</thead>
+<tbody>
+	<tr>
+		<td>qq</td>
+		<td>是</td>
+		<td>string</td>
+		<td>需要获取的QQ，如：2922619853</td>
+	</tr>
+</tbody>'><!-- 系统推荐以下表单均使用此表格样式 -->
+<thead>
+	<tr>
+		<th>名称</th>
+		<th>必填</th>
+		<th>类型</th>
+		<th>说明</th>
+	</tr>
+</thead>
+<tbody>
+	<tr>
+		<td>qq</td>
+		<td>是</td>
+		<td>string</td>
+		<td>需要获取的QQ，如：2922619853</td>
+	</tr>
+</tbody></textarea>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label" for="return_param">返回参数</label>
+                            <textarea class="form-control fs-sm " name="return_param" id="return_param" rows="5"
+                                      placeholder='<!-- 系统推荐以下表单均使用此表格样式 -->
+<thead>
+    <tr>
+        <th>名称</th>
+        <th>类型</th>
+        <th>说明</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>code</td>
+        <td>string</td>
+        <td>状态码</td>
+    </tr>
+    </tbody>'><!-- 系统推荐以下表单均使用此表格样式 -->
+<thead>
+    <tr>
+        <th>名称</th>
+        <th>类型</th>
+        <th>说明</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>code</td>
+        <td>string</td>
+        <td>状态码</td>
+    </tr>
+    </tbody></textarea>
+                        </div>
+                        <div class="mb-4">
                             <label class="form-label" for="return_case">返回示例</label>
                             <textarea class="form-control fs-sm " name="return_case" id="return_case" rows="5"
                                       placeholder='{
@@ -316,69 +382,6 @@ $bnums = ( $page - 1 ) * $ENUMS;
         </div>
     </div>
 </div>
-<!--请求参数-->
-<div class="modal  fade" id="modal-httpParam" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-     aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="block block-rounded shadow-none mb-0">
-                    <div class="block-header block-header-default">
-                        <h3 class="block-title" id="title">请求参数</h3>
-                        <div class="block-options">
-                            <button type="button" class="btn-block-option" data-bs-dismiss="modal" aria-label="Close">
-                                <i class="fa fa-times"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="block-content fs-sm">
-                        <button class="btn btn-sm btn-alt-primary mb-2" onclick="addHttpParam()">加一组</button>
-                        <button class="btn btn-sm btn-alt-primary mb-2" onclick="deleteHttpParam()">删一组</button>
-                        <form id="httpParamFrom" method="post" onsubmit="return check()">
-                            <input type="hidden" name="API_ID" value="0">
-                            <div id="httpParamInputList">
-                                <div class="row mb-2">
-                                    <div class="col-sm-3">
-                                        <label class="form-label" for="name0">名称</label>
-                                        <input type="text" class="form-control fs-sm" name="name[0]" id="name0"
-                                               placeholder="参数名" value="">
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <label class="form-label" for="must0">必填</label>
-                                        <input type="text" class="form-control fs-sm" name="must[0]" id="must0"
-                                               placeholder="是/否" value="">
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <label class="form-label" for="type0">类型</label>
-                                        <input type="text" class="form-control fs-sm" name="type[0]" id="type0"
-                                               placeholder="string" value="">
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <label class="form-label" for="explain0">说明</label>
-                                        <input type="text" class="form-control fs-sm" name="explain[0]" id="explain0"
-                                               placeholder="参数说明" value="">
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-
-                    </div>
-
-
-                    <div class="block-content block-content-full block-content-sm text-end border-top">
-                        <button type="button" class="btn btn-alt-secondary" data-bs-dismiss="modal">
-                            取消
-                        </button>
-                        <button type="button" class="btn btn-alt-primary" onclick="add_HttpParam()">
-                            提交
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
 <script>
     // 监听select
     $("#api_type select").change(() => {
@@ -397,37 +400,6 @@ $bnums = ( $page - 1 ) * $ENUMS;
             $("#http_case").attr("placeholder", "输入API目录名加参数例如：" + x.getval('#api_url') + "?abc=123");
         }
     });
-
-    function add_api ()
-    {
-        x.ajax('ajax.php?act=control_' + x.getval('#fun'), {
-            id: x.getval('#api_id'),                            // 接口ID
-            name: x.getval('#api_name'),                        // 接口名字
-            type: x.getval('#type'),                            // 接口类型
-            api_url: x.getval('#api_url'),                      // 接口地址
-            des: x.getval('#api_des'),                          // 接口介绍
-            http_mode: x.getval('#http_mode'),                  // 接口请求方法
-            return_format: x.getval('#return_format'),          // 接口返回格式
-            http_case: x.getval('#http_case'),                  // 接口请求示例
-            return_case: x.getval('#return_case'),              // 接口返回示例
-            code_case: x.getval('#code_case'),                  // 接口代码示例
-            state: x.getval('#state')                            // 接口状态
-        }, (data) => {
-            if (data.code === 200) {
-                console.log('return =>', data)
-                $('#modal-top').modal('hide');
-                setTimeout(() => {
-                    x.notify(data.msg, 'success')
-                    setTimeout(() => {
-                        x.pjax('?control_list');
-                    }, 1200)
-                }, 300)
-            } else {
-                x.btn(data.msg)
-            }
-        });
-    }
-
     function edit_modal (list = null)
     {
         if (list != null) {
@@ -441,6 +413,8 @@ $bnums = ( $page - 1 ) * $ENUMS;
             $("input[name='http_mode']").val(data.http_mode); // 接口请求方法
             $("input[name='return_format']").val(data.return_format); // 接口返回格式
             $("input[name='http_case']").val(data.http_case); // 接口请求示例
+            $("textarea[name='http_param']").val(data.http_param); // 接口请求参数
+            $("textarea[name='return_param']").val(data.return_param); // 接口返回参数
             $("textarea[name='return_case']").val(Base64.decode(data.return_case)); // 接口返回示例
             $("textarea[name='code_case']").val(Base64.decode(data.code_case)); // 接口代码示例
             $("select[name='state']").val(data.state); // 接口状态
@@ -464,69 +438,35 @@ $bnums = ( $page - 1 ) * $ENUMS;
         }
 
     }
-    // 展开模态框，传入APIID
-    function httpParam (id)
-    {
-        $("input[name='API_ID']").val(id) // ID
-        $('#modal-httpParam').modal('show');
-    }
-    // 阻止表单点击事件
-    $("form").click((event) => {
-        event.preventDefault();
-    });
 
-    // 增加字段
-    let add_id = 0;
-    function addHttpParam ()
+    function add_api ()
     {
-        add_id += 1;
-        $("#httpParamInputList").append('<div class="row mb-2" id="http-param-' + add_id + '">' +
-            '<hr class="mt-2"><div class="col-sm-3">' +
-            '<label class="form-label" for="name' + add_id + '">名称</label>' +
-            '<input type="text" class="form-control fs-sm" name="name[' + add_id + ']" id="name' + add_id + '" placeholder="参数名" value="">' +
-            '</div>' +
-            '<div class="col-sm-3">' +
-            '<label class="form-label" for="must' + add_id + '">必填</label>' +
-            '<input type="text" class="form-control fs-sm" name="must[' + add_id + ']" id="must' + add_id + '" placeholder="是/否" value="">' +
-            '</div>' +
-            '<div class="col-sm-3">' +
-            '<label class="form-label" for="type' + add_id + '">类型</label>' +
-            '<input type="text" class="form-control fs-sm" name="type[' + add_id + ']" id="type' + add_id + '" placeholder="string" value="">' +
-            '</div>' +
-            '<div class="col-sm-3">' +
-            '<label class="form-label" for="explain' + add_id + '">说明</label>' +
-            '<input type="text" class="form-control fs-sm" name="explain[' + add_id + ']" id="explain' + add_id + '" placeholder="参数说明" value="">' +
-            '</div></div>');
-    }
-    // 删除字段
-    function deleteHttpParam ()
-    {
-        let id = add_id--
-        $('#http-param-' + id).remove();
-    }
-
-    function add_HttpParam ()
-    {
-        let From = new FormData(document.getElementById('httpParamFrom'));
-        var loading = layer.load(2);
-        $.ajax({
-            url: 'ajax.php?act=control_httpParam',
-            type: "POST",
-            data: From,
-            contentType: false,
-            processData: false,/*阻止ajax序列化表单data*/
-            success: function (data) {
-                let i = JSON.parse(data)
-                x.close(loading);
-                if (i.code === 200) {
-                    $('#modal-httpParam').modal('hide');
-                    x.notify(i.msg, 'success')
+        x.ajax('ajax.php?act=control_' + x.getval('#fun'), {
+            id: x.getval('#api_id'),                            // 接口ID
+            name: x.getval('#api_name'),                        // 接口名字
+            type: x.getval('#type'),                            // 接口类型
+            api_url: x.getval('#api_url'),                      // 接口地址
+            des: x.getval('#api_des'),                          // 接口介绍
+            http_mode: x.getval('#http_mode'),                  // 接口请求方法
+            return_format: x.getval('#return_format'),          // 接口返回格式
+            http_case: x.getval('#http_case'),                  // 接口请求示例
+            http_param: x.getval('#http_param'),                // 接口请求参数
+            return_param: x.getval('#return_param'),            // 接口返回参数
+            return_case: x.getval('#return_case'),              // 接口返回示例
+            code_case: x.getval('#code_case'),                  // 接口代码示例
+            state: x.getval('#state')                            // 接口状态
+        }, (data) => {
+            if (data.code === 200) {
+                console.log('return =>', data)
+                $('#modal-top').modal('hide');
+                setTimeout(() => {
+                    x.notify(data.msg, 'success')
                     setTimeout(() => {
                         x.pjax('?control_list');
                     }, 1200)
-                } else {
-                    x.btn(i.msg)
-                }
+                }, 300)
+            } else {
+                x.btn(data.msg)
             }
         });
     }

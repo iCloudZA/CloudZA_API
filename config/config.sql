@@ -53,34 +53,19 @@ CREATE TABLE `api_list`
     `http_mode`     text comment '请求方法',
     `http_case`     text comment '请求示例',
     `return_format` text comment '返回格式',
+    `http_param`    text comment '请求参数',
+    `return_param` text comment '返回参数',
     `return_case`   text comment '返回示例',
     `code_case`     text comment '代码示例',
     `sign`          varchar(12) not null comment 'API标识',
     `type`          varchar(12) not null comment '类型', -- 本地||外部
-    `state`         varchar(3) comment 'API状态',               -- 正常/维护
+    `state`         enum('on','off') comment 'API状态',        -- 正常/维护
     `pv`            int(10)     not null default '0' comment '浏览量',
     `add_time`      datetime    not null comment '添加时间',
     primary key (`sign`),
     KEY `id` (`id`)
 ) ENGINE = INNODB
   DEFAULT CHARSET = utf8;
-
--- API请求参数说明
-DROP TABLE IF EXISTS `api_content_http`;
-CREATE TABLE `api_content_http`
-(
-    `id`      int primary key auto_increment comment '主键',
-    `name`    varchar(64) comment '名称',
-    `must`    varchar(12) comment '必填',
-    `type`    varchar(32) comment '类型',
-    `explain` text comment '说明',
-    `API_ID`  int not null comment 'API_ID',
-    CONSTRAINT `API_ID` FOREIGN KEY (API_ID)
-        REFERENCES api_list (id)
-        ON DELETE CASCADE
-) ENGINE = INNODB
-  DEFAULT CHARSET = utf8;
-
 
 -- API调用统计
 DROP TABLE IF EXISTS `api_count`;
