@@ -44,12 +44,12 @@ $WEB = Db::table('webset')->find();
                                 </div>
                                 <div class="block-content">
                                     <div class="form-floating mb-4">
-                                        <input type="text" class="form-control" name="user" placeholder="输入你的账号"
+                                        <input type="text" class="form-control" name="user" id="user" placeholder="输入你的账号"
                                                required />
                                         <label class="form-label" for="login-username">账号</label>
                                     </div>
                                     <div class="form-floating mb-4">
-                                        <input type="password" class="form-control" name="password"
+                                        <input type="password" class="form-control" name="password" id="password"
                                                placeholder="输入你的密码" required />
                                         <label class="form-label" for="login-password">密码</label>
                                     </div>
@@ -82,26 +82,20 @@ $WEB = Db::table('webset')->find();
 <script src="../assets/js/bootstrap-notify.min.js"></script>
 <script src="../assets/js/plugins/jquery-pjax/jquery.pjax.js"></script>
 <script src="../assets/js/app.min.js"></script>
+<script src="../assets/js/layer.js"></script>
 <script>
     $('#submit').click(function () {
-        let user = $("input[name='user']").val();
-        let pwd = $("input[name='password']").val();
-        $.ajax({
-            cache: false,
-            type: "POST",//请求的方式
-            url: "index.php?action=login",//请求的文件名
-            data: {user: user, pwd: pwd},
-            dataType: 'json',
-            success: function (data) {
-                console.log(data);
-                if (data.code == 200) {
-                    x.notify(data.msg, 'success')
-                    window.setTimeout("window.location='" + data.data.url + "'", 1000);
-                } else {
-                    x.notify(data.msg, 'danger')
-                }
+        x.ajax('index.php?action=login',{
+            user:x.getval('#user'),
+            pwd:x.getval('#password')
+        },(data)=>{
+            if(data.code === '200'){
+                x.notify(data.msg, 'success')
+                window.setTimeout("window.location='" + data.data.url + "'", 1000);
+            } else {
+                x.notify(data.msg, 'danger')
             }
-        });
+        })
     });
 </script>
 </body>

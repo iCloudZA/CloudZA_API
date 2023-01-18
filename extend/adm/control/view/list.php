@@ -332,10 +332,12 @@ $bnums = ( $page - 1 ) * $ENUMS;
                         </div>
                     </div>
                     <div class="block-content fs-sm">
+                        <button class="btn btn-sm btn-alt-primary mb-2" onclick="addHttpParam()">加一组</button>
+                        <button class="btn btn-sm btn-alt-primary mb-2" onclick="deleteHttpParam()">删一组</button>
                         <form id="httpParamFrom" method="post" onsubmit="return check()">
                             <input type="hidden" name="API_ID" value="0">
                             <div id="httpParamInputList">
-                                <div class="row mb-1">
+                                <div class="row mb-2">
                                     <div class="col-sm-3">
                                         <label class="form-label" for="name0">名称</label>
                                         <input type="text" class="form-control fs-sm" name="name[0]" id="name0"
@@ -359,9 +361,7 @@ $bnums = ( $page - 1 ) * $ENUMS;
                                 </div>
                             </div>
                         </form>
-                        <div class="text-center">
-                            <a href="javascript:void(0);" class="btn btm-sm btn-alt-primary fs-sm mb-2" id="addHttpInput" onclick="addHttpParam()"><i class="fa fa-lg fa-plus text-primary"></i>加一组</a>
-                        </div>
+
                     </div>
 
 
@@ -464,53 +464,51 @@ $bnums = ( $page - 1 ) * $ENUMS;
         }
 
     }
-
+    // 展开模态框，传入APIID
     function httpParam (id)
     {
         $("input[name='API_ID']").val(id) // ID
         $('#modal-httpParam').modal('show');
     }
-
+    // 阻止表单点击事件
     $("form").click((event) => {
         event.preventDefault();
     });
-    let add_id = 0;
 
+    // 增加字段
+    let add_id = 0;
     function addHttpParam ()
     {
         add_id += 1;
-        console.log(add_id)
-        $("#httpParamInputList").append('<div class="row mb-1" id="http-param-' + add_id + '">' +
-            '<div class="col-sm-3">' +
+        $("#httpParamInputList").append('<div class="row mb-2" id="http-param-' + add_id + '">' +
+            '<hr class="mt-2"><div class="col-sm-3">' +
             '<label class="form-label" for="name' + add_id + '">名称</label>' +
             '<input type="text" class="form-control fs-sm" name="name[' + add_id + ']" id="name' + add_id + '" placeholder="参数名" value="">' +
             '</div>' +
             '<div class="col-sm-3">' +
             '<label class="form-label" for="must' + add_id + '">必填</label>' +
-            '<input type="text" class="form-control fs-sm" name="must[' + add_id + ']" id="must' + add_id + '" placeholder="参数名" value="">' +
+            '<input type="text" class="form-control fs-sm" name="must[' + add_id + ']" id="must' + add_id + '" placeholder="是/否" value="">' +
             '</div>' +
             '<div class="col-sm-3">' +
             '<label class="form-label" for="type' + add_id + '">类型</label>' +
-            '<input type="text" class="form-control fs-sm" name="type[' + add_id + ']" id="type' + add_id + '" placeholder="参数名" value="">' +
+            '<input type="text" class="form-control fs-sm" name="type[' + add_id + ']" id="type' + add_id + '" placeholder="string" value="">' +
             '</div>' +
             '<div class="col-sm-3">' +
             '<label class="form-label" for="explain' + add_id + '">说明</label>' +
-            '<input type="text" class="form-control fs-sm" name="explain[' + add_id + ']" id="explain' + add_id + '" placeholder="参数名" value="">' +
-            '</div>' +
-            '<div class="col-sm-12 text-center mt-2 mb-2">' +
-            '<button type="button" class="btn btn-alt-primary btn-sm" onclick="deleteHttpParam(' + add_id + ')">删除</button>' +
-            '</div>' +
-            '</div>');
+            '<input type="text" class="form-control fs-sm" name="explain[' + add_id + ']" id="explain' + add_id + '" placeholder="参数说明" value="">' +
+            '</div></div>');
     }
-
-    function deleteHttpParam (id)
+    // 删除字段
+    function deleteHttpParam ()
     {
+        let id = add_id--
         $('#http-param-' + id).remove();
     }
 
     function add_HttpParam ()
     {
         let From = new FormData(document.getElementById('httpParamFrom'));
+        var loading = layer.load(2);
         $.ajax({
             url: 'ajax.php?act=control_httpParam',
             type: "POST",
@@ -519,6 +517,7 @@ $bnums = ( $page - 1 ) * $ENUMS;
             processData: false,/*阻止ajax序列化表单data*/
             success: function (data) {
                 let i = JSON.parse(data)
+                x.close(loading);
                 if (i.code === 200) {
                     $('#modal-httpParam').modal('hide');
                     x.notify(i.msg, 'success')
@@ -526,15 +525,8 @@ $bnums = ( $page - 1 ) * $ENUMS;
                         x.pjax('?control_list');
                     }, 1200)
                 } else {
-                    $('#modal-httpParam').modal('hide');
-                    x.notify(i.msg, 'warning')
-                    setTimeout(() => {
-                        x.pjax('?control_list');
-                    }, 1200)
+                    x.btn(i.msg)
                 }
-            },
-            error: function (err) {
-                console.log(err)
             }
         });
     }
