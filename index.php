@@ -8,7 +8,8 @@
 include 'include/CheckRedis.php';
 require_once( 'include/common.php' );
 CheckRedis::Run();
-//details-test.html
+$count_api = Db::table('api_list')->count();
+
 $_GET && SafeFilter($_GET);
 $_POST && SafeFilter($_POST);
 $_COOKIE && SafeFilter($_COOKIE);
@@ -34,6 +35,10 @@ function SafeFilter (&$arr): void
 //define('FCPATH' , str_replace("\\" , '/' , dirname(dirname(__FILE__)) . '/'));
 
 $uri = $_SERVER[ 'REQUEST_URI' ];
+
+
+
+
 if (str_contains($uri , '/api/')) {
     $uri_parts = explode('/' , $uri);
     $uri_parts = explode('?' , $uri_parts[ 2 ]);
@@ -57,6 +62,13 @@ if (str_contains($uri , '/api/')) {
     }
 }
 
+if(str_contains($uri , DESCURI)){
+    $uri_parts = explode('-' , $uri);
+    $uri_parts = explode('.',$uri_parts[1]);
+    define("DOC_SIGN" , $uri_parts[ 0 ]);
+    require 'extend/docView.php';
+    exit;
+}
 ?>
 
 <!doctype html>
@@ -111,7 +123,7 @@ if (str_contains($uri , '/api/')) {
     </header>
 
     <main id="main-container">
-        <div class="content">
+        <div class="content" id="pjax-container">
             <div class="block block-rounded">
                 <div class="block-content block-content-full">
                     <div class="py-3 text-center">
@@ -124,7 +136,7 @@ if (str_contains($uri , '/api/')) {
                                     <?php
                                     echo DESC ?>
                                 </span></span></h3>
-                        <p class="fs-sm fw-medium text-muted mb-4">共收录的xx个接口</p>
+                        <p class="fs-sm fw-medium text-muted mb-4">共收录了<?php echo $count_api ?>个接口</p>
                         <div class="row justify-content-center">
                             <div class="col-md-10 col-lg-8 col-xl-6">
                                 <form action="" method="POST">
@@ -140,7 +152,7 @@ if (str_contains($uri , '/api/')) {
                     </div>
                 </div>
             </div>
-            <div class="row" id="list"></div>
+            <div class="row animated fadeIn" id="list"></div>
     </main>
 
     <footer id="page-footer">
@@ -159,34 +171,38 @@ if (str_contains($uri , '/api/')) {
     </footer>
 </div>
 <script>
-
     $.ajax({
-        url: "extend/api.php",
+        url: "extend/ajaxApi.php",
         dataType: "json",
         success: function (data) {
-            var listContainer = $("#list");
-            for (var i = 0; i < data.length; i++) {
-                var title = data[i].title;
-                var desc = data[i].desc;
-                var pv = data[i].pv;
-                var state = data[i].state;
-                var stateInfo = data[i].stateInfo;
-                var uri = data[i].uri;
-                var itemHtml = '<div class="col-sm-6"><a class="block block-rounded d-flex align-items-stretch" href="javascript:void(0)" onclick="goToApiDoc(\'' + state + '\',\'' + uri + '\')">' +
-                    '<div class="block-content block-sticky-options pt-5 bg-white">' +
-                    '<div class="block-options block-options-left">' +
-                    '<h2 class="fs-sm text-muted">' + title + '</h2>' +
-                    '</div>' +
-                    '<div class="block-options">' +
-                    '<div class="block-options-item text-muted fs-sm">' +
-                    '<i class="far fa-bookmark m-1"></i>' + stateInfo +
-                    '<i class="si si-eye m-1"></i>' + pv +
-                    '</div>' +
-                    '</div>' +
-                    '<h3 class="fs-sm fw-medium text-muted">' + desc + '</h3>' +
-                    '</div>' +
-                    '</a></div>';
-                listContainer.append(itemHtml);
+            console.log(data)
+            if(data.code){
+                let listContainer = $("#list");
+                for (let i = 0; i < data.data.length; i++) {
+                    let title = data.data[i].name;
+                    let desc = data.data[i].desc;
+                    let pv = data.data[i].pv;
+                    let state = data.data[i].state;
+                    let stateInfo = data.data[i].stateInfo;
+                    let uri = data.data[i].uri;
+                    let itemHtml = '<div class="col-sm-6"><a class="block block-rounded d-flex align-items-stretch" href="javascript:void(0)" onclick="goToApiDoc(\'' + state + '\',\'' + uri + '\')">' +
+                        '<div class="block-content block-sticky-options pt-5 bg-white">' +
+                        '<div class="block-options block-options-left">' +
+                        '<h2 class="fs-sm text-muted">' + title + '</h2>' +
+                        '</div>' +
+                        '<div class="block-options">' +
+                        '<div class="block-options-item text-muted fs-sm">' +
+                        '<i class="far fa-bookmark m-1"></i>' + stateInfo +
+                        '<i class="si si-eye m-1"></i>' + pv +
+                        '</div>' +
+                        '</div>' +
+                        '<h3 class="fs-sm fw-medium text-muted">' + desc + '</h3>' +
+                        '</div>' +
+                        '</a></div>';
+                    listContainer.append(itemHtml);
+                }
+            } else {
+                x.notify('Sever Error');
             }
         }
     });
@@ -194,7 +210,7 @@ if (str_contains($uri , '/api/')) {
     function goToApiDoc (state, uri)
     {
         if (state === 'on') {
-            x.notify(uri, 'success');
+            x.pjax(uri)
         } else {
             x.notify('此接口维护中', 'warning');
         }

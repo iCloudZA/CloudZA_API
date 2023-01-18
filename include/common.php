@@ -6,6 +6,10 @@ const API_EXTEND_MULU = 'extend/api/';
 // API展示路径
 const APIURI = 'api/';
 
+// API详情规则
+const  DESCURI = 'doc-';
+
+
 $web_info = Db::table('webset' , 'as A')->find();
 define("TITLE" , ( $web_info[ 'web_title' ] ) ?: 'CloudZA-API');
 define("TITLE_DESC",( $web_info[ 'web_titleDesc' ] ) ?: '一款开源的API系统');
