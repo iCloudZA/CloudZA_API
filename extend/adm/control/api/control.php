@@ -9,8 +9,8 @@ if ($act === 'add') {
     $data[ 'http_mode' ] = isset($_POST[ 'http_mode' ]) && !empty($_POST[ 'http_mode' ]) ? purge($_POST[ 'http_mode' ]) : '';                   // 接口请求方法
     $data[ 'return_format' ] = isset($_POST[ 'return_format' ]) && !empty($_POST[ 'return_format' ]) ? purge($_POST[ 'return_format' ]) : '';   // 接口返回格式
     $data[ 'http_case' ] = isset($_POST[ 'http_case' ]) && !empty($_POST[ 'http_case' ]) ? purge($_POST[ 'http_case' ]) : '';                   // 接口请求示例
-    $data['http_param'] = isset($_POST[ 'http_param' ]) && !empty($_POST[ 'http_param' ]) ? purge($_POST[ 'http_param' ]) : '';                 // 接口请求参数
-    $data['return_param'] = isset($_POST[ 'return_param' ]) && !empty($_POST[ 'return_param' ]) ? purge($_POST[ 'return_param' ]) : '';         // 接口返回参数
+    $data['http_param'] = isset($_POST[ 'http_param' ]) && !empty($_POST[ 'http_param' ]) ? $_POST[ 'http_param' ] : '';                        // 接口请求参数
+    $data['return_param'] = isset($_POST[ 'return_param' ]) && !empty($_POST[ 'return_param' ]) ? $_POST[ 'return_param' ] : '';                // 接口返回参数
     $data[ 'return_case' ] = isset($_POST[ 'return_case' ]) && !empty($_POST[ 'return_case' ]) ? $_POST[ 'return_case' ] : '';                  // 接口返回示例
     $data[ 'code_case' ] = isset($_POST[ 'code_case' ]) && !empty($_POST[ 'code_case' ]) ? $_POST[ 'code_case' ] : '';                          // 接口代码示例
     $data[ 'state' ] = isset($_POST[ 'state' ]) && !empty($_POST[ 'state' ]) ? purge($_POST[ 'state' ]) : '';                                         // 接口状态
@@ -43,8 +43,8 @@ if ($act === 'edit') {
     $data[ 'http_mode' ] = isset($_POST[ 'http_mode' ]) && !empty($_POST[ 'http_mode' ]) ? purge($_POST[ 'http_mode' ]) : '';                   // 接口请求方法
     $data[ 'return_format' ] = isset($_POST[ 'return_format' ]) && !empty($_POST[ 'return_format' ]) ? purge($_POST[ 'return_format' ]) : '';   // 接口返回格式
     $data[ 'http_case' ] = isset($_POST[ 'http_case' ]) && !empty($_POST[ 'http_case' ]) ? purge($_POST[ 'http_case' ]) : '';                   // 接口请求示例
-    $data['http_param'] = isset($_POST[ 'http_param' ]) && !empty($_POST[ 'http_param' ]) ? purge($_POST[ 'http_param' ]) : '';                 // 接口请求参数
-    $data['return_param'] = isset($_POST[ 'return_param' ]) && !empty($_POST[ 'return_param' ]) ? purge($_POST[ 'return_param' ]) : '';         // 接口返回参数
+    $data['http_param'] = isset($_POST[ 'http_param' ]) && !empty($_POST[ 'http_param' ]) ? $_POST[ 'http_param' ] : '';                        // 接口请求参数
+    $data['return_param'] = isset($_POST[ 'return_param' ]) && !empty($_POST[ 'return_param' ]) ? $_POST[ 'return_param' ] : '';                // 接口返回参数
     $data[ 'return_case' ] = isset($_POST[ 'return_case' ]) && !empty($_POST[ 'return_case' ]) ? $_POST[ 'return_case' ] : '';                  // 接口返回示例
     $data[ 'code_case' ] = isset($_POST[ 'code_case' ]) && !empty($_POST[ 'code_case' ]) ? $_POST[ 'code_case' ] : '';                          // 接口代码示例
     $data[ 'state' ] = isset($_POST[ 'state' ]) && !empty($_POST[ 'state' ]) ? $_POST[ 'state' ] : '';                                          // 接口状态

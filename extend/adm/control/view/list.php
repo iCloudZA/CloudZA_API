@@ -167,8 +167,8 @@ $bnums = ( $page - 1 ) * $ENUMS;
                                                echo $row[ 'http_mode' ] ?>%22,%22return_format%22:%22<?php
                                                echo $row[ 'return_format' ] ?>%22,%22http_case%22:%22<?php
                                                echo $row[ 'http_case' ] ?>%22,%22http_param%22:%22<?php
-                                               echo $row[ 'http_param' ] ?>%22,%22return_param%22:%22<?php
-                                               echo $row[ 'return_param' ] ?>%22, %22return_case%22:%22<?php
+                                               echo base64_encode($row[ 'http_param' ]) ?>%22,%22return_param%22:%22<?php
+                                               echo base64_encode($row[ 'return_param' ]) ?>%22, %22return_case%22:%22<?php
                                                echo base64_encode($row[ 'return_case' ]) ?>%22,%22code_case%22:%22<?php
                                                echo base64_encode($row[ 'code_case' ]) ?>%22,%22state%22:%22<?php
                                                echo $row[ 'state' ] ?>%22%7D');">修改接口</a>
@@ -236,7 +236,7 @@ $bnums = ( $page - 1 ) * $ENUMS;
                             <div class="col-6">
                                 <label class="form-label" for="type">接口类型</label>
                                 <div id="api_type">
-                                    <select class="form-control fs-sm" id="type" name="type" default="local">
+                                    <select class="form-control form-select fs-sm" id="type" name="type" default="local">
                                         <option value="local">本地</option>
                                         <option value="external">外部</option>
                                     </select>
@@ -251,7 +251,7 @@ $bnums = ( $page - 1 ) * $ENUMS;
                         </div>
                         <div class="mb-4">
                             <label class="form-label" for="api_des">API介绍</label>
-                            <textarea class="form-control fs-sm " name="api_des" id="api_des" rows="2"
+                            <textarea class="form-control fs-sm " name="api_des" id="api_des" rows="1"
                                       placeholder="例如：将长网址进行缩短，支持百度、新浪、腾讯短网址等等..."></textarea>
                         </div>
 
@@ -362,7 +362,7 @@ $bnums = ( $page - 1 ) * $ENUMS;
                         </div>
                         <div class="mb-4">
                             <label class="form-label" for="state">API状态</label>
-                            <select class="form-control" id="state" name="state">
+                            <select class="form-control form-select" id="state" name="state">
                                 <option value="on">正常</option>
                                 <option value="off">维护</option>
                             </select>
@@ -413,8 +413,8 @@ $bnums = ( $page - 1 ) * $ENUMS;
             $("input[name='http_mode']").val(data.http_mode); // 接口请求方法
             $("input[name='return_format']").val(data.return_format); // 接口返回格式
             $("input[name='http_case']").val(data.http_case); // 接口请求示例
-            $("textarea[name='http_param']").val(data.http_param); // 接口请求参数
-            $("textarea[name='return_param']").val(data.return_param); // 接口返回参数
+            $("textarea[name='http_param']").val(Base64.decode(data.http_param)); // 接口请求参数
+            $("textarea[name='return_param']").val(Base64.decode(data.return_param)); // 接口返回参数
             $("textarea[name='return_case']").val(Base64.decode(data.return_case)); // 接口返回示例
             $("textarea[name='code_case']").val(Base64.decode(data.code_case)); // 接口代码示例
             $("select[name='state']").val(data.state); // 接口状态
