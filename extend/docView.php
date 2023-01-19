@@ -4,7 +4,7 @@
  */
 $row = DB::table('api_list')->where('sign',DOC_SIGN)->find();
 if(!$row){
-    header('Location:./');
+    header('Location:../');
 }
 ?>
 

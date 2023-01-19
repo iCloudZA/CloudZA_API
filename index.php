@@ -35,7 +35,7 @@ function SafeFilter (&$arr): void
 //define('FCPATH' , str_replace("\\" , '/' , dirname(dirname(__FILE__)) . '/'));
 
 $uri = $_SERVER[ 'REQUEST_URI' ];
-
+//exit(json_encode($uri,320));
 if (str_contains($uri , '/api/')) {
     $uri_parts = explode('/' , $uri);
     $uri_parts = explode('?' , $uri_parts[ 2 ]);
@@ -169,7 +169,7 @@ if(str_contains($uri , DESCURI)){
 </div>
 <script>
     $.ajax({
-        url: "extend/ajaxApi.php",
+        url: "<?php echo WEB_URL ?>extend/ajaxApi.php",
         dataType: "json",
         success: function (data) {
             console.log("data=>",data.data)
