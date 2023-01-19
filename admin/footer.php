@@ -15,10 +15,9 @@
     </div>
 </footer>
 </div>
+<script src="https://cdn.staticfile.org/nprogress/0.2.0/nprogress.js"></script>
 <script src="../assets/js/codebase.app.min-5.4.js"></script>
-<!--<script src="../assets/js/lib/jquery.min.js"></script>-->
 <script src="../assets/js/plugins/jquery-pjax/jquery.pjax.js"></script>
-<script src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-0-M/nprogress/0.2.0/nprogress.min.js"></script>
 <script src="../assets/js/dashboard.js"></script>
 <script src="../assets/js/bootstrap-notify.min.js"></script>
 <script src="../assets/js/layer.js"></script>
