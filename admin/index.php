@@ -17,5 +17,3 @@ if($Filename == '' or $Filename == 'index'){
 }
 require_once "footer.php";
 
-?>
-
