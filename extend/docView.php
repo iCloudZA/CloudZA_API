@@ -9,7 +9,7 @@ if(!$row){
 ?>
 
 <!doctype html>
-<html lang="zn-cn">
+<html lang="zn-cn" class="">
 <head>
     <meta charset="utf-8">
     <title><?php
@@ -92,19 +92,19 @@ if(!$row){
                             <div class="mb-4 col-sm-6">
                                 <label class="form-label">接口地址</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control form-control-alt" value="<?php echo ($row['type'] === 'local') ? WEB_URL.APIURI.$row['api_url'] : $row['api_url'] ?>" readonly>
-                                    <a class="btn btn-alt-info copy-btn" href="javascript:;" data-clipboard-text="<?php echo WEB_URL.APIURI.$row['api_url'] ?>" title="点击复制">
+                                    <input type="text" class="form-control form-control-alt fs-sm" value="<?php echo ($row['type'] === 'local') ? WEB_URL.APIURI.$row['api_url'] : $row['api_url'] ?>" readonly>
+                                    <a class="btn btn-sm btn-alt-info copy-btn" style="padding-top: 6px;" href="javascript:;" data-clipboard-text="<?php echo WEB_URL.APIURI.$row['api_url'] ?>" title="点击复制">
                                         <i class="far fa-copy"></i>
                                     </a>
                                 </div>
                             </div>
                             <div class="mb-4 col-sm-3">
                                 <label class="form-label">请求方法</label>
-                                    <input type="text" class="form-control form-control-alt" value="<?php echo $row['http_mode'] ?>" readonly>
+                                    <input type="text" class="form-control form-control-alt fs-sm" value="<?php echo $row['http_mode'] ?>" readonly>
                             </div>
                             <div class="mb-4 col-sm-3">
                                 <label class="form-label">返回格式</label>
-                                    <input type="text" class="form-control form-control-alt" value="<?php echo $row['return_format'] ?>" readonly>
+                                    <input type="text" class="form-control form-control-alt fs-sm" value="<?php echo $row['return_format'] ?>" readonly>
                             </div>
                         </div>
 
@@ -171,13 +171,13 @@ if(!$row){
         });
     })
 </script>
-<script src="../../assets/js/codebase.app.min-5.4.js"></script>
-<script src="../../assets/js/plugins/jquery-pjax/jquery.pjax.js"></script>
+<script src="../assets/js/codebase.app.min-5.4.js"></script>
+<script src="../assets/js/plugins/jquery-pjax/jquery.pjax.js"></script>
 <script src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-0-M/nprogress/0.2.0/nprogress.min.js"></script>
-<script src="../../assets/js/dashboard.js"></script>
-<script src="../../assets/js/bootstrap-notify.min.js"></script>
-<script src="../../assets/js/layer.js"></script>
-<script src="../../assets/js/app.min.js"></script>
+<script src="../assets/js/dashboard.js"></script>
+<script src="../assets/js/bootstrap-notify.min.js"></script>
+<script src="../assets/js/layer.js"></script>
+<script src="../assets/js/app.min.js"></script>
 <script src="//cdn.staticfile.org/clipboard.js/1.7.1/clipboard.min.js"></script>
 </body>
 </html>

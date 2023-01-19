@@ -7,7 +7,7 @@
 
 include 'include/CheckRedis.php';
 require_once( 'include/common.php' );
-CheckRedis::Run();
+//CheckRedis::Run();
 $count_api = Db::table('api_list')->count();
 
 $_GET && SafeFilter($_GET);
@@ -35,9 +35,6 @@ function SafeFilter (&$arr): void
 //define('FCPATH' , str_replace("\\" , '/' , dirname(dirname(__FILE__)) . '/'));
 
 $uri = $_SERVER[ 'REQUEST_URI' ];
-
-
-
 
 if (str_contains($uri , '/api/')) {
     $uri_parts = explode('/' , $uri);
@@ -72,7 +69,7 @@ if(str_contains($uri , DESCURI)){
 ?>
 
 <!doctype html>
-<html lang="zn-cn">
+<html lang="zn-cn" class="">
 <head>
     <meta charset="utf-8">
     <title><?php
@@ -84,7 +81,7 @@ if(str_contains($uri , DESCURI)){
     <!-- 表格样式 -->
     <link rel="stylesheet"
           href="/assets/css/dataTables.bootstrap5.min.css">
-    <link href="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-0-M/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+    <link href="https://cdn.staticfile.org/nprogress/0.2.0/nprogress.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
@@ -175,7 +172,7 @@ if(str_contains($uri , DESCURI)){
         url: "extend/ajaxApi.php",
         dataType: "json",
         success: function (data) {
-            console.log(data)
+            console.log("data=>",data.data)
             if(data.code){
                 let listContainer = $("#list");
                 for (let i = 0; i < data.data.length; i++) {
@@ -219,7 +216,7 @@ if(str_contains($uri , DESCURI)){
 </script>
 <script src="/assets/js/codebase.app.min-5.4.js"></script>
 <script src="/assets/js/plugins/jquery-pjax/jquery.pjax.js"></script>
-<script src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-0-M/nprogress/0.2.0/nprogress.min.js"></script>
+<script src="https://cdn.staticfile.org/nprogress/0.2.0/nprogress.js"></script>
 <script src="/assets/js/dashboard.js"></script>
 <script src="/assets/js/bootstrap-notify.min.js"></script>
 <script src="/assets/js/layer.js"></script>
