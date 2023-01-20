@@ -47,8 +47,11 @@ if (str_contains($uri , '/api/')) {
             // 判断接口是否正常
             if ($sign[ 'state' ] === 'on') {
                 require FCPATH . API_EXTEND_MULU . $uri_parts[ 0 ] . '/index.php';
-                $pv = $sign[ 'pv' ] + 1;
-                $table->where('sign' , $uri_parts[ 0 ])->update(['pv' => $pv]);
+                if (callApiLog($sign['name'],$uri_parts[ 0 ] , $sign[ 'pv' ])) {
+                    echo '<script>console.log("CloudZA API => PV write succeeded !"); console.log("CloudZA API => Log write succeeded !");</script>';
+                } else {
+                    echo '<script>console.log("CloudZA API => Sever Error !")</script>';
+                }
             } else {
                 exit(ReturnError('接口维护中'));
             }
@@ -59,9 +62,9 @@ if (str_contains($uri , '/api/')) {
     }
 }
 
-if(str_contains($uri , DESCURI)){
+if (str_contains($uri , DESCURI)) {
     $uri_parts = explode('-' , $uri);
-    $uri_parts = explode('.',$uri_parts[1]);
+    $uri_parts = explode('.' , $uri_parts[ 1 ]);
     define("DOC_SIGN" , $uri_parts[ 0 ]);
     require 'extend/docView.php';
     exit;
@@ -133,7 +136,8 @@ if(str_contains($uri , DESCURI)){
                                     <?php
                                     echo DESC ?>
                                 </span></span></h3>
-                        <p class="fs-sm fw-medium text-muted mb-4">共收录了<?php echo $count_api ?>个接口</p>
+                        <p class="fs-sm fw-medium text-muted mb-4">共收录了<?php
+                            echo $count_api ?>个接口</p>
                         <div class="row justify-content-center">
                             <div class="col-md-10 col-lg-8 col-xl-6">
                                 <form action="" method="POST">
@@ -172,8 +176,8 @@ if(str_contains($uri , DESCURI)){
         url: "<?php echo WEB_URL ?>extend/ajaxApi.php",
         dataType: "json",
         success: function (data) {
-            console.log("data=>",data.data)
-            if(data.code){
+            console.log("data=>", data.data)
+            if (data.code) {
                 let listContainer = $("#list");
                 for (let i = 0; i < data.data.length; i++) {
                     let title = data.data[i].name;

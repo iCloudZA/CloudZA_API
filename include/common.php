@@ -12,17 +12,28 @@ const  DESCURI = 'doc-';
 
 $web_info = Db::table('webset' , 'as A')->find();
 define("TITLE" , ( $web_info[ 'web_title' ] ) ?: 'CloudZA-API');
-define("TITLE_DESC",( $web_info[ 'web_titleDesc' ] ) ?: '一款开源的API系统');
+define("TITLE_DESC" , ( $web_info[ 'web_titleDesc' ] ) ?: '一款开源的API系统');
 define("DESC" , ( $web_info[ 'web_des' ] ) ?: '一款开源的API系统');
 define("KEY" , ( $web_info[ 'web_key' ] ) ?: 'API,CloudZA-API,免费API,API内容管理系统');
 define("BEIAN" , ( $web_info[ 'web_beian' ] ) ?: '京ICP备8888888号-8');
-define("QQ",( $web_info[ 'web_qq' ] ) ?: '2922619853');
+define("QQ" , ( $web_info[ 'web_qq' ] ) ?: '2922619853');
 define("FOOTER_BAN" , ( $web_info[ 'web_ban' ] ) ?: '云之安');
 define("PAGES" , ( $web_info[ 'web_page_nums' ] ) ?: '10');
 define('FCPATH' , str_replace("\\" , '/' , dirname(dirname(__FILE__)) . '/'));
-define('WEB_URL', ( ( $_SERVER[ 'SERVER_PORT' ] == 443 ) ? 'https' : 'http' ) . '://' . $_SERVER[ 'HTTP_HOST' ].'/');
+define('WEB_URL' , ( ( $_SERVER[ 'SERVER_PORT' ] == 443 ) ? 'https' : 'http' ) . '://' . $_SERVER[ 'HTTP_HOST' ] . '/');
 define('WEB_URL_FILE' , ( ( $_SERVER[ 'SERVER_PORT' ] == 443 ) ? 'https' : 'http' ) . '://' . $_SERVER[ 'HTTP_HOST' ] . str_replace($_SERVER[ 'DOCUMENT_ROOT' ] , ( substr($_SERVER[ 'DOCUMENT_ROOT' ] , -1) == '/' ) ? '/' : '' , dirname($_SERVER[ 'SCRIPT_FILENAME' ])));
 
+
+// API调用记录
+function callApiLog ($name,$sign , $pv): bool
+{
+    $pv += 1;
+    if (Db::table('api_list')->where('sign' , $sign)->update(['pv' => $pv]) && Db::table('api_count')->add(['sign' => $sign , 'name' => $name , 'ip' => get_ip() , 'address' => getIPAddress(get_ip()) , 'datetime' => date('Y-m-d H:i:s')])) {
+        return true;
+    } else {
+        return false;
+    }
+}
 
 /**
  * 导航配置方法
@@ -140,7 +151,6 @@ function purge ($string , $trim = true , $filter = true , $force = 0 , $strip = 
 }
 
 
-
 function txt_Arr ($txt): array
 {
     //文本转数组
@@ -192,7 +202,8 @@ function getIPAddress ($ip): string
         $iphtml = iconv("gb2312" , "utf-8//IGNORE" , $ipaddres);
         $addres = mb_substr($iphtml , 9 , -4);
         return $addres;
-    } catch (Exception $e) {
+    }
+    catch (Exception $e) {
         return '未知ip';
     }
 }
@@ -244,16 +255,17 @@ function get_ip (int $type = 0 , bool $adv = true): mixed
  * @param $length int 长度
  * @return string|null
  */
-function getRand(int $length): ?string
+function getRand (int $length): ?string
 {
-    $str = null;
+    $str = NULL;
     $strPol = "abcdefhijkmnprstwxyz";
     $max = strlen($strPol) - 1;
-    for ($i = 0;$i < $length;$i++) {
-        $str.= $strPol[rand(0, $max) ];
+    for ($i = 0; $i < $length; $i++) {
+        $str .= $strPol[ rand(0 , $max) ];
     }
     return $str;
 }
+
 // url参数转数组
 function toarr ($para): ?array
 {
@@ -261,7 +273,6 @@ function toarr ($para): ?array
     parse_str($str , $arr);
     return $arr;
 }
-
 
 
 /**
@@ -344,19 +355,14 @@ function ReturnError ($msg)
  * @param $msg
  * @return bool
  */
-function writeLog($msg): bool
+function writeLog ($msg): bool
 {
-    if(empty($msg)){
+    if (empty($msg)) {
         return false;
     }
     $ip = get_ip();
-    $implement = Db::table('web_log')->add([
-        'ip' => $ip,
-        'time' => date('Y-m-d H:i:s'),
-        'event' => $msg,
-        'detailed' => getIPAddress($ip)
-    ]);
-    if($implement) {
+    $implement = Db::table('web_log')->add(['ip' => $ip , 'time' => date('Y-m-d H:i:s') , 'event' => $msg , 'detailed' => getIPAddress($ip)]);
+    if ($implement) {
         return true;
     } else {
         return false;
