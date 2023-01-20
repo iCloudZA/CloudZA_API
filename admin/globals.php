@@ -8,9 +8,10 @@
 require_once '../include/common.php';
 $res = Db::table('admin')->find();
 $action = isset($_GET[ 'action' ]) ? purge($_GET[ 'action' ]) : '';
+$api = isset($_GET[ 'api' ]) ? purge($_GET[ 'api' ]) : '';
 substr($_SERVER[ 'PHP_SELF' ] , strrpos($_SERVER[ 'PHP_SELF' ] , '/') + 1);
 //登录验证
-if ($action == 'login') {
+if ($action === 'login') {
     $username = isset($_POST[ 'user' ]) ? purge($_POST[ 'user' ]) : '';
     $password = isset($_POST[ 'pwd' ]) ? purge($_POST[ 'pwd' ]) : '';
     if ($username == '' || $password == '') {
@@ -30,7 +31,7 @@ if ($action == 'login') {
     }
 }
 //退出
-if ($action == 'logout') {
+if ($action === 'logout') {
     setcookie('ADMIN_COOKIE' , ' ' , time() - 36000 , '/');
     header('Location:./login.php');
     exit;
@@ -72,3 +73,18 @@ array_multisort($sortKey , SORT_ASC , $menu);
 
 $Filename = strpos($_SERVER[ "QUERY_STRING" ] , '&') ? txt_zuo($_SERVER[ "QUERY_STRING" ] , "&") : $_SERVER[ "QUERY_STRING" ];
 $title = !empty($titlename[ $Filename ]) ? $titlename[ $Filename ] : '首页';
+
+
+// Chart Data
+
+if($api === 'chart'){
+    $week_array = ["星期日" , "星期一" , "星期二" , "星期三" , "星期四" , "星期五" , "星期六"];
+    $data = Db::query('SELECT DATE(datetime) as date, COUNT(DISTINCT ip) as ips, COUNT(*) as pv FROM api_count WHERE datetime >= DATE_SUB(CURDATE(), INTERVAL 6 DAY) GROUP BY DATE(datetime)');
+    $result = ["date" => [] ,"ip"=>[] , "pv" => []];
+    foreach ($data as $item) {
+        $result["date"][] = $item["date"];
+        $result['ip'][] = $item['ips'];
+        $result['pv'][] = $item['pv'];
+    }
+    exit(return_msg('200','success',$result));
+}

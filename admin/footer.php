@@ -32,11 +32,13 @@
             Codebase.helpers('jq-slimscroll');
         });
     })
-    // 线形图
-    x.lineCharts(["周一", "周二", "周三", "周四", "周五", "周六", "周日"]);
-    // 柱形图
-    x.barCharts();
-
+    // ChartJS
+    x.ajax('index.php?api=chart',{},(data)=>{
+        if(data.code === '200'){
+            let item = data.data
+            x.barCharts(item.date,item.pv,item.ip);
+        }
+    })
 </script>
 </body>
 </html>
