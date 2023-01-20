@@ -46,7 +46,7 @@ CREATE TABLE `web_log`
 DROP TABLE IF EXISTS `api_list`;
 CREATE TABLE `api_list`
 (
-    `id`            int(10)     NOT NULL auto_increment comment '主键',
+    `id`            int(10)      NOT NULL auto_increment comment '主键',
     `name`          text comment '名称',
     `api_url`       text comment '接口地址',
     `des`           text comment '描述',
@@ -58,10 +58,10 @@ CREATE TABLE `api_list`
     `return_case`   text comment '返回示例',
     `code_case`     text comment '代码示例',
     `sign`          varchar(255) not null comment 'API标识',
-    `type`          varchar(12) not null comment '类型', -- 本地||外部
-    `state`         enum('on','off') comment 'API状态',        -- 正常/维护
-    `pv`            int(10)     not null default '0' comment '浏览量',
-    `add_time`      datetime    not null comment '添加时间',
+    `type`          varchar(12)  not null comment '类型', -- 本地||外部
+    `state`         enum ('on','off') comment 'API状态',  -- 正常/维护
+    `pv`            int(10)      not null default '0' comment '浏览量',
+    `add_time`      datetime     not null comment '添加时间',
     primary key (`sign`),
     KEY `id` (`id`)
 ) ENGINE = INNODB
@@ -72,11 +72,11 @@ DROP TABLE IF EXISTS `api_count`;
 CREATE TABLE `api_count`
 (
     `id`       int primary key auto_increment comment '主键',
-    `api_id`   int         not null comment 'API_ID',
-    `call_num` int         not null comment '调用次数',
-    `ip`       varchar(32) not null comment 'IP',
-    `address`  varchar(32) not null comment '地址',
-    `datetime` datetime    not null comment '时间'
+    `name`     text         not null comment 'API名称',
+    `sign`     varchar(255) not null comment 'API_ID',
+    `ip`       varchar(32)  not null comment 'IP',
+    `address`  varchar(32)  not null comment '地址',
+    `datetime` datetime     not null comment '时间'
 ) ENGINE = INNODB
   DEFAULT CHARSET = utf8;
 
