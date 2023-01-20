@@ -54,10 +54,10 @@ CREATE TABLE `api_list`
     `http_case`     text comment '请求示例',
     `return_format` text comment '返回格式',
     `http_param`    text comment '请求参数',
-    `return_param` text comment '返回参数',
+    `return_param`  text comment '返回参数',
     `return_case`   text comment '返回示例',
     `code_case`     text comment '代码示例',
-    `sign`          varchar(12) not null comment 'API标识',
+    `sign`          varchar(255) not null comment 'API标识',
     `type`          varchar(12) not null comment '类型', -- 本地||外部
     `state`         enum('on','off') comment 'API状态',        -- 正常/维护
     `pv`            int(10)     not null default '0' comment '浏览量',
