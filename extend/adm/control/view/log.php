@@ -18,103 +18,106 @@ $bnums = ( $page - 1 ) * $ENUMS;
         white-space: nowrap;
     }
 </style>
-<div class="col-12">
-    <div class="block block-rounded">
-        <div class="block-header block-header-default">
-            <h3 class="block-title">操作日志</h3>
+<div class="animated fadeIn">
+    <div class="col-12">
+        <div class="block block-rounded">
+            <div class="block-header block-header-default">
+                <h3 class="block-title">操作日志</h3>
+            </div>
         </div>
     </div>
-</div>
 
-<div class="col-xl-12">
-    <div class="block block-rounded">
-        <div class="block-header">
-            <h3 class="block-title">操作日志 <small>每页展示<?php
-                    echo PAGES; ?>条数据</small>
-            </h3>
-        </div>
-        <div class="block-content block-content-full">
-            <div class="dataTables_wrapper dt-bootstrap5 no-footer">
-                <div class="row mb-4">
-                    <div class="col-12">
-                        <button type="button" class="btn btn-sm btn-alt-primary me-1" onclick="delLog()">清空日志</button>
+    <div class="col-xl-12">
+        <div class="block block-rounded">
+            <div class="block-header">
+                <h3 class="block-title">操作日志 <small>每页展示<?php
+                        echo PAGES; ?>条数据</small>
+                </h3>
+            </div>
+            <div class="block-content block-content-full">
+                <div class="dataTables_wrapper dt-bootstrap5 no-footer">
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <button type="button" class="btn btn-sm btn-alt-primary me-1" onclick="delLog()">清空日志
+                            </button>
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-12 table-responsive">
-                        <table class="table table-bordered table-striped table-vcenter js-dataTable-responsive  no-footer dtr-inline"
-                               id="task-logs-list" data-type="sport"
-                               aria-describedby="task-logs-list_info">
-                            <thead>
-                            <tr>
-                                <th style="width: 10px;text-align: center;">
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="all"
-                                               onclick="checkAll();" />
-                                    </div>
-                                </th>
-                                <th style="text-align: center;" rowspan="1" colspan="1">
-                                    事件
-                                </th>
-                                <th style="text-align: center" rowspan="1" colspan="1">详细地址</th>
-                                <th style="text-align: center;" rowspan="1" colspan="1">
-                                    IP
-                                </th>
-                                <th style="text-align: center;" rowspan="1" colspan="1">
-                                    时间
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody>
-
-                            <?php
-                            $res = Db::table('web_log')->order('id DESC')->limit($bnums , $ENUMS)->select();
-                            if (json_encode($res) == '[]') {
-                                if ( !empty($_GET[ 'page' ])) {
-                                    $url = ( ( $_SERVER[ 'SERVER_PORT' ] == 443 ) ? 'https' : 'http' ) . '://' . $_SERVER[ 'HTTP_HOST' ] . str_replace($_SERVER[ 'DOCUMENT_ROOT' ] , ( substr($_SERVER[ 'DOCUMENT_ROOT' ] , -1) == '/' ) ? '/' : '' , dirname($_SERVER[ 'SCRIPT_FILENAME' ]));
-                                    $js = '<script>window.location="' . $url . '/?user_edit&id=' . $user_info[ 'id' ] . '"</script>';
-                                    echo $js;
-                                }
-                                echo '<td style="text-align: center;" colspan="5" class="dataTables_empty"><i class="si si-drawer fa-2x"></i><p class="text-muted fs-sm">暂无数据</p></td>';
-                            }
-                            foreach ($res as $k => $v) {
-                                $row = $res[ $k ];
-                                ?>
-                                <tr class="odd">
-                                    <td style="text-align: center;" class="fs-sm">
+                    <div class="row">
+                        <div class="col-sm-12 table-responsive">
+                            <table class="table table-bordered table-striped table-vcenter js-dataTable-responsive  no-footer dtr-inline"
+                                   id="task-logs-list" data-type="sport"
+                                   aria-describedby="task-logs-list_info">
+                                <thead>
+                                <tr>
+                                    <th style="width: 10px;text-align: center;">
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" name="ids[]"
-                                                   value="<?php
-                                                   echo $row[ 'id' ]; ?>" id="<?php
-                                            echo 'check_' . $row[ 'id' ]; ?>">
-                                            <label class="custom-control-label" for="<?php
-                                            echo 'check_' . $row[ 'id' ]; ?>"></label>
+                                            <input type="checkbox" class="custom-control-input" id="all"
+                                                   onclick="checkAll();" />
                                         </div>
-                                    </td>
-
-                                    <td style="text-align: center;" class="fs-sm">
-                                        <?php
-                                        echo $lang_adm[$row[ 'event']]; ?>
-                                    </td>
-                                    <td style="text-align: center">
-                                        <?php
-                                        echo getIPAddress($row[ 'ip' ]) ?>
-                                    </td>
-                                    <td style="text-align: center;" class="fs-sm">
-                                        <?php
-                                        echo $row[ 'ip' ]; ?>
-                                    </td>
-                                    <td style="text-align: center;" class="fs-sm">
-                                        <?php
-                                        echo $row[ 'time' ];
-                                        ?>
-                                    </td>
+                                    </th>
+                                    <th style="text-align: center;" rowspan="1" colspan="1">
+                                        事件
+                                    </th>
+                                    <th style="text-align: center" rowspan="1" colspan="1">详细地址</th>
+                                    <th style="text-align: center;" rowspan="1" colspan="1">
+                                        IP
+                                    </th>
+                                    <th style="text-align: center;" rowspan="1" colspan="1">
+                                        时间
+                                    </th>
                                 </tr>
-                                <?php
-                            } ?>
+                                </thead>
+                                <tbody>
 
-                            </tbody>
-                        </table>
+                                <?php
+                                $res = Db::table('web_log')->order('id DESC')->limit($bnums , $ENUMS)->select();
+                                if (json_encode($res) == '[]') {
+                                    if ( !empty($_GET[ 'page' ])) {
+                                        $url = ( ( $_SERVER[ 'SERVER_PORT' ] == 443 ) ? 'https' : 'http' ) . '://' . $_SERVER[ 'HTTP_HOST' ] . str_replace($_SERVER[ 'DOCUMENT_ROOT' ] , ( substr($_SERVER[ 'DOCUMENT_ROOT' ] , -1) == '/' ) ? '/' : '' , dirname($_SERVER[ 'SCRIPT_FILENAME' ]));
+                                        $js = '<script>window.location="' . $url . '/?user_edit&id=' . $user_info[ 'id' ] . '"</script>';
+                                        echo $js;
+                                    }
+                                    echo '<td style="text-align: center;" colspan="5" class="dataTables_empty"><i class="si si-drawer fa-2x"></i><p class="text-muted fs-sm">暂无数据</p></td>';
+                                }
+                                foreach ($res as $k => $v) {
+                                    $row = $res[ $k ];
+                                    ?>
+                                    <tr class="odd">
+                                        <td style="text-align: center;" class="fs-sm">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" name="ids[]"
+                                                       value="<?php
+                                                       echo $row[ 'id' ]; ?>" id="<?php
+                                                echo 'check_' . $row[ 'id' ]; ?>">
+                                                <label class="custom-control-label" for="<?php
+                                                echo 'check_' . $row[ 'id' ]; ?>"></label>
+                                            </div>
+                                        </td>
+
+                                        <td style="text-align: center;" class="fs-sm">
+                                            <?php
+                                            echo $lang_adm[ $row[ 'event' ] ]; ?>
+                                        </td>
+                                        <td style="text-align: center">
+                                            <?php
+                                            echo getIPAddress($row[ 'ip' ]) ?>
+                                        </td>
+                                        <td style="text-align: center;" class="fs-sm">
+                                            <?php
+                                            echo $row[ 'ip' ]; ?>
+                                        </td>
+                                        <td style="text-align: center;" class="fs-sm">
+                                            <?php
+                                            echo $row[ 'time' ];
+                                            ?>
+                                        </td>
+                                    </tr>
+                                    <?php
+                                } ?>
+
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
                 <!--分页-->
@@ -152,9 +155,10 @@ $bnums = ( $page - 1 ) * $ENUMS;
             }
         }
     }
+
     function delLog ()
     {
-        x.del('ajax.php?act=control_web_delLog',null,(data)=>{
+        x.del('ajax.php?act=control_web_delLog', null, (data) => {
             if (200 === data.code) {
                 x.notify(data.msg, 'success')
                 setTimeout(() => {
@@ -163,8 +167,9 @@ $bnums = ( $page - 1 ) * $ENUMS;
             } else {
                 x.notify(data.msg, 'warning')
             }
-        },'你确定要清空所有日志吗?')
+        }, '你确定要清空所有日志吗?')
     }
+
     function delSelect ()
     {
         let id_array = [];

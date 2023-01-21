@@ -19,263 +19,266 @@ $bnums = ( $page - 1 ) * $ENUMS;
         white-space: nowrap;
     }
 </style>
-<div class="col-12">
-    <div class="block block-rounded">
-        <div class="block-header block-header-default">
-            <h3 class="block-title">接口列表</h3>
-        </div>
-    </div>
-</div>
-<div class="col-xl-12">
-    <div class="block block-rounded">
-        <div class="block-header">
-            <h3 class="block-title">已经添加的API <small>每页展示<?php
-                    echo PAGES; ?>条数据</small>
-            </h3>
-        </div>
-        <div class="block-content block-content-full">
-            <div class="dataTables_wrapper dt-bootstrap5 no-footer">
-                <div class="row mb-4">
-                    <div class="col-12">
-                        <button type="button" class="btn btn-sm btn-alt-primary me-1" onclick="edit_modal(null)">添加API
-                        </button>
-                        <button type="button" class="btn btn-sm btn-alt-secondary btn-alt-info" data-toggle="layout"
-                                data-action="header_search_on">
-                            <i class="fa fa-fw fa-search"></i>
-                        </button>
-                    </div>
-                </div>
-
-
-                <?php
-                $data = Db::table('api_list');
-                if ($so != '') {
-                    $list = $data->where('name' , 'like' , "%$so%")->whereOr('des' , 'like' , "%$so%");
-                } else {
-                    $list = $data->order('id ASC')->limit($bnums , $ENUMS);
-                }
-                $res = $list->select();
-                ?>
-
-                <div class="row">
-                    <div class="col-sm-12 table-responsive">
-                        <table class="table table-bordered table-striped table-vcenter js-dataTable-responsive  no-footer dtr-inline"
-                               id="task-logs-list" data-type="sport"
-                               aria-describedby="task-logs-list_info">
-                            <thead>
-                            <tr>
-                                <th style="letter-spacing: initial;width: 10px;text-align: center;">
-                                    <div class="custom-control custom-checkbox">
-                                        <label for="all"></label>
-                                        <input type="checkbox" class="custom-control-input" id="all"
-                                               onclick="checkAll();" />
-                                    </div>
-                                </th>
-                                <th style="letter-spacing: initial;text-align: center;" rowspan="1" colspan="1">
-                                    API名称
-                                </th>
-                                <th style="letter-spacing: initial;text-align: center;" rowspan="1" colspan="1">
-                                    API介绍
-                                </th>
-                                <th style="text-align: center;" rowspan="1" colspan="1">
-                                    添加时间
-                                </th>
-                                <th style="letter-spacing: initial;text-align: center;" rowspan="1" colspan="1">pv</th>
-                                <th style="letter-spacing: initial;text-align: center;" rowspan="1" colspan="1">类型
-                                </th>
-                                <th style="letter-spacing: initial;text-align: center;" rowspan="1" colspan="1">状态
-                                </th>
-                                <th style="letter-spacing: initial;width: 20px;text-align: center;" rowspan="1"
-                                    colspan="1">操作
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody>
-
-                            <?php
-                            if (json_encode($res) == '[]') {
-                                if ( !empty($_GET[ 'page' ])) {
-                                    $url = ( ( $_SERVER[ 'SERVER_PORT' ] == 443 ) ? 'https' : 'http' ) . '://' . $_SERVER[ 'HTTP_HOST' ] . str_replace($_SERVER[ 'DOCUMENT_ROOT' ] , ( str_ends_with($_SERVER[ 'DOCUMENT_ROOT' ] , '/') ) ? '/' : '' , dirname($_SERVER[ 'SCRIPT_FILENAME' ]));
-                                    $js = '<script>window.location="' . $url . '/?user_edit&id=' . $user_info[ 'id' ] . '"</script>';
-                                    echo $js;
-                                }
-                                echo '<td style="text-align: center;" colspan="8" class="dataTables_empty"><i class="si si-drawer fa-2x"></i><p class="text-muted fs-sm">暂无数据</p></td>';
-                            }
-                            foreach ($res as $k => $v) {
-                                $row = $res[ $k ];
-
-                                ?>
-                                <tr class="odd">
-                                    <td style="text-align: center;" class="fs-sm">
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" name="ids[]"
-                                                   value="<?php
-                                                   echo $row[ 'id' ]; ?>" id="<?php
-                                            echo 'check_' . $row[ 'id' ]; ?>">
-                                            <label class="custom-control-label" for="<?php
-                                            echo 'check_' . $row[ 'id' ]; ?>"></label>
-                                        </div>
-                                    </td>
-
-                                    <td style="text-align: center;" class="fs-sm">
-                                        <?php
-                                        echo $row[ 'name' ]; ?>
-                                    </td>
-
-                                    <td style="text-align: center;" class="fs-sm">
-                                        <?php
-                                        echo ( strlen($row[ 'des' ]) > 33 ) ? mb_substr($row[ 'des' ] , 0 , 11) . '...' : $row[ 'des' ] ?>
-                                    </td>
-                                    <td style="text-align: center;" class="fs-sm">
-                                        <?php
-                                        echo $row[ 'add_time' ]; ?>
-                                    </td>
-                                    <td style="text-align: center;" class="fs-sm">
-                                        <?php
-                                        echo ( $row[ 'type' ] == 'external' ) ? 'NULL' : $row[ 'pv' ];
-                                        ?>
-                                    </td>
-                                    <td style="text-align: center;" class="fs-sm">
-                                        <?php
-                                        echo ( $row[ 'type' ] == 'external' ) ? '外部' : '本地';
-                                        ?>
-                                    </td>
-                                    <td style="text-align: center;">
-                                        <?php
-                                        if ($row[ 'state' ] == 'on') { ?>
-                                            <i class="far fa-circle-check text-success"></i>
-                                            <?php
-                                        } else { ?>
-                                            <i class="far fa-circle-xmark text-danger"></i>
-                                            <?php
-                                        } ?>
-                                    </td>
-                                    <td style="text-align: center;">
-                                        <button type="button" class="btn btn-sm btn-alt-primary dropdown-toggle"
-                                                id="dropdown-default-alt-primary" data-bs-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                            设置
-                                        </button>
-                                        <div class="dropdown-menu fs-sm" aria-labelledby="dropdown-default-alt-primary">
-                                            <a class="dropdown-item" href="javascript:void(0)"
-                                               onclick="edit_modal('%7B%22api_id%22:%22<?php
-                                               echo $row[ 'id' ] ?>%22,%22api_name%22:%22<?php
-                                               echo $row[ 'name' ] ?>%22,%22api_url%22:%22<?php
-                                               echo $row[ 'api_url' ] ?>%22,%22api_des%22:%22<?php
-                                               echo $row[ 'des' ] ?>%22,%22type%22:%22<?php
-                                               echo $row[ 'type' ] ?>%22,%22http_mode%22:%22<?php
-                                               echo $row[ 'http_mode' ] ?>%22,%22return_format%22:%22<?php
-                                               echo $row[ 'return_format' ] ?>%22,%22http_case%22:%22<?php
-                                               echo $row[ 'http_case' ] ?>%22,%22http_param%22:%22<?php
-                                               echo base64_encode($row[ 'http_param' ]) ?>%22,%22return_param%22:%22<?php
-                                               echo base64_encode($row[ 'return_param' ]) ?>%22, %22return_case%22:%22<?php
-                                               echo base64_encode($row[ 'return_case' ]) ?>%22,%22code_case%22:%22<?php
-                                               echo base64_encode($row[ 'code_case' ]) ?>%22,%22state%22:%22<?php
-                                               echo $row[ 'state' ] ?>%22%7D');">修改接口</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="javascript:void(0)" onclick="del('<?php
-                                            echo $row[ 'name' ] ?>',<?php
-                                            echo $row[ 'id' ] ?>)">删除接口</a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <?php
-                            } ?>
-
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <!--分页-->
-                <div class="row">
-                    <div class="col-sm-12 col-md-5">
-                        <div class="dataTables_info" id="task-logs-list_info" role="status" aria-live="polite">
-                            选中项：<a href="javascript:void(0);" onclick="delSelect()">删除</a>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-md-7">
-                        <div class="dataTables_paginate paging_full_numbers" id="task-logs-list_paginate">
-                            <?php
-                            if ( !$so) {
-                                echo pagination($nums , $ENUMS , $page , $url);
-                            } ?>
-                        </div>
-                    </div>
-                </div>
+<div class="animated fadeIn">
+    <div class="col-12">
+        <div class="block block-rounded">
+            <div class="block-header block-header-default">
+                <h3 class="block-title">接口列表</h3>
             </div>
         </div>
-
-
     </div>
-</div>
-<!--模态框-->
-<div class="modal modal-lg fade" id="modal-top" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-     aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="block block-rounded shadow-none mb-0">
-                    <div class="block-header block-header-default">
-                        <h3 class="block-title" id="title">新增API</h3>
-                        <div class="block-options">
-                            <button type="button" class="btn-block-option" data-bs-dismiss="modal" aria-label="Close">
-                                <i class="fa fa-times"></i>
+    <div class="col-xl-12">
+        <div class="block block-rounded">
+            <div class="block-header">
+                <h3 class="block-title">已经添加的API <small>每页展示<?php
+                        echo PAGES; ?>条数据</small>
+                </h3>
+            </div>
+            <div class="block-content block-content-full">
+                <div class="dataTables_wrapper dt-bootstrap5 no-footer">
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <button type="button" class="btn btn-sm btn-alt-primary me-1" onclick="edit_modal(null)">
+                                添加API
+                            </button>
+                            <button type="button" class="btn btn-sm btn-alt-secondary btn-alt-info" data-toggle="layout"
+                                    data-action="header_search_on">
+                                <i class="fa fa-fw fa-search"></i>
                             </button>
                         </div>
                     </div>
 
-                    <div class="block-content fs-sm">
-                        <input type="hidden" name="fun" id="fun" value="add">
-                        <input type="hidden" name="api_id" id="api_id" value="">
-                        <div class="mb-4">
-                            <label class="form-label" for="api_name">API名称</label>
-                            <input type="text" class="form-control fs-sm" name="api_name" id="api_name"
-                                   placeholder="例如：短网址生成" value="">
+
+                    <?php
+                    $data = Db::table('api_list');
+                    if ($so != '') {
+                        $list = $data->where('name' , 'like' , "%$so%")->whereOr('des' , 'like' , "%$so%");
+                    } else {
+                        $list = $data->order('id ASC')->limit($bnums , $ENUMS);
+                    }
+                    $res = $list->select();
+                    ?>
+
+                    <div class="row">
+                        <div class="col-sm-12 table-responsive">
+                            <table class="table table-bordered table-striped table-vcenter js-dataTable-responsive  no-footer dtr-inline"
+                                   id="task-logs-list" data-type="sport"
+                                   aria-describedby="task-logs-list_info">
+                                <thead>
+                                <tr>
+                                    <th style="letter-spacing: initial;width: 10px;text-align: center;">
+                                        <div class="custom-control custom-checkbox">
+                                            <label for="all"></label>
+                                            <input type="checkbox" class="custom-control-input" id="all"
+                                                   onclick="checkAll();" />
+                                        </div>
+                                    </th>
+                                    <th style="letter-spacing: initial;text-align: center;" rowspan="1" colspan="1">
+                                        API名称
+                                    </th>
+                                    <th style="letter-spacing: initial;text-align: center;" rowspan="1" colspan="1">
+                                        API介绍
+                                    </th>
+                                    <th style="text-align: center;" rowspan="1" colspan="1">
+                                        添加时间
+                                    </th>
+                                    <th style="letter-spacing: initial;text-align: center;" rowspan="1" colspan="1">pv
+                                    </th>
+                                    <th style="letter-spacing: initial;text-align: center;" rowspan="1" colspan="1">类型
+                                    </th>
+                                    <th style="letter-spacing: initial;text-align: center;" rowspan="1" colspan="1">状态
+                                    </th>
+                                    <th style="letter-spacing: initial;width: 20px;text-align: center;" rowspan="1"
+                                        colspan="1">操作
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                <?php
+                                if (json_encode($res) == '[]') {
+                                    if ( !empty($_GET[ 'page' ])) {
+                                        $url = ( ( $_SERVER[ 'SERVER_PORT' ] == 443 ) ? 'https' : 'http' ) . '://' . $_SERVER[ 'HTTP_HOST' ] . str_replace($_SERVER[ 'DOCUMENT_ROOT' ] , ( str_ends_with($_SERVER[ 'DOCUMENT_ROOT' ] , '/') ) ? '/' : '' , dirname($_SERVER[ 'SCRIPT_FILENAME' ]));
+                                        $js = '<script>window.location="' . $url . '/?user_edit&id=' . $user_info[ 'id' ] . '"</script>';
+                                        echo $js;
+                                    }
+                                    echo '<td style="text-align: center;" colspan="8" class="dataTables_empty"><i class="si si-drawer fa-2x"></i><p class="text-muted fs-sm">暂无数据</p></td>';
+                                }
+                                foreach ($res as $k => $v) {
+                                    $row = $res[ $k ];
+
+                                    ?>
+                                    <tr class="odd">
+                                        <td style="text-align: center;" class="fs-sm">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" name="ids[]"
+                                                       value="<?php
+                                                       echo $row[ 'id' ]; ?>" id="<?php
+                                                echo 'check_' . $row[ 'id' ]; ?>">
+                                                <label class="custom-control-label" for="<?php
+                                                echo 'check_' . $row[ 'id' ]; ?>"></label>
+                                            </div>
+                                        </td>
+
+                                        <td style="text-align: center;" class="fs-sm">
+                                            <?php
+                                            echo $row[ 'name' ]; ?>
+                                        </td>
+
+                                        <td style="text-align: center;" class="fs-sm">
+                                            <?php
+                                            echo ( strlen($row[ 'des' ]) > 33 ) ? mb_substr($row[ 'des' ] , 0 , 11) . '...' : $row[ 'des' ] ?>
+                                        </td>
+                                        <td style="text-align: center;" class="fs-sm">
+                                            <?php
+                                            echo $row[ 'add_time' ]; ?>
+                                        </td>
+                                        <td style="text-align: center;" class="fs-sm">
+                                            <?php
+                                            echo ( $row[ 'type' ] == 'external' ) ? 'NULL' : $row[ 'pv' ];
+                                            ?>
+                                        </td>
+                                        <td style="text-align: center;" class="fs-sm">
+                                            <?php
+                                            echo ( $row[ 'type' ] == 'external' ) ? '外部' : '本地';
+                                            ?>
+                                        </td>
+                                        <td style="text-align: center;">
+                                            <?php
+                                            if ($row[ 'state' ] == 'on') { ?>
+                                                <i class="far fa-circle-check text-success"></i>
+                                                <?php
+                                            } else { ?>
+                                                <i class="far fa-circle-xmark text-danger"></i>
+                                                <?php
+                                            } ?>
+                                        </td>
+                                        <td style="text-align: center;">
+                                            <button type="button" class="btn btn-sm btn-alt-primary dropdown-toggle"
+                                                    id="dropdown-default-alt-primary" data-bs-toggle="dropdown"
+                                                    aria-haspopup="true" aria-expanded="false">
+                                                设置
+                                            </button>
+                                            <div class="dropdown-menu fs-sm" aria-labelledby="dropdown-default-alt-primary">
+                                                <a class="dropdown-item" href="javascript:void(0)"
+                                                   onclick="edit_modal('%7B%22api_id%22:%22<?php
+                                                   echo $row[ 'id' ] ?>%22,%22api_name%22:%22<?php
+                                                   echo $row[ 'name' ] ?>%22,%22api_url%22:%22<?php
+                                                   echo $row[ 'api_url' ] ?>%22,%22api_des%22:%22<?php
+                                                   echo $row[ 'des' ] ?>%22,%22type%22:%22<?php
+                                                   echo $row[ 'type' ] ?>%22,%22http_mode%22:%22<?php
+                                                   echo $row[ 'http_mode' ] ?>%22,%22return_format%22:%22<?php
+                                                   echo $row[ 'return_format' ] ?>%22,%22http_case%22:%22<?php
+                                                   echo $row[ 'http_case' ] ?>%22,%22http_param%22:%22<?php
+                                                   echo base64_encode($row[ 'http_param' ]) ?>%22,%22return_param%22:%22<?php
+                                                   echo base64_encode($row[ 'return_param' ]) ?>%22, %22return_case%22:%22<?php
+                                                   echo base64_encode($row[ 'return_case' ]) ?>%22,%22code_case%22:%22<?php
+                                                   echo base64_encode($row[ 'code_case' ]) ?>%22,%22state%22:%22<?php
+                                                   echo $row[ 'state' ] ?>%22%7D');">修改接口</a>
+                                                <div class="dropdown-divider"></div>
+                                                <a class="dropdown-item" href="javascript:void(0)" onclick="del('<?php
+                                                echo $row[ 'name' ] ?>',<?php
+                                                echo $row[ 'id' ] ?>)">删除接口</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <?php
+                                } ?>
+
+                                </tbody>
+                            </table>
                         </div>
-                        <div class="row mb-4">
-                            <div class="col-6">
-                                <label class="form-label" for="type">接口类型</label>
-                                <div id="api_type">
-                                    <select class="form-control form-select fs-sm" id="type" name="type" default="local">
-                                        <option value="local">本地</option>
-                                        <option value="external">外部</option>
-                                    </select>
+                    </div>
+                    <!--分页-->
+                    <div class="row">
+                        <div class="col-sm-12 col-md-5">
+                            <div class="dataTables_info" id="task-logs-list_info" role="status" aria-live="polite">
+                                选中项：<a href="javascript:void(0);" onclick="delSelect()">删除</a>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-7">
+                            <div class="dataTables_paginate paging_full_numbers" id="task-logs-list_paginate">
+                                <?php
+                                if ( !$so) {
+                                    echo pagination($nums , $ENUMS , $page , $url);
+                                } ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <!--模态框-->
+    <div class="modal modal-lg fade" id="modal-top" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+         aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="block block-rounded shadow-none mb-0">
+                        <div class="block-header block-header-default">
+                            <h3 class="block-title" id="title">新增API</h3>
+                            <div class="block-options">
+                                <button type="button" class="btn-block-option" data-bs-dismiss="modal" aria-label="Close">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="block-content fs-sm">
+                            <input type="hidden" name="fun" id="fun" value="add">
+                            <input type="hidden" name="api_id" id="api_id" value="">
+                            <div class="mb-4">
+                                <label class="form-label" for="api_name">API名称</label>
+                                <input type="text" class="form-control fs-sm" name="api_name" id="api_name"
+                                       placeholder="例如：短网址生成" value="">
+                            </div>
+                            <div class="row mb-4">
+                                <div class="col-6">
+                                    <label class="form-label" for="type">接口类型</label>
+                                    <div id="api_type">
+                                        <select class="form-control form-select fs-sm" id="type" name="type" default="local">
+                                            <option value="local">本地</option>
+                                            <option value="external">外部</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-6">
+                                    <label class="form-label" id="label_title" for="api_url">API目录名</label>
+                                    <input type="text" class="form-control fs-sm" name="api_url" id="api_url"
+                                           placeholder="例如：dwz" value="">
                                 </div>
                             </div>
+                            <div class="mb-4">
+                                <label class="form-label" for="api_des">API介绍</label>
+                                <textarea class="form-control fs-sm " name="api_des" id="api_des" rows="1"
+                                          placeholder="例如：将长网址进行缩短，支持百度、新浪、腾讯短网址等等..."></textarea>
+                            </div>
 
-                            <div class="col-6">
-                                <label class="form-label" id="label_title" for="api_url">API目录名</label>
-                                <input type="text" class="form-control fs-sm" name="api_url" id="api_url"
-                                       placeholder="例如：dwz" value="">
+                            <div class="row">
+                                <div class="col-sm-6 mb-4">
+                                    <label class="form-label" for="http_mode">请求方法</label>
+                                    <input type="text" class="form-control fs-sm" name="http_mode" id="http_mode"
+                                           placeholder="例如：GET/POST" value="">
+                                </div>
+                                <div class="col-sm-6 mb-4">
+                                    <label class="form-label" for="return_format">返回格式</label>
+                                    <input type="text" class="form-control fs-sm" name="return_format" id="return_format"
+                                           placeholder="例如：JSON" value="">
+                                </div>
                             </div>
-                        </div>
-                        <div class="mb-4">
-                            <label class="form-label" for="api_des">API介绍</label>
-                            <textarea class="form-control fs-sm " name="api_des" id="api_des" rows="1"
-                                      placeholder="例如：将长网址进行缩短，支持百度、新浪、腾讯短网址等等..."></textarea>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-sm-6 mb-4">
-                                <label class="form-label" for="http_mode">请求方法</label>
-                                <input type="text" class="form-control fs-sm" name="http_mode" id="http_mode"
-                                       placeholder="例如：GET/POST" value="">
+                            <div class="mb-4">
+                                <label class="form-label" for="http_case">请求示例</label>
+                                <input type="text" class="form-control fs-sm" name="http_case" id="http_case"
+                                       placeholder="https://abc.com/api/dome?url=http://baidu.com" value="">
                             </div>
-                            <div class="col-sm-6 mb-4">
-                                <label class="form-label" for="return_format">返回格式</label>
-                                <input type="text" class="form-control fs-sm" name="return_format" id="return_format"
-                                       placeholder="例如：JSON" value="">
-                            </div>
-                        </div>
-                        <div class="mb-4">
-                            <label class="form-label" for="http_case">请求示例</label>
-                            <input type="text" class="form-control fs-sm" name="http_case" id="http_case"
-                                   placeholder="https://abc.com/api/dome?url=http://baidu.com" value="">
-                        </div>
-                        <div class="mb-4">
-                            <label class="form-label" for="http_param">请求参数</label>
-                            <textarea class="form-control fs-sm " name="http_param" id="http_param" rows="5"
-                                      placeholder='<!-- 系统推荐以下表单均使用此表格样式 -->
+                            <div class="mb-4">
+                                <label class="form-label" for="http_param">请求参数</label>
+                                <textarea class="form-control fs-sm " name="http_param" id="http_param" rows="5"
+                                          placeholder='<!-- 系统推荐以下表单均使用此表格样式 -->
 <thead>
 	<tr>
 		<th>名称</th>
@@ -308,11 +311,11 @@ $bnums = ( $page - 1 ) * $ENUMS;
 		<td>需要获取的QQ，如：2922619853</td>
 	</tr>
 </tbody></textarea>
-                        </div>
-                        <div class="mb-4">
-                            <label class="form-label" for="return_param">返回参数</label>
-                            <textarea class="form-control fs-sm " name="return_param" id="return_param" rows="5"
-                                      placeholder='<!-- 系统推荐以下表单均使用此表格样式 -->
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label" for="return_param">返回参数</label>
+                                <textarea class="form-control fs-sm " name="return_param" id="return_param" rows="5"
+                                          placeholder='<!-- 系统推荐以下表单均使用此表格样式 -->
 <thead>
     <tr>
         <th>名称</th>
@@ -341,11 +344,11 @@ $bnums = ( $page - 1 ) * $ENUMS;
         <td>状态码</td>
     </tr>
     </tbody></textarea>
-                        </div>
-                        <div class="mb-4">
-                            <label class="form-label" for="return_case">返回示例</label>
-                            <textarea class="form-control fs-sm " name="return_case" id="return_case" rows="5"
-                                      placeholder='{
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label" for="return_case">返回示例</label>
+                                <textarea class="form-control fs-sm " name="return_case" id="return_case" rows="5"
+                                          placeholder='{
     "code": 1,
     "msg": "生成成功",
     "url": "http://baidu.com",
@@ -354,28 +357,29 @@ $bnums = ( $page - 1 ) * $ENUMS;
         "url": "https://url.cn/xxxxxx"
     }
 }'></textarea>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label" for="code_case">代码示例</label>
+                                <textarea class="form-control fs-sm " name="code_case" id="code_case" rows="4"
+                                          placeholder='hello word'></textarea>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label" for="state">API状态</label>
+                                <select class="form-control form-select" id="state" name="state">
+                                    <option value="on">正常</option>
+                                    <option value="off">维护</option>
+                                </select>
+                            </div>
                         </div>
-                        <div class="mb-4">
-                            <label class="form-label" for="code_case">代码示例</label>
-                            <textarea class="form-control fs-sm " name="code_case" id="code_case" rows="4"
-                                      placeholder='hello word'></textarea>
-                        </div>
-                        <div class="mb-4">
-                            <label class="form-label" for="state">API状态</label>
-                            <select class="form-control form-select" id="state" name="state">
-                                <option value="on">正常</option>
-                                <option value="off">维护</option>
-                            </select>
-                        </div>
-                    </div>
 
-                    <div class="block-content block-content-full block-content-sm text-end border-top">
-                        <button type="button" class="btn btn-alt-secondary" data-bs-dismiss="modal">
-                            取消
-                        </button>
-                        <button type="button" class="btn btn-alt-primary" onclick="add_api()">
-                            提交
-                        </button>
+                        <div class="block-content block-content-full block-content-sm text-end border-top">
+                            <button type="button" class="btn btn-alt-secondary" data-bs-dismiss="modal">
+                                取消
+                            </button>
+                            <button type="button" class="btn btn-alt-primary" onclick="add_api()">
+                                提交
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -400,6 +404,7 @@ $bnums = ( $page - 1 ) * $ENUMS;
             $("#http_case").attr("placeholder", "输入API目录名加参数例如：" + x.getval('#api_url') + "?abc=123");
         }
     });
+
     function edit_modal (list = null)
     {
         if (list != null) {

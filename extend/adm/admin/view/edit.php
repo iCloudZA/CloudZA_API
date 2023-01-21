@@ -11,7 +11,7 @@ if ( !isset($islogin)) header("Location: /");//非法访问拦截
 $data = Db::table('admin')->find();
 ?>
 
-<div class="content">
+<div class="animated fadeIn">
     <div class="col-12">
         <div class="block block-rounded">
             <div class="block-header block-header-default">
