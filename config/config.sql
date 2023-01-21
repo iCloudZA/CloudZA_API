@@ -7,8 +7,6 @@ CREATE TABLE `webset`
     `web_des`       text        not null comment '网站描述',
     `web_key`       text        not null comment '网站关键词',
     `web_qq`        varchar(12) not null comment 'QQ号',
-#     `extent_api`    text default 'extend/api/' not null comment 'API路径',
-#     `api_uri`       text default '/api/'       not null comment 'API目录',
     `web_beian`     text        not null comment '网站备案号',
     `web_ban`       text        not null comment '网站底部版权',
     `web_page_nums` int default '10' comment '每页条数'

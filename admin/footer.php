@@ -29,7 +29,7 @@
 <script>
     // ChartJS
     x.ajax('index.php?api=base', {}, (data) => {
-        console.log('CloudZA API [BASE] =>', data)
+        // console.log('CloudZA API [BASE] =>', data)
         if (data.code === '200') {
             let chart = data.data.chart
             let event = data.data.eventList

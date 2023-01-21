@@ -47,7 +47,7 @@ if (str_contains($uri , '/api/')) {
             // 判断接口是否正常
             if ($sign[ 'state' ] === 'on') {
                 require FCPATH . API_EXTEND_MULU . $uri_parts[ 0 ] . '/index.php';
-                if (callApiLog($sign['name'],$uri_parts[ 0 ] , $sign[ 'pv' ])) {
+                if (callApiLog($sign[ 'name' ] , $uri_parts[ 0 ] , $sign[ 'pv' ])) {
                     echo '<script>console.log("CloudZA API => PV write succeeded !"); console.log("CloudZA API => Log write succeeded !");</script>';
                 } else {
                     echo '<script>console.log("CloudZA API => Sever Error !")</script>';
@@ -211,7 +211,12 @@ if (str_contains($uri , DESCURI)) {
     function goToApiDoc (state, uri)
     {
         if (state === 'on') {
-            x.pjax(uri)
+            try {
+                x.pjax(uri)
+            }
+            catch {
+                x.notify('出现异常，请看控制台', 'warning')
+            }
         } else {
             x.notify('此接口维护中', 'warning');
         }
