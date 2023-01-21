@@ -124,7 +124,7 @@ if ($api === 'base') {
                 $icon = 'si si-settings';
                 break;
             case 'edit_admin':
-                $colour = 'text-waring';
+                $colour = 'text-warning';
                 $icon = "si si-wrench";
                 break;
             default:
