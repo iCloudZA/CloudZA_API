@@ -43,7 +43,7 @@ if ($ADMIN_COOKIE == $res[ 'cookie' ]) {
     $islogin = false;
 }
 if ( !$islogin) {
-    header('Location:./login.php?err=3');
+    header('Location:./login.php');
     exit;
 }
 
