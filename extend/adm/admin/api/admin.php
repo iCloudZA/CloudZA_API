@@ -15,7 +15,7 @@
         $data['password'] = md5($data['password']);
         $data['cookie'] = md5($data['user'] . $data['password'] . time());
         if(Db::table('admin')->update($data)){
-            writeLog('修改管理员密码');
+            writeLog('edit_admin');
             echo ReturnSuccess('修改成功，即将重新登录');
         } else {
             echo ReturnError('修改失败');

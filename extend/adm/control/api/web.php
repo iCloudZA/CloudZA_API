@@ -17,7 +17,7 @@ if ($act == 'set') {
     // 对比原始数据
     if (array_diff($origData , (array)$data) && array_diff((array)$data , $origData)) {
         if ($table->update($data)) {
-            writeLog('修改了网站信息');
+            writeLog('edit_web');
             exit(ReturnSuccess('更新成功'));
         } else {
             exit(ReturnError('更新失败'));

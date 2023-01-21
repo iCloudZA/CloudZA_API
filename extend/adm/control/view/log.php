@@ -94,7 +94,7 @@ $bnums = ( $page - 1 ) * $ENUMS;
 
                                     <td style="text-align: center;" class="fs-sm">
                                         <?php
-                                        echo $row[ 'event']; ?>
+                                        echo $lang_adm[$row[ 'event']]; ?>
                                     </td>
                                     <td style="text-align: center">
                                         <?php

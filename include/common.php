@@ -22,10 +22,12 @@ define("PAGES" , ( $web_info[ 'web_page_nums' ] ) ?: '10');
 define('FCPATH' , str_replace("\\" , '/' , dirname(dirname(__FILE__)) . '/'));
 define('WEB_URL' , ( ( $_SERVER[ 'SERVER_PORT' ] == 443 ) ? 'https' : 'http' ) . '://' . $_SERVER[ 'HTTP_HOST' ] . '/');
 define('WEB_URL_FILE' , ( ( $_SERVER[ 'SERVER_PORT' ] == 443 ) ? 'https' : 'http' ) . '://' . $_SERVER[ 'HTTP_HOST' ] . str_replace($_SERVER[ 'DOCUMENT_ROOT' ] , ( substr($_SERVER[ 'DOCUMENT_ROOT' ] , -1) == '/' ) ? '/' : '' , dirname($_SERVER[ 'SCRIPT_FILENAME' ])));
+//管理日志
+$lang_adm = ['logon' => '后台登录' , 'add_api' => '新增API' , 'edit_api' => '修改API' , 'del_api' => '删除API' , 'dels_api' => '删除多个API' , 'edit_web' => '修改网站设置' , 'edit_admin' => '修改管理员信息' ,];
 
 
 // API调用记录
-function callApiLog ($name,$sign , $pv): bool
+function callApiLog ($name , $sign , $pv): bool
 {
     $pv += 1;
     if (Db::table('api_list')->where('sign' , $sign)->update(['pv' => $pv]) && Db::table('api_count')->add(['sign' => $sign , 'name' => $name , 'ip' => get_ip() , 'address' => getIPAddress(get_ip()) , 'datetime' => date('Y-m-d H:i:s')])) {
@@ -192,24 +194,26 @@ function txt_zuo ($str , $rightStr)
 
 
 //获取当个ip所在的省份
-function getIpAddress($ip):string
+function getIpAddress ($ip): string
 {
-    $url = 'https://api.map.baidu.com/location/ip?ak=32f38c9491f2da9eb61106aaab1e9739&ip='.$ip;
+    $url = 'https://api.map.baidu.com/location/ip?ak=32f38c9491f2da9eb61106aaab1e9739&ip=' . $ip;
     try {
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch , CURLOPT_URL , $url);
+        curl_setopt($ch , CURLOPT_RETURNTRANSFER , 1);
         $ipaddres = curl_exec($ch);
         curl_close($ch);
-        $result = json_decode($ipaddres, true);
-        if( (isset($result['status']) && $result['status'] === 2 && $result['message'] === "Request Parameter Error:ip illegal") || (isset($result['message']) && preg_match("/ip\[.*\] loc failed/", $result['message']) ) ) {
+        $result = json_decode($ipaddres , true);
+        if (( isset($result[ 'status' ]) && $result[ 'status' ] === 2 && $result[ 'message' ] === "Request Parameter Error:ip illegal" ) || ( isset($result[ 'message' ]) && preg_match("/ip\[.*\] loc failed/" , $result[ 'message' ]) )) {
             throw new Exception("Invalid IP address");
         }
         return $result[ 'content' ][ 'address' ] ?? '未知ip';
-    } catch (Exception $e) {
+    }
+    catch (Exception $e) {
         return '未知ip';
     }
 }
+
 //function getIPAddress ($ip): string
 //{
 //    //访问api接口获取ip地址http://ip-api.com/json/ip地址?lang=zh-CN

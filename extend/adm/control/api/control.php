@@ -27,7 +27,7 @@ if ($act === 'add') {
     if ( !f($data)) exit(ReturnError('数据不完整'));
     if (Db::table('api_list')->where('sign' , $data[ 'sign' ])->find()) exit(ReturnError('【' . $data[ 'sign' ] . '】' . '已存在，请更换'));
     if (Db::table('api_list')->add($data)) {
-        writeLog('添加API：[' . $data[ 'name' ] . ']');
+        writeLog('add_api');
         exit(ReturnSuccess('添加成功'));
     } else {
         exit(ReturnError('添加失败'));
@@ -63,7 +63,7 @@ if ($act === 'edit') {
     // 对比原始数据
     if (array_diff($origData , (array)$data) && array_diff((array)$data , $origData)) {
         if ($table->where('id' , $id)->update($data)) {
-            writeLog('修改API：[' . $data[ 'name' ] . ']');
+            writeLog('edit_api');
             exit(ReturnSuccess('更新成功'));
         } else {
             exit(ReturnError('更新失败'));
@@ -83,7 +83,7 @@ if ($act === 'delSelect') {
         $ids = rtrim($ids , ",");
         $res = Db::table('api_list')->where('id' , 'in' , '(' . $ids . ')')->del();
         if ($res) {
-            writeLog('删除了' . count($_POST[ 'id' ]) . '个API');
+            writeLog('dels_api');
             exit(ReturnSuccess('删除成功'));
         } else {
             exit(ReturnError('删除失败'));
@@ -96,7 +96,7 @@ if ($act === 'delSelect') {
 if ($act === 'delapi') {
     $id = isset($_POST[ 'id' ]) && !empty($_POST[ 'id' ]) ? purge($_POST[ 'id' ]) : '';
     if (Db::table('api_list')->where('id' , $id)->del()) {
-        writeLog('删除了一个API');
+        writeLog('del_api');
         exit(ReturnSuccess('删除成功'));
     } else {
         exit(ReturnError('删除失败'));
