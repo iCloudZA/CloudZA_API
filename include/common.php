@@ -192,21 +192,39 @@ function txt_zuo ($str , $rightStr)
 
 
 //获取当个ip所在的省份
-function getIPAddress ($ip): string
+function getIpAddress($ip):string
 {
-    //访问api接口获取ip地址http://ip-api.com/json/ip地址?lang=zh-CN
-    //获取当前ip所在的省份
-    $url = "http://whois.pconline.com.cn/jsAlert.jsp?callback=testJson&ip=" . $ip;
+    $url = 'https://api.map.baidu.com/location/ip?ak=32f38c9491f2da9eb61106aaab1e9739&ip='.$ip;
     try {
-        $ipaddres = file_get_contents($url);
-        $iphtml = iconv("gb2312" , "utf-8//IGNORE" , $ipaddres);
-        $addres = mb_substr($iphtml , 9 , -4);
-        return $addres;
-    }
-    catch (Exception $e) {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $ipaddres = curl_exec($ch);
+        curl_close($ch);
+        $result = json_decode($ipaddres, true);
+        if( (isset($result['status']) && $result['status'] === 2 && $result['message'] === "Request Parameter Error:ip illegal") || (isset($result['message']) && preg_match("/ip\[.*\] loc failed/", $result['message']) ) ) {
+            throw new Exception("Invalid IP address");
+        }
+        return $result[ 'content' ][ 'address' ] ?? '未知ip';
+    } catch (Exception $e) {
         return '未知ip';
     }
 }
+//function getIPAddress ($ip): string
+//{
+//    //访问api接口获取ip地址http://ip-api.com/json/ip地址?lang=zh-CN
+//    //获取当前ip所在的省份
+//    $url = "http://whois.pconline.com.cn/jsAlert.jsp?callback=testJson&ip=" . $ip;
+//    try {
+//        $ipaddres = file_get_contents($url);
+//        $iphtml = iconv("gb2312" , "utf-8//IGNORE" , $ipaddres);
+//        $addres = mb_substr($iphtml , 9 , -4);
+//        return $addres;
+//    }
+//    catch (Exception $e) {
+//        return '未知ip';
+//    }
+//}
 
 /**
  * 获取用户真实IP
