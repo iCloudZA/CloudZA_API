@@ -3,6 +3,13 @@ if ( !isset($islogin)) header("Location: /"); //非法访问拦截
 $apiCount = Db::table('api_list')->count();
 $apiCallCount = Db::table('api_count')->count();
 $today = Db::table('api_count')->where('datetime' , 'like' , '%' . date('Y-m-d') . '%')->count();
+$arr = Db::table('api_count')->select();
+$ipArr = array();
+foreach($arr as $item){
+    if(!in_array($item['ip'], $ipArr)){
+        $ipArr[] = $item[ 'ip' ];
+    }
+}
 ?>
 <div class="animated fadeIn">
     <div class="block block-rounded bg-primary-light mb-4">
@@ -39,8 +46,8 @@ $today = Db::table('api_count')->where('datetime' , 'like' , '%' . date('Y-m-d')
                     </div>
                     <div class="text-end">
                         <div class="fs-3 fw-semibold text-earth"><span class="fs-lg"><?php
-                                echo 'sign' ?></span></div>
-                        <div class="fs-sm fw-semibold text-uppercase text-muted">今日冠军</div>
+                                echo count($ipArr); ?></span><span class="fs-sm">个</span></div>
+                        <div class="fs-sm fw-semibold text-uppercase text-muted">总IP数量</div>
                     </div>
                 </div>
             </a>

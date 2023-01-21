@@ -71,10 +71,14 @@ CREATE TABLE `api_count`
 (
     `id`       int primary key auto_increment comment '主键',
     `name`     text         not null comment 'API名称',
-    `sign`     varchar(255) not null comment 'API_ID',
     `ip`       varchar(32)  not null comment 'IP',
     `address`  varchar(32)  not null comment '地址',
-    `datetime` datetime     not null comment '时间'
+    `datetime` datetime     not null comment '时间',
+    `sign`     varchar(255) NOT NULL COMMENT 'API_ID',
+    FOREIGN KEY (sign)
+        REFERENCES api_list (sign)
+        ON DELETE CASCADE
+
 ) ENGINE = INNODB
   DEFAULT CHARSET = utf8;
 
