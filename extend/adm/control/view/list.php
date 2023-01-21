@@ -413,6 +413,13 @@ $bnums = ( $page - 1 ) * $ENUMS;
             $("input[name='api_id']").val(data.api_id); // 接口ID
             $("input[name='api_name']").val(data.api_name); // 接口名字
             $("select[name='type']").val(data.type); // 接口类型
+            if(data.type==='external'){
+                $("#label_title").html("API地址")
+                $("#api_url").attr("placeholder", "例如：https://domain/api/dwz");
+            } else{
+                $("#label_title").html("API目录名")
+                $("#api_url").attr("placeholder", "例如：dwz");
+            }
             $("input[name='api_url']").val(data.api_url); // 接口地址
             $("textarea[name='api_des']").val(data.api_des); // 接口介绍
             $("input[name='http_mode']").val(data.http_mode); // 接口请求方法
