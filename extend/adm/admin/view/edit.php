@@ -72,24 +72,18 @@ $data = Db::table('admin')->find();
             x.notify('请确认是我操作', 'warning')
             return false;
         }
-
-        $.ajax({
-            cache: false,
-            type: "POST",//请求的方式
-            url: "ajax.php?act=admin_pwd",//请求的文件名
-            data: {user: user, pwd: pwd, okpwd: okpwd},
-            dataType: 'json',
-            success: function (data) {
-                console.log(data);
-                if (data.code == 200) {
-                    x.notify(data.msg, 'success')
-                    window.setTimeout("window.location='" + window.location.href + "'", 1000);
-                } else {
-                    x.notify(data.msg, 'danger')
-                }
+        x.ajax('ajax.php?act=admin_pwd',{
+            user:user,
+            pwd:pwd,
+            okpwd:okpwd
+        },(data)=>{
+            if (data.code === 200) {
+                x.notify(data.msg, 'success')
+                window.setTimeout("window.location='" + window.location.href + "'", 1000);
+            } else {
+                x.notify(data.msg, 'danger')
             }
-        });
-        return false;//重要语句：如果是像a链接那种有href属性注册的点击事件，可以阻止它跳转。
+        })
     });
 
 </script>
