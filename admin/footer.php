@@ -33,12 +33,24 @@
         });
     })
     // ChartJS
-    x.ajax('index.php?api=chart',{},(data)=>{
+    x.ajax('index.php?api=base',{},(data)=>{
+        console.log('CloudZA API [BASE] =>',data)
         if(data.code === '200'){
-            let item = data.data
-            x.barCharts(item.date,item.pv,item.ip);
+            let chart = data.data.chart
+            let event = data.data.eventList
+            x.barCharts(chart.date,chart.pv,chart.ip);
+            $.each(event,(index, item) => {
+                $("#eventList").append(
+                    "<li>" +
+                    "<i class='" + item.icon + " " + item.colour + "'></i>" +
+                    "<div class='fs-sm fw-semibold'>" + item.event + "</div>" +
+                    "<div class='fs-xs text-muted'>" + item.time + "</div>" +
+                    "</li>"
+                );
+            });
         }
     })
+
 </script>
 </body>
 </html>

@@ -23,7 +23,7 @@ if ($action === 'login') {
         if ( !Db::table('admin')->update(['cookie' => $COOKIE])) {
             exit(ReturnError('Sever Error!'));
         }
-        writeLog('登录后台');
+        writeLog('logon');
         setcookie('ADMIN_COOKIE' , $COOKIE , time() + 36000 , '/');
         exit(return_msg('200' , '登录成功' , array('url' => '/admin?index')));
     } else {
@@ -75,16 +75,65 @@ $Filename = strpos($_SERVER[ "QUERY_STRING" ] , '&') ? txt_zuo($_SERVER[ "QUERY_
 $title = !empty($titlename[ $Filename ]) ? $titlename[ $Filename ] : '首页';
 
 
-// Chart Data
 
-if($api === 'chart'){
+if ($api === 'base') {
+    // chart
     $week_array = ["星期日" , "星期一" , "星期二" , "星期三" , "星期四" , "星期五" , "星期六"];
     $data = Db::query('SELECT DATE(datetime) as date, COUNT(DISTINCT ip) as ips, COUNT(*) as pv FROM api_count WHERE datetime >= DATE_SUB(CURDATE(), INTERVAL 6 DAY) GROUP BY DATE(datetime)');
-    $result = ["date" => [] ,"ip"=>[] , "pv" => []];
+    $result = ["date" => [] , "ip" => [] , "pv" => []];
     foreach ($data as $item) {
-        $result["date"][] = $item["date"];
-        $result['ip'][] = $item['ips'];
-        $result['pv'][] = $item['pv'];
+        $result[ "date" ][] = $item[ "date" ];
+        $result[ 'ip' ][] = $item[ 'ips' ];
+        $result[ 'pv' ][] = $item[ 'pv' ];
     }
-    exit(return_msg('200','success',$result));
+    // log
+    $now = time();
+    $data = Db::query("SELECT id, ip, time, event, detailed FROM web_log ORDER BY time DESC LIMIT 6");
+    $output = array();
+    foreach ($data as $row) {
+        $time = strtotime($row[ 'time' ]);
+        $diff = $now - $time;
+        if ($diff < 60) {
+            $diff = $diff . " 秒前";
+        } else if ($diff < 3600) {
+            $diff = round($diff / 60) . " 分钟前";
+        } else if ($diff < 86400) {
+            $diff = round($diff / 3600) . " 小时前";
+        } else {
+            $diff = round($diff / 86400) . " 天前";
+        }
+        switch ($row[ 'event' ]) {
+            case 'logon':
+                $colour = 'text-success';
+                $icon = 'si si-check';
+                break;
+            case 'add_api':
+                $colour = 'text-info';
+                $icon = 'si si-pencil';
+                break;
+            case 'del_api':
+                $colour = 'text-danger';
+                $icon = 'si si-ban';
+                break;
+            case 'dels_api':
+                $colour = 'text-danger';
+                $icon = 'si si-puzzle';
+                break;
+            case 'edit_web':
+                $colour = 'text-warning';
+                $icon = 'si si-settings';
+                break;
+            case 'edit_admin':
+                $colour = 'text-waring';
+                $icon = "si si-wrench";
+                break;
+            default:
+                $colour = 'text-success';
+                $icon = 'si si-check';
+        }
+        $output[] = array("time" => $diff , "event" => $lang_adm[$row[ 'event' ] ], "icon" => $icon , "colour" => $colour);
+    }
+    $arr['chart'] = $result;
+    $arr['eventList'] = $output;
+    exit(return_msg('200' , 'success' , $arr));
 }
