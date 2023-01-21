@@ -12,7 +12,7 @@ CREATE TABLE `webset`
     `web_page_nums` int default '10' comment '每页条数'
 ) ENGINE = INNODB
   DEFAULT CHARSET = utf8;
-INSERT INTO public_api.webset (web_title, web_titleDesc, web_des, web_key, web_qq, web_beian, web_ban, web_page_nums)
+INSERT INTO webset (web_title, web_titleDesc, web_des, web_key, web_qq, web_beian, web_ban, web_page_nums)
 VALUES ('CloudZA-API', '一款开源的API系统', 'CloudZA-API， 我们致力于为用户提供稳定、快速的免费API数据接口服务。',
         'API,云之安,API内容管理,免费API', '2922619853', '京ICP备8888888号', '云之安', 10);
 
@@ -25,7 +25,7 @@ CREATE TABLE `admin`
     `cookie`   varchar(32) not null comment 'Cookie'
 ) ENGINE = INNODB
   DEFAULT CHARSET = utf8;
-INSERT INTO public_api.admin (user, password, cookie)
+INSERT INTO admin (user, password, cookie)
 VALUES ('admin', '123456', '5844a8e587c353ce2dfbca3def069981');
 
 -- 操作日志
@@ -56,8 +56,8 @@ CREATE TABLE `api_list`
     `return_case`   text comment '返回示例',
     `code_case`     text comment '代码示例',
     `sign`          varchar(255) not null comment 'API标识',
-    `type`          varchar(12)  not null comment '类型', -- 本地||外部
-    `state`         enum ('on','off') comment 'API状态',  -- 正常/维护
+    `type`          varchar(12)  not null comment '类型',
+    `state`         enum ('on','off') comment 'API状态',
     `pv`            int(10)      not null default '0' comment '浏览量',
     `add_time`      datetime     not null comment '添加时间',
     primary key (`sign`),
