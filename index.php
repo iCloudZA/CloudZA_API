@@ -8,7 +8,6 @@
 include 'include/CheckRedis.php';
 require_once( 'include/common.php' );
 require_once ('include/Route.class.php');
-//CheckRedis::Run();
 $count_api = Db::table('api_list')->count();
 
 $_GET && SafeFilter($_GET);
