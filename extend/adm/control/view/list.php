@@ -19,15 +19,15 @@ $bnums = ( $page - 1 ) * $ENUMS;
         white-space: nowrap;
     }
 </style>
-<div class="animated fadeIn">
-    <div class="col-12">
+
+    <div class="col-12 animated fadeIn">
         <div class="block block-rounded">
             <div class="block-header block-header-default">
                 <h3 class="block-title">接口列表</h3>
             </div>
         </div>
     </div>
-    <div class="col-xl-12">
+    <div class="col-xl-12 animated fadeIn">
         <div class="block block-rounded">
             <div class="block-header">
                 <h3 class="block-title">已经添加的API <small>每页展示<?php
@@ -385,7 +385,7 @@ $bnums = ( $page - 1 ) * $ENUMS;
             </div>
         </div>
     </div>
-</div>
+
 <script>
     // 监听select
     $("#api_type select").change(() => {
