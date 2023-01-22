@@ -111,6 +111,10 @@ if ($api === 'base') {
                 $colour = 'text-info';
                 $icon = 'si si-plus';
                 break;
+            case 'edit_api':
+                $colour = 'text-info';
+                $icon = 'si si-settings';
+                break;
             case 'del_api':
                 $colour = 'text-danger';
                 $icon = 'si si-ban';
