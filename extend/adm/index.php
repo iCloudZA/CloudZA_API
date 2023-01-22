@@ -82,27 +82,7 @@ foreach ($arr as $item) {
             </a>
         </div>
     </div>
-    <div class="block block-rounded block-mode-hidden">
-        <div class="block-header block-header-default">
-            <h3 class="block-title">公告 <small>作者寄语</small>
-            </h3>
-            <div class="block-options">
-                <button type="button" class="btn-block-option" data-toggle="block-option" data-action="state_toggle"
-                        data-action-mode="demo">
-                    <i class="si si-refresh"></i>
-                </button>
-                <button type="button" class="btn-block-option" data-toggle="block-option" data-action="content_toggle">
-                    <i
-                            class="si si-arrow-down"></i></button>
-                <button type="button" class="btn-block-option" data-toggle="block-option" data-action="close">
-                    <i class="si si-close"></i>
-                </button>
-            </div>
-        </div>
-        <div class="block-content">
-            <p>这个估计会删掉，可能没什么用！</p>
-        </div>
-    </div>
+
     <div class="row">
 
         <div class="col-xl-7">
