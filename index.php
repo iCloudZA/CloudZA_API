@@ -4,12 +4,12 @@
  * @hitokoto: 一场秋雨一场凉，秋心酌满泪为霜。
  * Copyright (c) 2022 by CloudZA, All Rights Reserved.
  */
-if (!file_exists('install.lock')) {
+if (!file_exists('./install/install.lock')) {
     header("Location: ../install");
-    return;
+    return true;
 }
 require_once( 'include/common.php' );
-require_once ('include/Route.class.php');
+require_once( 'include/Route.class.php' );
 $count_api = Db::table('api_list')->count();
 
 $_GET && SafeFilter($_GET);
@@ -32,6 +32,7 @@ function SafeFilter (&$arr): void
         }
     }
 }
+
 $route = new Route();
 ?>
 
@@ -42,8 +43,10 @@ $route = new Route();
     <title><?php
         echo TITLE ?> - <?php
         echo TITLE_DESC ?></title>
-    <meta name="description" content="<?php echo DESC ?>" />
-    <meta name="keywords" content="<?php echo KEY ?>" />
+    <meta name="description" content="<?php
+    echo DESC ?>" />
+    <meta name="keywords" content="<?php
+    echo KEY ?>" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="/assets/img/favicons/favicon.png">
     <link rel="stylesheet" id="css-main" href="/assets/css/codebase.min-5.4.css">
@@ -63,7 +66,7 @@ $route = new Route();
                     <span class="smini-visible fw-bold tracking-wide fs-lg">
 								c<span class="text-primary">c</span>
 							</span>
-                        <a class="link-fx fw-bold tracking-wide mx-auto" data-pjax="" href="./">
+                        <a class="link-fx fw-bold tracking-wide mx-auto" data-pjax href="../">
                             <span class="smini-hidden">
                                 <i class="fa fa-fire text-primary"></i>
                                 <span class="fs-4 text-dual">cloudza</span>
@@ -90,7 +93,7 @@ $route = new Route();
 
     <main id="main-container">
         <div class="content" id="pjax-container">
-            <div class="block block-rounded">
+            <div class="row block block-rounded">
                 <div class="block-content block-content-full">
                     <div class="py-3 text-center">
                         <h2 class="fw-bold mb-3"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;">
@@ -106,14 +109,12 @@ $route = new Route();
                             echo $count_api ?>个接口</p>
                         <div class="row justify-content-center">
                             <div class="col-md-10 col-lg-8 col-xl-6">
-                                <form action="" method="POST">
-                                    <div class="input-group input-group-lg">
-                                        <input type="text" class="form-control" name="search" id="search" placeholder="搜索API">
-                                        <button type="submit" class="btn btn-alt-primary">
-                                            <i class="fa fa-search"></i>
-                                        </button>
-                                    </div>
-                                </form>
+                                <div class="input-group input-group-lg">
+                                    <input type="text" class="form-control" name="search" id="search" placeholder="搜索API">
+                                    <button type="submit" onclick="search()" class="btn btn-alt-primary">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -138,13 +139,9 @@ $route = new Route();
     </footer>
 </div>
 <script>
-    $.ajax({
-        url: "<?php echo WEB_URL ?>extend/ajaxApi.php",
-        dataType: "json",
-        success: function (data) {
-            console.log("data=>", data.data)
-            if (data.code) {
-                let listContainer = $("#list");
+    $(() => {
+        x.ajax("extend/ajaxApi.php?act=list",{}, (data) => {
+            if (data.code && data.data.length > 0) {
                 for (let i = 0; i < data.data.length; i++) {
                     let title = data.data[i].name;
                     let desc = data.data[i].desc;
@@ -166,13 +163,52 @@ $route = new Route();
                         '<h3 class="fs-sm fw-medium text-muted">' + desc + '</h3>' +
                         '</div>' +
                         '</a></div>';
-                    listContainer.append(itemHtml);
+                    $("#list").append(itemHtml);
                 }
             } else {
-                x.notify('Sever Error');
+                let itemHtml = '<div class="block block-rounded"><div class="block-content block-content-full  text-center"><h2 class="h3 fw-bold mb-2">暂无接口</h2><h3 class="h4 fw-medium text-muted mb-2">您可以联系管理员添加接口</h3></div></div> '
+                $("#list").append(itemHtml);
             }
-        }
-    });
+        })
+    })
+
+    function search(){
+        let name = x.getval('#search');
+        x.ajax("extend/ajaxApi.php?act=search",{
+            name:name
+        },(data)=>{
+            $("#list").empty();  // or $("#list").remove();
+            if (data.code && data.data.length > 0) {
+                for (let i = 0; i < data.data.length; i++) {
+                    let title = data.data[i].name;
+                    let desc = data.data[i].desc;
+                    let pv = data.data[i].pv;
+                    let state = data.data[i].state;
+                    let stateInfo = data.data[i].stateInfo;
+                    let uri = data.data[i].uri;
+                    let itemHtml = '<div class="col-sm-6"><a class="block block-rounded d-flex align-items-stretch" href="javascript:void(0)" onclick="goToApiDoc(\'' + state + '\',\'' + uri + '\')">' +
+                        '<div class="block-content block-sticky-options pt-5 bg-white">' +
+                        '<div class="block-options block-options-left">' +
+                        '<h2 class="fs-sm text-muted">' + title + '</h2>' +
+                        '</div>' +
+                        '<div class="block-options">' +
+                        '<div class="block-options-item text-muted fs-sm">' +
+                        '<i class="far fa-bookmark m-1"></i>' + stateInfo +
+                        '<i class="si si-eye m-1"></i>' + pv +
+                        '</div>' +
+                        '</div>' +
+                        '<h3 class="fs-sm fw-medium text-muted">' + desc + '</h3>' +
+                        '</div>' +
+                        '</a></div>';
+                    $("#list").append(itemHtml);
+                }
+            } else {
+                let itemHtml = '<div class="block block-rounded"><div class="block-content block-content-full  text-center"><h2 class="h3 fw-bold mb-2">暂无接口</h2><h3 class="h4 fw-medium text-muted mb-2">您可以联系管理员添加接口</h3></div></div> '
+                $("#list").append(itemHtml);
+            }
+        })
+    }
+
 
     function goToApiDoc (state, uri)
     {

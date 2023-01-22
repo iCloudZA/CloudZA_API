@@ -72,11 +72,11 @@ $data = Db::table('admin')->find();
             x.notify('请确认是我操作', 'warning')
             return false;
         }
-        x.ajax('ajax.php?act=admin_pwd',{
-            user:user,
-            pwd:pwd,
-            okpwd:okpwd
-        },(data)=>{
+        x.ajax('ajax.php?act=admin_pwd', {
+            user: user,
+            pwd: pwd,
+            okpwd: okpwd
+        }, (data) => {
             if (data.code === 200) {
                 x.notify(data.msg, 'success')
                 window.setTimeout("window.location='" + window.location.href + "'", 1000);
