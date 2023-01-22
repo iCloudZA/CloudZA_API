@@ -4,13 +4,10 @@
     <div class="content py-3">
         <div class="row fs-sm">
             <div class="col-sm-6 order-sm-2 py-1 text-center text-sm-end">
-                Crafted with <i class="fa fa-heart text-danger"></i> by
-                <a class="fw-semibold" href="https://osuu.cc/" target="_blank">CloudZA</a>
+                Powered by <?php echo FOOTER_BAN ?> <i class="fa fa-heart text-danger"></i> Developer is <a href="https://github.com/iCloudZA/CloudZA_API" target="_blank">CloudZA</a>
             </div>
             <div class="col-sm-6 order-sm-1 py-1 text-center text-sm-start">
-                <a class="fw-semibold" href="https://1.envato.market/95j" target="_blank"><?php
-                    echo FOOTER_BAN ?> </a> &copy; <span
-                        data-toggle="year-copy"></span>
+                <a class="fw-semibold text-muted" href="javascript:void (0);"><?php echo BEIAN ?> </a>
             </div>
         </div>
     </div>
