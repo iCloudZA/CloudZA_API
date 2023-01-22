@@ -77,11 +77,12 @@ $WEB = Db::table('webset')->find();
     </main>
 </div>
 <script src="../assets/js/codebase.app.min-5.4.js"></script>
-<script src="../assets/js/lib/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.staticfile.org/clipboard.js/2.0.11/clipboard.min.js"></script>
 <script src="../assets/js/bootstrap-notify.min.js"></script>
-<script src="../assets/js/plugins/jquery-pjax/jquery.pjax.js"></script>
+<script src="https://cdn.staticfile.org/jquery.pjax/2.0.1/jquery.pjax.min.js"></script>
 <script src="../assets/js/app.min.js"></script>
-<script src="../assets/js/layer.js"></script>
+
 <script>
     $('#submit').click(function () {
         x.ajax('index.php?action=login', {
