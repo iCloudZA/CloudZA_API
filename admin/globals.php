@@ -24,7 +24,7 @@ if ($action === 'login') {
             exit(ReturnError('Sever Error!'));
         }
         writeLog('logon');
-        setcookie('ADMIN_COOKIE' , $COOKIE , time() + 36000 , '/');
+        setcookie('ADMIN_COOKIE' , $COOKIE , time() + 3600 * 24 , '/');
         exit(return_msg('200' , '登录成功' , array('url' => '/admin?index')));
     } else {
         exit(ReturnError('账号密码错误'));
@@ -32,7 +32,7 @@ if ($action === 'login') {
 }
 //退出
 if ($action === 'logout') {
-    setcookie('ADMIN_COOKIE' , ' ' , time() - 36000 , '/');
+    setcookie('ADMIN_COOKIE' , ' ' , time() - 36000 * 24 , '/');
     header('Location:./login.php');
     exit;
 }
@@ -73,7 +73,6 @@ array_multisort($sortKey , SORT_ASC , $menu);
 
 $Filename = strpos($_SERVER[ "QUERY_STRING" ] , '&') ? txt_zuo($_SERVER[ "QUERY_STRING" ] , "&") : $_SERVER[ "QUERY_STRING" ];
 $title = !empty($titlename[ $Filename ]) ? $titlename[ $Filename ] : '首页';
-
 
 
 if ($api === 'base') {
@@ -135,9 +134,9 @@ if ($api === 'base') {
                 $colour = 'text-success';
                 $icon = 'si si-check';
         }
-        $output[] = array("time" => $diff , "event" => $lang_adm[$row[ 'event' ] ], "icon" => $icon , "colour" => $colour);
+        $output[] = array("time" => $diff , "event" => $lang_adm[ $row[ 'event' ] ] , "icon" => $icon , "colour" => $colour);
     }
-    $arr['chart'] = $result;
-    $arr['eventList'] = $output;
+    $arr[ 'chart' ] = $result;
+    $arr[ 'eventList' ] = $output;
     exit(return_msg('200' , 'success' , $arr));
 }

@@ -25,27 +25,5 @@
 <script src="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-0-M/jQuery-slimScroll/1.3.8/jquery.slimscroll.min.js"></script>
 <script src="../assets/js/chart.min.js"></script>
 <script src="../assets/js/app.min.js"></script>
-
-<script>
-    // ChartJS
-    x.ajax('index.php?api=base', {}, (data) => {
-        // console.log('CloudZA API [BASE] =>', data)
-        if (data.code === '200') {
-            let chart = data.data.chart
-            let event = data.data.eventList
-            x.barCharts(chart.date, chart.pv, chart.ip);
-            $.each(event, (index, item) => {
-                $("#eventList").append(
-                    "<li>" +
-                    "<i class='" + item.icon + " " + item.colour + "'></i>" +
-                    "<div class='fs-sm fw-semibold'>" + item.event + "</div>" +
-                    "<div class='fs-xs text-muted'>" + item.time + "</div>" +
-                    "</li>"
-                );
-            });
-        }
-    })
-
-</script>
 </body>
 </html>

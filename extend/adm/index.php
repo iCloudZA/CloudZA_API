@@ -5,8 +5,8 @@ $apiCallCount = Db::table('api_count')->count();
 $today = Db::table('api_count')->where('datetime' , 'like' , '%' . date('Y-m-d') . '%')->count();
 $arr = Db::table('api_count')->select();
 $ipArr = array();
-foreach($arr as $item){
-    if(!in_array($item['ip'], $ipArr)){
+foreach ($arr as $item) {
+    if ( !in_array($item[ 'ip' ] , $ipArr)) {
         $ipArr[] = $item[ 'ip' ];
     }
 }
@@ -145,3 +145,26 @@ foreach($arr as $item){
 
     </div>
 </div>
+
+<script>
+    $(function () {
+        x.ajax('index.php?api=base', {}, (data) => {
+            // console.log('CloudZA API [BASE] =>', data)
+            if (data.code === '200') {
+                let chart = data.data.chart
+                let event = data.data.eventList
+                x.barCharts(chart.date, chart.pv, chart.ip);
+                $.each(event, (index, item) => {
+                    $("#eventList").append(
+                        "<li>" +
+                        "<i class='" + item.icon + " " + item.colour + "'></i>" +
+                        "<div class='fs-sm fw-semibold'>" + item.event + "</div>" +
+                        "<div class='fs-xs text-muted'>" + item.time + "</div>" +
+                        "</li>"
+                    );
+                });
+            }
+        })
+    });
+
+</script>
