@@ -26,14 +26,13 @@ if (!-e $request_filename)
     rewrite ^(.*)$ /index.php$1 last;
 }
 ```
-
 ## 发电
 欢迎来交♂易，大家的支持就是我继续开发的动力！
 
 制作不易，如果觉得好用，可以捐赠我，我会将您的捐赠信息制作成表格展示在下方
 
 WeChat & Alipay：
-![img_2.png](img_2.png)
+![img_2.png](donation.png)
 爱发电 https://afdian.net/a/cloudza
 
 ## 联系我
