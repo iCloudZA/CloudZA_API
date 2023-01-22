@@ -4,10 +4,10 @@
  * @hitokoto: 一场秋雨一场凉，秋心酌满泪为霜。
  * Copyright (c) 2022 by CloudZA, All Rights Reserved.
  */
-//if (!file_exists('./install/install.lock')) {
-//    header("Location: ../install");
-//    return true;
-//}
+if (!file_exists('./install/install.lock')) {
+    header("Location: ../install");
+    return true;
+}
 require_once( 'include/common.php' );
 require_once( 'include/Route.class.php' );
 $count_api = Db::table('api_list')->count();
