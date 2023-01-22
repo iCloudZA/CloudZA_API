@@ -1,6 +1,8 @@
 <?php
-/**
- * 渲染API接口详情
+/*
+ * @LastEditors: CloudZA(云之安) <admin@osuu.cc>
+ * @hitokoto: 一场秋雨一场凉，秋心酌满泪为霜。
+ * Copyright (c) 2022 by CloudZA, All Rights Reserved.
  */
 $row = DB::table('api_list')->where('sign',DOC_SIGN)->find();
 if(!$row){

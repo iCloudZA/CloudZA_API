@@ -1,8 +1,8 @@
 <?php
-
-/**
- * feile name 数据库的封装模块
- * author CloudZA(之安)
+/*
+ * @LastEditors: CloudZA(云之安) <admin@osuu.cc>
+ * @hitokoto: 一场秋雨一场凉，秋心酌满泪为霜。
+ * Copyright (c) 2022 by CloudZA, All Rights Reserved.
  */
 require_once('config.php'); //数据库配置
 class Db

@@ -4,7 +4,6 @@
  * @hitokoto: 一场秋雨一场凉，秋心酌满泪为霜。
  * Copyright (c) 2022 by CloudZA, All Rights Reserved.
  */
-
 require_once '../include/common.php';
 $WEB = Db::table('webset')->find();
 ?>

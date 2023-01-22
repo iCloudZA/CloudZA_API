@@ -1,8 +1,9 @@
-<?php 
-/** 
- * File: App Store 后台管理系统 CloudZA
+<?php
+/*
+ * @LastEditors: CloudZA(云之安) <admin@osuu.cc>
+ * @hitokoto: 一场秋雨一场凉，秋心酌满泪为霜。
+ * Copyright (c) 2022 by CloudZA, All Rights Reserved.
  */
-
 require_once "header.php";
 if($Filename == '' or $Filename == 'index'){
 	include(FCPATH.ADM_EXTEND_MULU."/index.php");
