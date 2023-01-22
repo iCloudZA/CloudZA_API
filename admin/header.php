@@ -8,6 +8,8 @@ $so = isset($_POST[ 'so' ]) ? purge($_POST[ 'so' ]) : '';
 <head>
     <meta charset="utf-8">
     <title><?php echo TITLE ?> - <?php echo TITLE_DESC ?></title>
+    <meta name="description" content="<?php echo DESC ?>" />
+    <meta name="keywords" content="<?php echo KEY ?>" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="../assets/img/favicons/favicon.png">
     <link rel="stylesheet" id="css-main" href="../assets/css/codebase.min-5.4.css">
@@ -52,7 +54,7 @@ $so = isset($_POST[ 'so' ]) ? purge($_POST[ 'so' ]) : '';
                     </div>
                     <div class="smini-hidden text-center mx-auto">
                         <a class="img-link" data-pjax href="./?index">
-                            <img class="img-avatar" src="http://q2.qlogo.cn/g?b=qq&nk=<?php echo QQ ?>&s=100"/>
+                            <img class="img-avatar" alt="avatar" src="https://q2.qlogo.cn/g?b=qq&nk=<?php echo QQ ?>&s=100"/>
                         </a>
                         <ul class="list-inline mt-3 mb-0">
                             <li class="list-inline-item">

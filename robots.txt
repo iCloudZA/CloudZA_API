@@ -1,0 +1,21 @@
+# robots.txt generated at https://uutool.cn/robots/
+User-agent: Baiduspider
+Disallow:
+User-agent: Sosospider
+Disallow:
+User-agent: sogou spider
+Disallow:
+User-agent: YodaoBot
+Disallow:
+User-agent: yisouspider
+Disallow:
+User-agent: Googlebot
+Disallow:
+User-agent: Bingbot
+Disallow:
+User-agent: *
+Disallow:
+Disallow: /admin
+Disallow: /extend/adm
+Disallow: /extend/
+Crawl-delay: 60
