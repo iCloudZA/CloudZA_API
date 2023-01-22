@@ -125,7 +125,7 @@ if ($api === 'base') {
                 break;
             case 'edit_web':
                 $colour = 'text-warning';
-                $icon = 'si si-settings';
+                $icon = 'si si-equalizer';
                 break;
             case 'edit_admin':
                 $colour = 'text-warning';
