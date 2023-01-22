@@ -2,9 +2,9 @@
 
 class Route
 {
-    public function __construct()
+    public function __construct ()
     {
-        $uri = $_SERVER['REQUEST_URI'];
+        $uri = $_SERVER[ 'REQUEST_URI' ];
         if (str_contains($uri , '/api/')) {
             $this->handleApiRoute($uri);
         }
@@ -13,7 +13,7 @@ class Route
         }
     }
 
-    private function handleApiRoute($uri): void
+    private function handleApiRoute ($uri): void
     {
         $uri_parts = explode('/' , $uri);
         $uri_parts = explode('?' , $uri_parts[ 2 ]);
@@ -25,10 +25,7 @@ class Route
                 // 判断接口是否正常
                 if ($sign[ 'state' ] === 'on') {
                     require FCPATH . API_EXTEND_MULU . $uri_parts[ 0 ] . '/index.php';
-                    if (callApiLog($sign[ 'name' ] , $uri_parts[ 0 ] , $sign[ 'pv' ])) {
-                        echo '<script>console.log("CloudZA API => PV write succeeded !"); console.log("CloudZA API => Log write succeeded !");</script>';
-                    } else {
-                        echo '<script>console.log("CloudZA API => Sever Error !")</script>';
+                    if ( !callApiLog($sign[ 'name' ] , $uri_parts[ 0 ] , $sign[ 'pv' ])) {
                     }
                 } else {
                     exit(ReturnError('接口维护中'));
@@ -40,7 +37,7 @@ class Route
         }
     }
 
-    private function handleDocRoute($uri): void
+    private function handleDocRoute ($uri): void
     {
         $uri_parts = explode('-' , $uri);
         $uri_parts = explode('.' , $uri_parts[ 1 ]);
