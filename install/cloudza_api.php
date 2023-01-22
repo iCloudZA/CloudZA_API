@@ -1,6 +1,6 @@
 <?php
 
-$sql = ["CREATE TABLE `webset`(
+$sql = ["DROP TABLE IF EXISTS `webset`;","CREATE TABLE `webset`(
     `web_title`     text        not null comment '网站标题',
     `web_titleDesc` text        not null comment '标题描述',
     `web_des`       text        not null comment '网站描述',
@@ -18,7 +18,8 @@ $sql = ["CREATE TABLE `webset`(
     `cookie`   varchar(32) not null comment 'Cookie'
 ) ENGINE = INNODB
   DEFAULT CHARSET = utf8;","INSERT INTO admin (user, password, cookie)
-VALUES ('$user', '$pass', '$cookie')","CREATE TABLE `web_log`
+VALUES ('$user', '$pass', '$cookie')",
+    "DROP TABLE IF EXISTS `web_log`;", "CREATE TABLE `web_log`
 (
     `id`       int primary key auto_increment comment '主键',
     `ip`       varchar(32) not null comment 'ip',
@@ -26,7 +27,7 @@ VALUES ('$user', '$pass', '$cookie')","CREATE TABLE `web_log`
     `event`    text        not null comment '事件',
     `detailed` text        not null comment '地址'
 ) ENGINE = INNODB
-  DEFAULT CHARSET = utf8;","CREATE TABLE `api_list`
+  DEFAULT CHARSET = utf8;","DROP TABLE IF EXISTS `api_list`;","CREATE TABLE `api_list`
 (
     `id`            int(10)      NOT NULL auto_increment comment '主键',
     `name`          text comment '名称',
@@ -47,7 +48,7 @@ VALUES ('$user', '$pass', '$cookie')","CREATE TABLE `web_log`
     primary key (`sign`),
     KEY `id` (`id`)
 ) ENGINE = INNODB
-  DEFAULT CHARSET = utf8;","CREATE TABLE `api_count`
+  DEFAULT CHARSET = utf8;","DROP TABLE IF EXISTS `api_count`;","CREATE TABLE `api_count`
 (
     `id`       int primary key auto_increment comment '主键',
     `name`     text         not null comment 'API名称',
