@@ -4,10 +4,10 @@
  * @hitokoto: 一场秋雨一场凉，秋心酌满泪为霜。
  * Copyright (c) 2022 by CloudZA, All Rights Reserved.
  */
-if (!file_exists('./install/install.lock')) {
-    header("Location: ../install");
-    return true;
-}
+//if (!file_exists('./install/install.lock')) {
+//    header("Location: ../install");
+//    return true;
+//}
 require_once( 'include/common.php' );
 require_once( 'include/Route.class.php' );
 $count_api = Db::table('api_list')->count();
@@ -226,11 +226,11 @@ $route = new Route();
 
 </script>
 <script src="/assets/js/codebase.app.min-5.4.js"></script>
-<script src="/assets/js/plugins/jquery-pjax/jquery.pjax.js"></script>
+<script src="https://cdn.staticfile.org/jquery.pjax/2.0.1/jquery.pjax.min.js"></script>
 <script src="https://cdn.staticfile.org/nprogress/0.2.0/nprogress.js"></script>
-<script src="/assets/js/dashboard.js"></script>
 <script src="/assets/js/bootstrap-notify.min.js"></script>
-<script src="/assets/js/layer.js"></script>
+<script src="https://cdn.staticfile.org/layer/3.5.1/layer.min.js"></script>
+<script src="https://cdn.staticfile.org/clipboard.js/2.0.11/clipboard.min.js"></script>
 <script src="/assets/js/app.min.js"></script>
 </body>
 </html>

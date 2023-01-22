@@ -96,8 +96,8 @@ if(!$row){
                             <div class="mb-4 col-sm-6">
                                 <label class="form-label">接口地址</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control form-control-alt fs-sm" value="<?php echo ($row['type'] === 'local') ? WEB_URL.APIURI.$row['api_url'] : $row['api_url'] ?>" readonly>
-                                    <a class="btn btn-sm btn-alt-info copy-btn" style="padding-top: 6px;" href="javascript:;" data-clipboard-text="<?php echo WEB_URL.APIURI.$row['api_url'] ?>" title="点击复制">
+                                    <input type="text" class="form-control form-control-alt fs-sm " value="<?php echo ($row['type'] === 'local') ? WEB_URL.APIURI.$row['api_url'] : $row['api_url'] ?>" readonly>
+                                    <a class="btn btn-sm btn-alt-info copy-btn copy" style="padding-top: 6px;" href="javascript:;" data-clipboard-text="<?php echo ($row['type'] == 'local')?WEB_URL.APIURI.$row['api_url']: $row['api_url'] ?>" title="点击复制">
                                         <i class="far fa-copy"></i>
                                     </a>
                                 </div>
@@ -164,24 +164,12 @@ if(!$row){
     </footer>
 </div>
 
-<script>
-    $(document).ready(()=>{
-        var clipboard = new Clipboard('.copy-btn');
-        clipboard.on('success', (e) => {
-            layer.msg('复制成功！', {icon: 1});
-        });
-        clipboard.on('error', (e) => {
-            layer.msg('复制失败，请长按链接后手动复制', {icon: 2});
-        });
-    })
-</script>
 <script src="../assets/js/codebase.app.min-5.4.js"></script>
-<script src="../assets/js/plugins/jquery-pjax/jquery.pjax.js"></script>
+<script src="https://cdn.staticfile.org/jquery.pjax/2.0.1/jquery.pjax.min.js"></script>
 <script src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-0-M/nprogress/0.2.0/nprogress.min.js"></script>
-<script src="../assets/js/dashboard.js"></script>
 <script src="../assets/js/bootstrap-notify.min.js"></script>
-<script src="../assets/js/layer.js"></script>
+<script src="https://cdn.staticfile.org/layer/3.5.1/layer.min.js"></script>
+<script src="https://cdn.staticfile.org/clipboard.js/2.0.11/clipboard.min.js"></script>
 <script src="../assets/js/app.min.js"></script>
-<script src="//cdn.staticfile.org/clipboard.js/1.7.1/clipboard.min.js"></script>
 </body>
 </html>

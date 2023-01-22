@@ -15,7 +15,7 @@ $so = isset($_POST[ 'so' ]) ? purge($_POST[ 'so' ]) : '';
     <link rel="stylesheet" id="css-main" href="../assets/css/codebase.min-5.4.css">
     <!-- 表格样式 -->
     <link rel="stylesheet"
-          href="../assets/css/dataTables.bootstrap5.min.css">
+          href="https://cdn.staticfile.org/datatables.net-bs5/1.13.1/dataTables.bootstrap5.css">
     <link href="https://cdn.staticfile.org/nprogress/0.2.0/nprogress.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../assets/js/lib/base64.js"></script>
