@@ -109,7 +109,7 @@ if ($api === 'base') {
                 break;
             case 'add_api':
                 $colour = 'text-info';
-                $icon = 'si si-pencil';
+                $icon = 'si si-plus';
                 break;
             case 'del_api':
                 $colour = 'text-danger';
