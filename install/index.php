@@ -117,8 +117,13 @@ function array_isset ($arr , $key): bool
                                 elseif ($a == 2): ?>安装完成<?php
                                 endif; ?> - 系统安装
                             </h2>
-                        </div>
 
+                        </div>
+                        <?php if($error_msg):?>
+                        <div class="alert alert-warning" role="alert">
+                            <p class="mb-0"><?php echo $error_msg; ?></p>
+                        </div>
+                        <?php endif; ?>
                         <?php
                         if ( $a == 0 ): ?>
                         <div class="block block-rounded block-fx-shadow">
