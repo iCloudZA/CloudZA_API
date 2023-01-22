@@ -127,12 +127,10 @@ $route = new Route();
         <div class="content py-3">
             <div class="row fs-sm">
                 <div class="col-sm-6 order-sm-2 py-1 text-center text-sm-end">
-                    Crafted with <i class="fa fa-heart text-danger"></i> by
-                    <a class="fw-semibold" href="https://github.com/iCloudZA" target="_blank">CloudZA</a>
+                    Powered by <?php echo FOOTER_BAN ?> <i class="fa fa-heart text-danger"></i> Developer is <a href="https://github.com/iCloudZA/CloudZA_API" target="_blank">CloudZA</a>
                 </div>
                 <div class="col-sm-6 order-sm-1 py-1 text-center text-sm-start">
-                    <a class="fw-semibold" href="javascript:void (0);">云之安 </a> ©
-                    <span data-toggle="year-copy" class="js-year-copy-enabled">2023</span>
+                    <a class="fw-semibold text-muted" href="javascript:void (0);"><?php echo BEIAN ?> </a>
                 </div>
             </div>
         </div>
