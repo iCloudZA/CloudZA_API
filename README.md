@@ -14,6 +14,7 @@
 1. 将程序上传到网站目录配置伪静态规则
 2. 访问domain或者domain/install进入到安装指引
 3. 安装数据库/配置管理员账号以及密码即安装完成
+4. 安装教程：https://www.bilibili.com/video/BV1uv4y1y749
 
 ## 添加API
 > 本地API在目录`extend/api/`中添加文件即可，主文件以`index.php`命名
