@@ -1,3 +1,7 @@
+### Star History 点亮项目星星！
+
+[![Star History Chart](https://api.star-history.com/svg?repos=iCloudZA/CloudZA_API&type=Date)](https://star-history.com/#iCloudZA/CloudZA_API&Date)
+
 ## 前言
 祝大家新年快乐，欢迎使用本程序(CloudZA API)
 
