@@ -90,7 +90,7 @@ $WEB = Db::table('webset')->find();
             user: x.getval('#user'),
             pwd: x.getval('#password')
         }, (data) => {
-            if (data.code === '200') {
+            if (data.code === 200) {
                 x.notify(data.msg, 'success')
                 window.setTimeout("window.location='" + data.data.url + "'", 1000);
             } else {

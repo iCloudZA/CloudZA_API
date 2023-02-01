@@ -130,7 +130,7 @@ foreach ($arr as $item) {
     $(function () {
         x.ajax('index.php?api=base', {}, (data) => {
             // console.log('CloudZA API [BASE] =>', data)
-            if (data.code === '200') {
+            if (data.code === 200) {
                 let chart = data.data.chart
                 let event = data.data.eventList
                 x.barCharts(chart.date, chart.pv, chart.ip);

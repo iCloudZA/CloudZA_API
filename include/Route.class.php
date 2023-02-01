@@ -30,6 +30,7 @@ class Route
                 if ($sign[ 'state' ] === 'on') {
                     require FCPATH . API_EXTEND_MULU . $uri_parts[ 0 ] . '/index.php';
                     if ( !callApiLog($sign[ 'name' ] , $uri_parts[ 0 ] , $sign[ 'pv' ])) {
+                        exit(ReturnError('Sever Error'));
                     }
                 } else {
                     exit(ReturnError('接口维护中'));

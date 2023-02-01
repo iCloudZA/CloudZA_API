@@ -172,7 +172,7 @@ function txt_Arr ($txt): array
     return $array;
 }
 
-function txt_zhong ($str , $leftStr , $rightStr): bool|string
+function txt_zhong ($str , $leftStr , $rightStr)
 {
     //取文本中间
     $left = strpos($str , $leftStr);
@@ -183,7 +183,7 @@ function txt_zhong ($str , $leftStr , $rightStr): bool|string
     return substr($str , $left + strlen($leftStr) , $right - $left - strlen($leftStr));
 }
 
-function txt_you ($str , $leftStr): bool|string
+function txt_you ($str , $leftStr)
 {
     //取文本右边
     $left = strpos($str , $leftStr);
@@ -197,43 +197,30 @@ function txt_zuo ($str , $rightStr)
     return substr($str , 0 , $right);
 }
 
+function ip_city_str ($str)
+{
+    return str_replace(array('省' , '市') , '' , $str);
+}
 
 //获取当个ip所在的省份
-function getIpAddress ($ip): string
+function getIpAddress ($ip)
 {
-    $url = 'https://api.map.baidu.com/location/ip?ak=32f38c9491f2da9eb61106aaab1e9739&ip=' . $ip;
-    try {
-        $ch = curl_init();
-        curl_setopt($ch , CURLOPT_URL , $url);
-        curl_setopt($ch , CURLOPT_RETURNTRANSFER , 1);
-        $ipaddres = curl_exec($ch);
-        curl_close($ch);
-        $result = json_decode($ipaddres , true);
-        if (( isset($result[ 'status' ]) && $result[ 'status' ] === 2 && $result[ 'message' ] === "Request Parameter Error:ip illegal" ) || ( isset($result[ 'message' ]) && preg_match("/ip\[.*\] loc failed/" , $result[ 'message' ]) )) {
-            throw new Exception("Invalid IP address");
-        }
-        return $result[ 'content' ][ 'address' ] ?? '未知ip';
+    $url = 'https://whois.pconline.com.cn/ipJson.jsp?json=true&ip=';
+    $city = curl_get($url . $ip);
+    $city = mb_convert_encoding($city , "UTF-8" , "GB2312");
+    $city = json_decode($city , true);
+    if ($city[ 'city' ]) {
+        $location = ip_city_str($city[ 'pro' ]) . ip_city_str($city[ 'city' ]);
+    } else {
+        $location = ip_city_str($city[ 'pro' ]);
     }
-    catch (Exception $e) {
-        return '未知ip';
+    if ($location) {
+        return $location;
+    } else {
+        return $city[ 'addr' ];
     }
 }
 
-//function getIPAddress ($ip): string
-//{
-//    //访问api接口获取ip地址http://ip-api.com/json/ip地址?lang=zh-CN
-//    //获取当前ip所在的省份
-//    $url = "http://whois.pconline.com.cn/jsAlert.jsp?callback=testJson&ip=" . $ip;
-//    try {
-//        $ipaddres = file_get_contents($url);
-//        $iphtml = iconv("gb2312" , "utf-8//IGNORE" , $ipaddres);
-//        $addres = mb_substr($iphtml , 9 , -4);
-//        return $addres;
-//    }
-//    catch (Exception $e) {
-//        return '未知ip';
-//    }
-//}
 
 /**
  * 获取用户真实IP
@@ -241,7 +228,7 @@ function getIpAddress ($ip): string
  * @param bool $adv
  * @return mixed
  */
-function get_ip (int $type = 0 , bool $adv = true): mixed
+function get_ip (int $type = 0 , bool $adv = true)
 {
     $type = $type ? 1 : 0;
     $ip = NULL;
@@ -294,7 +281,7 @@ function getRand (int $length): ?string
 }
 
 // url参数转数组
-function toarr ($para): ?array
+function toarr ($para)
 {
     $str = mb_substr($para , stripos($para , "?") + 1);
     parse_str($str , $arr);
@@ -302,44 +289,17 @@ function toarr ($para): ?array
 }
 
 
-/**
- * 发送HTTP请求方法
- * @param string $url 请求URL
- * @param array  $params 请求参数
- * @param string $method 请求方法GET/POST
- * @param array  $header 请求头
- * @return bool|string  $data   响应数据
- * @throws Exception
- */
-function http (string $url , array $params , string $method = 'GET' , array $header = array()): bool|string
+function curl_get ($url)
 {
-    $opts = array(CURLOPT_TIMEOUT => 30 , CURLOPT_RETURNTRANSFER => 1 , CURLOPT_SSL_VERIFYPEER => false , CURLOPT_SSL_VERIFYHOST => false , CURLOPT_HTTPHEADER => $header);
-    /* 根据请求类型设置特定参数 */
-    switch (strtoupper($method)) {
-        case 'GET':
-            // $opts[CURLOPT_URL] = $url . '?' . http_build_query($params);
-            $opts[ CURLOPT_URL ] = $url;
-            break;
-        case 'POST':
-            $opts[ CURLOPT_URL ] = $url;
-            $opts[ CURLOPT_POST ] = 1;
-            $opts[ CURLOPT_POSTFIELDS ] = $params;
-            break;
-        default:
-            throw new Exception('不支持的请求方式！');
-    }
-    /* 初始化并执行curl请求 */
-    $ch = curl_init();
-    curl_setopt($ch , CURLOPT_ENCODING , '');
-    //set gzip, deflate or keep empty for server to detect and set supported encoding.
-    curl_setopt($ch , CURLOPT_IPRESOLVE , CURL_IPRESOLVE_V4);
-    curl_setopt($ch , CURLOPT_HTTPHEADER , array('Expect:'));
-    curl_setopt_array($ch , $opts);
-    $data = curl_exec($ch);
-    $error = curl_error($ch);
+    $ch = curl_init($url);
+    curl_setopt($ch , CURLOPT_SSL_VERIFYPEER , false);
+    curl_setopt($ch , CURLOPT_SSL_VERIFYHOST , false);
+    curl_setopt($ch , CURLOPT_RETURNTRANSFER , true);
+    curl_setopt($ch , CURLOPT_USERAGENT , 'Mozilla/5.0 (Linux; U; Android 4.4.1; zh-cn; R815T Build/JOP40D) AppleWebKit/533.1 (KHTML, like Gecko)Version/4.0 MQQBrowser/4.5 Mobile Safari/533.1');
+    curl_setopt($ch , CURLOPT_TIMEOUT , 30);
+    $content = curl_exec($ch);
     curl_close($ch);
-    if ($error) throw new Exception('请求发生错误：' . $error);
-    return $data;
+    return ( $content );
 }
 
 /**
@@ -349,7 +309,7 @@ function http (string $url , array $params , string $method = 'GET' , array $hea
  * @param $data array 返回的数据
  * @return false|string json
  */
-function return_msg ($code , $msg , array $data = []): bool|string
+function return_msg (int $code , string $msg , array $data = [])
 {
     $return_data[ 'code' ] = $code;
     $return_data[ 'msg' ] = $msg;
@@ -361,7 +321,7 @@ function return_msg ($code , $msg , array $data = []): bool|string
  * 成功返回不带数据
  * @param $msg string 描述
  */
-function ReturnSuccess (string $msg): bool|string
+function ReturnSuccess (string $msg)
 {
     $result = ['code' => 200 , 'msg' => $msg ,];
     return json_encode($result);
@@ -371,7 +331,7 @@ function ReturnSuccess (string $msg): bool|string
  * 失败返回
  * @param $msg string 描述
  */
-function ReturnError ($msg)
+function ReturnError (string $msg)
 {
     $result = ['code' => 201 , 'msg' => $msg ,];
     return json_encode($result);

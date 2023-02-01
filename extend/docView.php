@@ -121,6 +121,12 @@ if(!$row){
                             </table>
                         </div>
                         <?php endif; ?>
+                        <?php if($row['http_case']): ?>
+                            <span class="form-label">调用示例</span>
+                            <div class="block-content bg-gray-light rounded mb-4">
+                                <pre><?php echo $row['http_case'] ?></pre>
+                            </div>
+                        <?php endif; ?>
                         <?php if($row['return_case']): ?>
                         <span class="form-label">返回示例</span>
                         <div class="block-content bg-gray-light rounded mb-4">
