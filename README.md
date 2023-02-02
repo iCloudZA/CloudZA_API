@@ -31,6 +31,11 @@ if (!-e $request_filename)
     rewrite ^(.*)$ /index.php$1 last;
 }
 ```
+
+## 免签约支付程序(朋友的)
+https://github.com/kaindev8/starMQ
+
+喜欢可以看看
 ## 赞助
 大家的支持就是我继续开发的动力！
 
