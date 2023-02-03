@@ -80,11 +80,27 @@ if ($api === 'base') {
     $week_array = ["星期日" , "星期一" , "星期二" , "星期三" , "星期四" , "星期五" , "星期六"];
     $data = Db::query('SELECT DATE(datetime) as date, COUNT(DISTINCT ip) as ips, COUNT(*) as pv FROM api_count WHERE datetime >= DATE_SUB(CURDATE(), INTERVAL 6 DAY) GROUP BY DATE(datetime)');
     $result = ["date" => [] , "ip" => [] , "pv" => []];
-    foreach ($data as $item) {
-        $result[ "date" ][] = $item[ "date" ];
-        $result[ 'ip' ][] = $item[ 'ips' ];
-        $result[ 'pv' ][] = $item[ 'pv' ];
+    //    foreach ($data as $item) {
+    //        $result[ "date" ][] = $item[ "date" ];
+    //        $result[ 'ip' ][] = $item[ 'ips' ];
+    //    }
+    $dataCount = count($data);
+    for ($i = 0; $i < $dataCount; $i++) {
+        $result[ 'date' ][] = $data[ $i ][ 'date' ];
+        $result[ 'ip' ][] = $data[ $i ][ 'ips' ];
+        $result[ 'pv' ][] = $data[ $i ][ 'pv' ];;
     }
+
+    if ($dataCount < 7) {
+        $currentDate = new DateTime();
+        for ($i = $dataCount; $i < 7; $i++) {
+            $currentDate->add(new DateInterval('P1D'));
+            $result[ 'date' ][] = $currentDate->format('Y-m-d');
+            $result[ 'ip' ][] = 0;
+            $result[ 'pv' ][] = 0;
+        }
+    }
+
     // log
     $now = time();
     $data = Db::query("SELECT id, ip, time, event, detailed FROM web_log ORDER BY time DESC LIMIT 6");
