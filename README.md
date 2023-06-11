@@ -36,16 +36,7 @@ if (!-e $request_filename)
 https://github.com/kaindev8/starMQ
 
 喜欢可以看看
-## 赞助
-大家的支持就是我继续开发的动力！
 
-制作不易，如果觉得好用，可以捐赠我，我会将您的捐赠信息制作成表格展示在下方
-
-[//]: # (&#40;赞助方能够获得未来专业版七折优惠&#41;)
-
-WeChat & Alipay：
-![img_2.png](donation.png)
-爱发电 https://afdian.net/a/cloudza
 
 ## 赞助名单
 |   昵称   |    联系方式    | 赞助方式 | 赞助金额 |
@@ -53,10 +44,6 @@ WeChat & Alipay：
 |  客观手记  | 22****5716 | 支付宝  |  20  |
 |   逢戏   | 13****9867 |  微信  |  10  |
 | ℳℓ大鱼ℳℓ | M-****ish  |  微信  |  20  |
-
-## 联系我
-
-Email：admin#osuu.cc <@>
 
 ## 最后
 
